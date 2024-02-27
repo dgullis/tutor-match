@@ -9,11 +9,11 @@ function App() {
   return (
     <Routes>
       <Route path = "/" element = { <Layout></Layout> }>
-            <Route index element = { <Login></Login> }></Route>
-            <Route path = "/signup" element = { <Signup></Signup> } ></Route>
-            <Route path = "/profile" element = { <Profile></Profile> }></Route>
-          </Route>
-      <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
+        <Route index element = { <Login></Login> }></Route>
+        <Route path = "/signup" element = { <Signup></Signup> } ></Route>
+        <Route path = "/profile" element = { <Profile></Profile> }></Route>
+      </Route>
+      {/*<Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>*/}
     </Routes>
 // New routes go here
 );
