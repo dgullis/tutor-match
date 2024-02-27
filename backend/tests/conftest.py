@@ -1,6 +1,8 @@
 import pytest
 from pymongo import MongoClient
 from datetime import datetime, timezone
+import os
+from dotenv import load_dotenv
 
 
 iso_date_start = datetime(2022, 3, 1, 12, 0, 0, tzinfo=timezone.utc)
@@ -42,13 +44,15 @@ subject_data = {
 }
 
 
-
+load_dotenv()
+test_db_name=os.getenv('TEST_DB_NAME')
 
 @pytest.fixture()
 def mongo_db_connection():
 
     client = MongoClient('localhost', 27017)
-    db = client["tutormatch_test"]
+
+    db = client[test_db_name]
 
     db.users.insert_one(student_data)
     db.users.insert_one(tutor_data1)
