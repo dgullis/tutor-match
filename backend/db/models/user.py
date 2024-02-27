@@ -5,10 +5,10 @@ class Availability:
         self.available = available
 
 class User:
-    def __init__(self, name, email, password, status, availability):
+    def __init__(self, name, email, password, status, availability=None):
         self.name = name
         self.email = email
         self.password = password
         self.status = status
-        self.availability = None
+        self.availability = availability
 
