@@ -13,7 +13,7 @@ function App() {
         <Route path = "/signup" element = { <Signup></Signup> } ></Route>
         <Route path = "/profile" element = { <Profile></Profile> }></Route>
       </Route>
-      {/*<Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>*/}
+      <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
     </Routes>
 // New routes go here
 );
