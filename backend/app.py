@@ -6,15 +6,15 @@ from bson import BSON
 import json
 from modules.users import update_bio
 from modules.users import signup
-#from firebase_admin import credentials, initialize_app
+from firebase_admin import credentials, initialize_app
 
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-#cred = credentials.Certificate('firebaseServiceAccountKey.json')
-#firebase_admin = initialize_app(cred)
+cred = credentials.Certificate('firebaseServiceAccountKey.json')
+firebase_admin = initialize_app(cred)
 
 @app.route('/users/<int:userId>/bio', methods=['PUT'])
 def update_user_bio(userId):

@@ -41,8 +41,8 @@ const Signup = () => {
                 if (password === confirmPassword) {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
-                        /*await signup(name, email, status)*/
-                        navigate("/");
+                        await signup(name, email, status)
+                        navigate("/profile");
                     } catch(error){
                         setNotice("Sorry, something went wrong. Please try again.");
                     }     
