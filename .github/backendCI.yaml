@@ -1,0 +1,42 @@
+name: backendCI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        python-version:
+          "3.10"
+
+    name: Test
+    runs-on: ${{ matrix.os }}
+      
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install pipenv
+        pipenv install
+        pipenv shell
+        pipenv install flask pymongo
+        pip install pytest
+        pip install python-dotenv
+
+    - name: Run pytest
+      run: pytest
+
+
+
+
+
+
