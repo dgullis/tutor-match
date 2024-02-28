@@ -3,16 +3,23 @@ import LandingPage from "./components/LandingPage";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
+import TutorMatchNavbar from "./components/TutorMatchNavbar";
+
 
 function App() {
+
   return (
-    <Routes>
-      <Route path = "/login" element= { <Login /> }></Route>
-      <Route path = "/signup" element = { <Signup /> } ></Route>
-      <Route path = "/profile" element = { <Profile /> }></Route>
-      <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
-    </Routes>
-// New routes go inside <Routes> tags
+    <>
+      <TutorMatchNavbar />
+
+      <Routes>
+        <Route path = "/login" element= { <Login /> }></Route>
+        <Route path = "/signup" element = { <Signup /> } ></Route>
+        <Route path = "/profile" element = { <Profile /> }></Route>
+        <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
+      </Routes>
+    </>
+
 );
 }
 
