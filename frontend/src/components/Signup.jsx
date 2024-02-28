@@ -28,24 +28,31 @@ const Signup = () => {
         e.preventDefault();
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        const emailLocalPart = email.match(/^[^@]+/)[0];
+        const emaiLocalPartRegex = /^[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*$/;
 
-        if (passwordRegex.test(password)) {
+        if (emaiLocalPartRegex.test(emailLocalPart)) {
 
-            if (password === confirmPassword) {
-                try {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    navigate("/");
-                } catch {
-                    setNotice("Sorry, something went wrong. Please try again.");
-                }     
+            if (passwordRegex.test(password)) {
+
+                if (password === confirmPassword) {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                        navigate("/");
+                    } catch(error){
+                        setNotice("Sorry, something went wrong. Please try again.");
+                    }     
+                } else {
+                    setNotice("Passwords don't match. Please try again.");
+                }
+    
             } else {
-                setNotice("Passwords don't match. Please try again.");
+                setNotice("Password doesn't meet requirements. Please try again.")
             }
 
         } else {
-            setNotice("Password doesn't meet requirements. Please try again.")
-        }
-
+            setNotice("Email address is not valid. Please try again.")
+            }
         
     };
 
@@ -59,7 +66,7 @@ const Signup = () => {
                         </div>
                     }
                     <div className = "form-floating mb-3">
-                        <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value) }></input>
+                        <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value.trim()) }></input>
                         <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
                     </div>
                     <div className = "form-floating mb-3">
