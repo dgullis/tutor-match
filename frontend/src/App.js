@@ -1,8 +1,8 @@
 import { useNavigate, Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Profile from "./components/Profile";
+import LandingPage from "./pages/LandingPage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 import TutorMatchNavbar from "./components/TutorMatchNavbar";
 
 
