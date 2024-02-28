@@ -14,7 +14,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 #cred = credentials.Certificate('firebaseServiceAccountKey.json')
-#firebase_admin = inie_app(cred)
+#firebase_admin = initialize_app(cred)
 
 @app.route('/users/<int:userId>/bio', methods=['PUT'])
 def update_user_bio(userId):
