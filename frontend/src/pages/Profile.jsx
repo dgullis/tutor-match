@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import { useAuth } from "./authContext";
+import { useAuth } from "../components/authContext";
 
 
 const Profile = () => {

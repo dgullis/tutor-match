@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { signup } from "../services/users";
 
 const Signup = () => {
     const navigate = useNavigate();
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [status, setStatus] = useState("");
     const [notice, setNotice] = useState("");   
     const [passwordPrompt, setPasswordPrompt] = useState([]);
 
@@ -38,7 +41,8 @@ const Signup = () => {
                 if (password === confirmPassword) {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
-                        navigate("/");
+                        await signup(name, email, status)
+                        navigate("/profile");
                     } catch(error){
                         setNotice("Sorry, something went wrong. Please try again.");
                     }     
@@ -71,17 +75,30 @@ const Signup = () => {
                                 </div>
                             }
                             <div className = "form-floating mb-3">
-                                <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value.trim()) }></input>
-                                <label htmlFor = "signupEmail" className = "form-label">Email</label>
-                            </div>
-                            <div className = "form-floating mb-3">
-                                <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = {handlePasswordChange}></input>
-                                <label htmlFor = "signupPassword" className = "form-label">Password</label>
-                            </div>
-                            <div className = "form-floating mb-3">
-                                <input id = "confirmPassword" type = "password" className = "form-control" placeholder = "Confirm Password" value = { confirmPassword } onChange = { (e) => setConfirmPassword(e.target.value) }></input>
-                                <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
-                            </div>
+                        <input id = "signupName" type = "email" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value.trim()) }></input>
+                        <label htmlFor = "signupName" className = "form-label">Enter your name</label>
+                        </div>
+                        <div className = "form-floating mb-3">
+                            <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value.trim()) }></input>
+                            <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
+                        </div>
+                        <div className = "form-floating mb-3">
+                            <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = {handlePasswordChange}></input>
+                            <label htmlFor = "signupPassword" className = "form-label">Password</label>
+                        </div>
+                        <div className = "form-floating mb-3">
+                            <input id = "confirmPassword" type = "password" className = "form-control" placeholder = "Confirm Password" value = { confirmPassword } onChange = { (e) => setConfirmPassword(e.target.value) }></input>
+                            <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
+                        </div>
+                        <div className="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" onChange = { (e) => setStatus("Tutor")}></input>
+                        <label className="custom-control-label" htmlFor="customRadio1">Tutor</label>
+                        </div>
+                        <div className="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" className="custom-control-input" onChange = { (e) => setStatus("Student")}></input>
+                        <label className="custom-control-label" htmlFor="customRadio2">Student</label>
+                        </div>
+
 
                             <div className = "d-grid">
                                 <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Sign up</button>
