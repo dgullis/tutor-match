@@ -8,21 +8,45 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [notice, setNotice] = useState("");
+    const [notice, setNotice] = useState("");   
+    const [passwordPrompt, setPasswordPrompt] = useState([]);
 
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value
+        const newPrompt = [
+            newPassword.length >= 8 ? '' : 'password must be at least 8 characters',
+            /[\W_]/.test(newPassword) ? '' : 'password must contain a special character',
+            /\d/.test(newPassword) ? '' : 'password must contain a number',
+            /[A-Z]/.test(newPassword) ? '' : 'password must contain a capital letter',  
+        ];
+        setPasswordPrompt(newPrompt);
+        setPassword(newPassword);
+    }
+
+    
     const signupWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
-        if (password === confirmPassword) {
-            try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                navigate("/");
-            } catch {
-                setNotice("Sorry, something went wrong. Please try again.");
-            }     
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        if (passwordRegex.test(password)) {
+
+            if (password === confirmPassword) {
+                try {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    navigate("/");
+                } catch {
+                    setNotice("Sorry, something went wrong. Please try again.");
+                }     
+            } else {
+                setNotice("Passwords don't match. Please try again.");
+            }
+
         } else {
-            setNotice("Passwords don't match. Please try again.");
+            setNotice("Password doesn't meet requirements. Please try again.")
         }
+
+        
     };
 
     return(
@@ -39,16 +63,23 @@ const Signup = () => {
                         <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
                     </div>
                     <div className = "form-floating mb-3">
-                        <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = { (e) => setPassword(e.target.value) }></input>
+                        <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = {handlePasswordChange}></input>
                         <label htmlFor = "signupPassword" className = "form-label">Password</label>
                     </div>
                     <div className = "form-floating mb-3">
                         <input id = "confirmPassword" type = "password" className = "form-control" placeholder = "Confirm Password" value = { confirmPassword } onChange = { (e) => setConfirmPassword(e.target.value) }></input>
                         <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
-                    </div>                    
+                    </div>
+
                     <div className = "d-grid">
                         <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Signup</button>
                     </div>
+
+                    {password && (
+                        <ul>
+                            {passwordPrompt.map((requirement, index) => requirement && <li key={index}>{requirement}</li>)}
+                        </ul>
+                    )}
                     <div className = "mt-3 text-center">
                         <span>Go back to login? <Link to = "/">Click here.</Link></span>
                     </div>                    
