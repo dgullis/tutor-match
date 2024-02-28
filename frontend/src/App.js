@@ -11,7 +11,6 @@ function App() {
 
   return (
     <>
-
       <TutorMatchNavbar />
 
       <Routes>
@@ -19,10 +18,9 @@ function App() {
               <Route index element = { <Login></Login> }></Route>
               <Route path = "/signup" element = { <Signup></Signup> } ></Route>
               <Route path = "/profile" element = { <Profile></Profile> }></Route>
-            </Route>
+        </Route>
         <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
       </Routes>
-
     </>
 
 );
