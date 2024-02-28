@@ -5,10 +5,15 @@ from datetime import datetime, timezone
 from bson import BSON
 import json
 from modules.users import update_bio
+from firebase_admin import credentials, initialise_app
+
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+cred = credentials.Certificate('firebaseServiceAccountKey.json')
+firebase_admin = initialize_app(cred)
 
 @app.route('/users/<int:userId>/bio', methods=['PUT'])
 def update_user_bio(userId):
@@ -20,7 +25,6 @@ def update_user_bio(userId):
         return jsonify({'message': 'Update bio successful'})
     except Exception as e:
         return jsonify({'error': f'Error updating bio: {str(e)}'}), 500
-
 
 if __name__ == '__main__':
     app.run(debug=True)
