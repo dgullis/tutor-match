@@ -5,10 +5,12 @@ class Availability:
         self.available = available
 
 class User:
-    def __init__(self, name, email, password, status, availability=None):
+    def __init__(self, name, email, password, status, availability=None, bio=None, profileImage=None):
         self.name = name
         self.email = email
         self.password = password
         self.status = status
         self.availability = availability
+        self.bio = bio
+        self.profileImage = profileImage
 
