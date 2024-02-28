@@ -11,7 +11,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
-firebase_admin = initialize_app(cred)
+firebase_admin = initialise_app(cred)
 
 if __name__ == '__main__':
     app.run(debug=True)
