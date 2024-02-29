@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from bson import BSON
 import json
 from firebase_admin import credentials, initialize_app
-from modules.users import signup, update_bio, get_user_by_id, UserNotFoundError
+from modules.users import signup, update_bio, get_user_by_id, add_availability_for_tutor, UserNotFoundError
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, TutorAddingError, SubjectGradeNotFoundError
 
 
@@ -89,8 +89,21 @@ def search_tutors():
         return jsonify({'error': str(sgnfe)}), 404
     
     except Exception as e:
-        return jsonify({'error': f'Error retrieving subjects: {str(e)}'}), 500
+        return jsonify({f'Error retrieving subjects: {str(e)}'}), 500
     
+@app.route('/tutors/<string:userId>/availability', methods=['POST'])
+def add_availability(userId):
+    data = request.json
+    availability = data.get('availability')
+
+    try:
+        add_availability_for_tutor(userId, availability)
+        return jsonify({"message": "availability added"}), 201
+    except Exception as e:
+        return jsonify({f'Error adding availability: {str(e)}'}), 500
+
+    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

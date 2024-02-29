@@ -4,6 +4,8 @@ from bson import ObjectId
 
 class UserNotFoundError(Exception):
     pass
+class AddAvailabilityError(Exception):
+    pass
 
 #create functions in here to add users / update users / delete users etc
 users_collection = get_users_collection()
@@ -62,3 +64,21 @@ def signup():
     users_collection.insert_one(new_user)
 
     return jsonify({"message": "Account created successfully"}), 201
+
+def add_availability_for_tutor(userId, availability):
+
+    filter_criteria = {"_id": ObjectId(userId)}  
+    for availability in availability:
+        
+        try:
+            update_data = {"$addToSet": {
+                "availability": {
+                    "start_time": availability["start_time"],
+                    "end_time": availability["end_time"],
+                    "available": True  
+                } 
+                }
+            }
+            users_collection.update_one(filter_criteria, update_data)
+        except Exception as e:
+            raise ValueError(f'Error adding availability: {str(e)}')
