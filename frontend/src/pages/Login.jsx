@@ -8,13 +8,15 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [notice, setNotice] = useState("");
+    var firebase_id = ""
 
     const loginWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            navigate("./profile");
+            firebase_id = auth.currentUser.uid
+            navigate(`/profile/${firebase_id}`);
         } catch {
             setNotice("You entered a wrong username or password.");
         }
