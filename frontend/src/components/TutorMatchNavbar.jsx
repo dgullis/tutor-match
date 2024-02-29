@@ -4,6 +4,7 @@ import { useAuth } from './authContext';
 import { auth } from "../firebase";
 
 
+
 const TutorMatchNavbar = () => {
     const navigate = useNavigate();
     const { user } = useAuth()
@@ -17,9 +18,18 @@ const TutorMatchNavbar = () => {
 
 
     return (
-    <Navbar bg="primary" data-bs-theme="dark">
+    <Navbar bg="primary" data-bs-theme="dark" style={{ marginBottom: '20px' }}>
         <Container>
-        <Navbar.Brand>TutorMatch</Navbar.Brand>
+        <Navbar.Brand>
+            <img
+                src="/images/logo.png"
+                width="35"
+                height="35"
+                className="d-inline-block align-top"
+                alt="Logo"
+            />
+            {' TutorMatch'}
+        </Navbar.Brand>
         {user ? (
             <Nav className="ms-auto">
             <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
