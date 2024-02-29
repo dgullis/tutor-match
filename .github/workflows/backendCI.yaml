@@ -19,10 +19,11 @@ jobs:
         pipenv install flask pymongo
         pip install pytest
         pip install python-dotenv
-        
+        pip install mongodb-community@6.0
+        pip start mongodb-community@6.0
+
     - name: Run app.py
       run: python app.py
-
 
     - name: Run pytest
       run: |
