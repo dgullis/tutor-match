@@ -7,7 +7,7 @@ import { auth } from "../firebase";
 
 const TutorMatchNavbar = () => {
     const navigate = useNavigate();
-    const { user } = useAuth()
+    const { user, mongoUser } = useAuth()
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -32,7 +32,10 @@ const TutorMatchNavbar = () => {
         </Navbar.Brand>
         {user ? (
             <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+                {mongoUser && mongoUser.status === 'Student' && (
+                <Nav.Link as={Link} to="/search">Search Tutors</Nav.Link>
+                )}
+            <Nav.Link as={Link} to={`/profile/${user.uid}`}>Profile</Nav.Link>
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </Nav>
         ) : (
