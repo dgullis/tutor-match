@@ -1,8 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+const apiKey = process.env.FIREBASE_API_KEY
+
 const firebaseConfig = {
-    apiKey: "AIzaSyBf61n5nrQMtrVSjsrZ6GANT55i5KhGZuk",
+    apiKey: apiKey,
     authDomain: "tutormatch-e2a6a.firebaseapp.com",
     projectId: "tutormatch-e2a6a",
     storageBucket: "tutormatch-e2a6a.appspot.com",
