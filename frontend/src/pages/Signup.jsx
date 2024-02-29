@@ -13,6 +13,7 @@ const Signup = () => {
     const [status, setStatus] = useState("");
     const [notice, setNotice] = useState("");   
     const [passwordPrompt, setPasswordPrompt] = useState([]);
+    var firebase_id = ""
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value
@@ -41,8 +42,9 @@ const Signup = () => {
                 if (password === confirmPassword) {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
-                        await signup(name, email, status)
-                        navigate("/profile");
+                        firebase_id = auth.currentUser.uid
+                        await signup(firebase_id, name, email, status)
+                        navigate(`/profile/${firebase_id}`);
                     } catch(error){
                         setNotice("Sorry, something went wrong. Please try again.");
                     }     

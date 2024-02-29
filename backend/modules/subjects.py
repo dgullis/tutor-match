@@ -10,17 +10,17 @@ class TutorAddingError(Exception):
 class SubjectGradeNotFoundError(Exception):
     pass
 
-def add_tutor_to_a_subject_grade(userId, subject, grade):
+def add_tutor_to_a_subject_grade(firebase_id, subject, grade):
     subjects_collection = get_subjects_collection()
 
     try:
         result = subjects_collection.update_one(
             {"name": subject},
-            {"$addToSet": {grade: userId}}
+            {"$addToSet": {grade: firebase_id}}
         )
 
         if result.matched_count == 1:
-            if result.modified_count == 0:
+            if result.modified_count == 0: 
                 # User was already in the tutors list for the given grade
                 raise TutorAddingError('Tutor already added to subject and grade')
             else:

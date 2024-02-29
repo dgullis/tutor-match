@@ -1,11 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { auth } from "../firebase";
 import { useAuth } from "../components/authContext";
+import { getUser } from "../services/users";
 
 
 const Profile = () => {
     const navigate = useNavigate();
     const { user } = useAuth()
+    const handle = useParams()
+    const firebase_id = handle.id
+    const [userDetails, setUserDetails] = useState({})
+
+    useEffect(() => {
+        getUser(firebase_id)
+            .then((data) => {
+                setUserDetails(data.user)
+            })
+            .catch((err) => {
+                console.log(err);
+                navigate("/login");
+            });
+    },[]);
 
     const logoutUser = async (e) => {
         e.preventDefault();
@@ -15,16 +31,12 @@ const Profile = () => {
     }
 
     return(
-        <div className = "container">
-            <div className = "row justify-content-center">
-                <div className = "col-md-4 text-center">
-                    {user ? <p>Welcome <em className = "text-decoration-underline">{ user.email }</em>. You are logged in!</p> : <p>no user logged in</p>}
-                    <div className = "d-grid gap-2">
-                        <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => logoutUser(e)}>Logout</button>
-                    </div>                
-                </div>
-            </div>
-        </div>       
+        <>
+        <h2>Tutor Details</h2>
+        <p>Name: {userDetails.name}<br/>
+        Email: {userDetails.email}<br/>
+        Subjects: Maths - GCSE, Science - A Level</p>
+        </>
     )    
 }
 

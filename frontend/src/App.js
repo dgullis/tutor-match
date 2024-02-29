@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path = "/login" element= { <Login /> }></Route>
         <Route path = "/signup" element = { <Signup /> } ></Route>
-        <Route path = "/profile" element = { <Profile /> }></Route>
+        <Route path = "/profile/:id" element = { <Profile /> }></Route>
         <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
       </Routes>
     </>

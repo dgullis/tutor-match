@@ -1,7 +1,8 @@
 const BACKEND_URL = "http://localhost:5000";
 
-export const signup = async (name, email, status) => {
+export const signup = async (firebase_id, name, email, status) => {
     const payload = {
+        firebase_id: firebase_id,
         name: name,
         email: email,
         status: status
@@ -23,3 +24,19 @@ export const signup = async (name, email, status) => {
         throw new Error (await response.json().then((data) => data.message));
     }
 };
+
+export const getUser = async (firebase_id) => {
+    const requestOptions = {
+        method: "GET",
+    }
+
+    let response = await fetch(`${BACKEND_URL}/users/${firebase_id}`, requestOptions);
+    var data = await response.json()
+    
+
+    if (response.status === 200) {
+        return data;
+    } else {
+        throw new Error (await response.json().then((data) => data.message));
+    }
+}

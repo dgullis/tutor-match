@@ -22,12 +22,12 @@ const TutorMatchNavbar = () => {
         <Navbar.Brand>TutorMatch</Navbar.Brand>
         {user ? (
             <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/Profile">Profile</Nav.Link>
+            <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </Nav>
         ) : (
             <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">Login</Nav.Link>
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
             <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
             </Nav>
         )}

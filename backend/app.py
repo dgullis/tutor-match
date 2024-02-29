@@ -54,11 +54,11 @@ def get_user(userId):
 @app.route('/subjects/<string:subject>/add', methods=['POST'])
 def add_tutor_to_subject_grade(subject):
     data = request.json
-    userId = data.get('userId')
+    firebase_id = data.get('firebase_id')
     grade = data.get('grade')
 
     try:
-        add_tutor_to_a_subject_grade(userId, subject, grade)
+        add_tutor_to_a_subject_grade(firebase_id, subject, grade)
         # request successfull and tutor added to array for subject/grade
         return jsonify({'message': 'Tutor added sucessfully'}), 201
     # request successful but nothing to change as tutor already exists for subject/grade so send back 204
