@@ -71,13 +71,15 @@ def add_tutor_to_subject_grade(subject):
         return jsonify({'error': f'{str(e)}'}), 500
     
 
-@app.route('/subjects', methods=['GET'])
-def get_tutors_for_subject_grade():
+@app.route('/tutors', methods=['GET'])
+def search_tutors():
     #as this is a GET request subject and grade should be in a query string 
     #e.g. GET /subjects?subject=math&grade=alevel
     subject = request.args.get('subject')
     grade = request.args.get('grade')
-
+    print("backend subject", subject)
+    print("backend grade", grade)
+    
     try:
         result = search_by_subject_and_grade(subject, grade)
         return jsonify({"result": result}), 200
