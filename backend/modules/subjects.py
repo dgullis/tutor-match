@@ -47,6 +47,7 @@ def search_by_subject_and_grade(subject, grade):
             #iterates through list of tuturIds find the corresponding userfrom the users collection..
                 #changes the value of _id from an ObjectId to a string
                     #adds the suers documents to the user information array
+            #Needs to be changed to use firebase_id rather than _id
             user_information = [
                 {**users_collection.find_one({"_id": ObjectId(user_id)}), '_id': str(ObjectId(user_id))}
                 for user_id in user_ids

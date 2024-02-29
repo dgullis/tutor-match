@@ -41,6 +41,7 @@ def signup_route():
 def get_user(userId):
     try:
         user = get_user_by_id(userId)
+        print(user)
         return jsonify({"user": user}), 200
     
     except UserNotFoundError as ve:
