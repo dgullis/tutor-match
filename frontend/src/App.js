@@ -21,6 +21,7 @@ function App() {
         <Route path = "/profile" element = { <ProtectedRoute> <Profile /> </ProtectedRoute>  }></Route>
         <Route path = "/search" element = {<ProtectedRoute> <SearchPage /> </ProtectedRoute>}></Route>
         <Route path = "/profile/:id" element = {<ProtectedRoute> <Profile /> </ProtectedRoute>  }></Route>
+
         <Route path='/' element={<LandingPage  navigate={useNavigate()} />}/>
       </Routes>
 
