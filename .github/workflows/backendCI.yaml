@@ -17,13 +17,14 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pipenv
-        pipenv install
-        pipenv shell
+        pipenv install --dev
+        pip install pytest
+        
         
 
     - name: Run pytest
       run: |
-        pytest
+        pipenv run pytest
 
 
 
