@@ -7,6 +7,7 @@
 5. npm install bootstrap
 6. npm install firebase
 7. npm install react-bootstrap
+8. npm install react-select
 
 
 # Backend: Install dependencies and set up virtual environment

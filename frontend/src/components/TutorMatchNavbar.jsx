@@ -18,7 +18,7 @@ const TutorMatchNavbar = () => {
 
 
     return (
-    <Navbar bg="primary" data-bs-theme="dark">
+    <Navbar bg="primary" data-bs-theme="dark" style={{ marginBottom: '20px' }}>
         <Container>
         <Navbar.Brand>
             <img
@@ -37,7 +37,7 @@ const TutorMatchNavbar = () => {
             </Nav>
         ) : (
             <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">Login</Nav.Link>
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
             <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
             </Nav>
         )}
