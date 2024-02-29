@@ -51,6 +51,7 @@ def signup():
     if not all([name, email, status]):
         return jsonify({"error": "Missing fields"}), 400
     
+    users_collection = get_users_collection()
 
     new_user = {
         "name": name,
