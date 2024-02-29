@@ -54,6 +54,7 @@ def search_by_subject_and_grade(subject, grade):
 
             #returns array of user documents i.e. 
                 #[{'_id': '', 'name': '', 'email': 'dan15@.com', 'status': '', 'bio': ''}]
+            print("backend results", user_information)
             return user_information
         else:
             raise SubjectGradeNotFoundError('Subject or grade not found')
