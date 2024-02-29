@@ -17,14 +17,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pipenv
-        pipenv install
-        pipenv shell
-        pipenv install flask pymongo
-        pip install pytest
-        pip install python-dotenv
+        pipenv install --dev
 
     - name: Run pytest
-      run: pytest
+      run: |
+        pipenv run pytest
 
 
 
