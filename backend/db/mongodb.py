@@ -3,14 +3,15 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-db_name= os.getenv('DB_NAME')
+mongo_uri = os.getenv('MONGO_URI')
+mongo_uri = os.getenv('MONGO_URI')
+mongo_client = MongoClient(mongo_uri)
+db_name = os.getenv('DB_NAME')
+db = mongo_client.get_database(db_name)
+mongo_client = MongoClient(mongo_uri)
+db_name = os.getenv('DB_NAME')
 
-#mongodb_url = os.getenv("MONGODB_URL")
-mongoClient = MongoClient('MONGOURL')
-#mongoClient = MongoClient('')
-print(db_name, "HELLLLLOOOO")
-
-db = mongoClient.get_database(db_name)
+db = mongo_client.get_database(db_name)
 
 users_collection = db.get_collection('users')
 subjects_collection = db.get_collection('subjects')
