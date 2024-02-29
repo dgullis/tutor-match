@@ -5,6 +5,9 @@ node_modules
 /.pnp
 .pnp.js
 
+# firebase
+firebase.js
+
 # testing
 /coverage
 

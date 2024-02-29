@@ -32,7 +32,7 @@ const TutorMatchNavbar = () => {
         </Navbar.Brand>
         {user ? (
             <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/Profile">Profile</Nav.Link>
+            <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </Nav>
         ) : (

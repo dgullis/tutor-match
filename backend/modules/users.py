@@ -32,11 +32,11 @@ def get_user_by_id(userId):
     users_collection = get_users_collection()
 
     try:
-        result = users_collection.find_one({"_id": ObjectId(userId)})
+        result = users_collection.find_one({"firebase_id": userId}, {"_id": 0})
 
         if result:
             # If user is found create a new dictionary with _id as a string not ObjectId
-            return {**result, '_id': str(ObjectId(userId))}
+            return {**result}
         else:
             raise UserNotFoundError('User not found')
 
@@ -46,6 +46,7 @@ def get_user_by_id(userId):
 
 def signup():
     data = request.json
+    firebase_id = data.get("firebase_id")
     name = data.get("name")
     email = data.get("email")
     status = data.get("status")
@@ -55,6 +56,7 @@ def signup():
     
 
     new_user = {
+        "firebase_id": firebase_id,
         "name": name,
         "email": email,
         "status": status
