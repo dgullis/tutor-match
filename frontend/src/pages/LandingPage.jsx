@@ -22,9 +22,13 @@ const AboutUsModal = () => {
                 <Modal.Body>
                     <p>This is a Makers Academy final project using FReMP tech stack by:</p>
                     <ul>
-                        <li>John Doe</li>
-                        <li>Bob Marley</li>
-                        <li>Alice in Wonderland</li>
+                        <li>Ann Galloway</li>
+                        <li>Leah Simon</li>
+                        <li>Kat Bielecka</li>
+                        <li>Dan Gullis</li>
+                        <li>Simon Budden</li>
+                        <li>Muhtadi Maahir</li>
+                        <li>Pier Bruno Pompilii</li>
                     </ul>
                     <p>Please, do not sign in :)</p>
                 </Modal.Body>
