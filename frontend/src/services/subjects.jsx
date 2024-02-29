@@ -24,3 +24,26 @@ export const searchTutor = async (query) => {
     }
 
 }
+
+export const addSubject = async (subject, grade, firebase_id) => {
+    const payload = {
+        grade: grade,
+        firebase_id: firebase_id
+    };
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload)
+    }
+
+    let response = await fetch(`${BACKEND_URL}/subjects/${subject}/add`, requestOptions);
+
+    if (response.status === 201) {
+        return;
+    } else {
+        throw new Error (await response.json().then((data) => data.message))
+    }
+
+}
