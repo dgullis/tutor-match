@@ -7,12 +7,13 @@ import { auth } from "../firebase";
 
 const TutorMatchNavbar = () => {
     const navigate = useNavigate();
-    const { user, mongoUser } = useAuth()
+    const { user, mongoUser, storeUserDataMongoDB } = useAuth()
 
     const handleLogout = async (e) => {
         e.preventDefault();
 
         await auth.signOut();
+        storeUserDataMongoDB(null)
         navigate("/");
     }
 

@@ -45,11 +45,10 @@ const Signup = () => {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
                         firebase_id = auth.currentUser.uid
-                        const data = await signup(firebase_id, name, email, status)
-                        console.log("result,", data)
-                        storeUserDataMongoDB(data.user)
-                        console.log("finished signup");
-
+                        const result = await signup(firebase_id, name, email, status)
+                        storeUserDataMongoDB(result.user)
+                        
+                        
                         navigate(`/profile/${firebase_id}`);
                     } catch(error){
                         if (error.code === "auth/email-already-in-use") {
