@@ -24,4 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 
 #firebase admin certificate
-firebaseServiceAcountKey.json
+firebaseServiceAccountKey.json
+
+#firebase 
+firebase.js

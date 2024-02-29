@@ -23,7 +23,7 @@ jobs:
         brew services start mongodb-community@6.0
 
     - name: Run app.py
-      run: python app.py
+      run: python backend/app.py
 
     - name: Run pytest
       run: |
