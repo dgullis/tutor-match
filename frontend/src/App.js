@@ -20,6 +20,7 @@ function App() {
         <Route path = "/signup" element = { <Signup /> } ></Route>
         <Route path = "/profile/:id" element = { <ProtectedRoute> <Profile /> </ProtectedRoute>}></Route>
         <Route path='/' element={<LandingPage  navigate={useNavigate()} />}/>
+      </Routes>
 
     </>
 
