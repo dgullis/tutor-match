@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from bson import BSON
 import json
 from modules.users import update_bio
-from firebase_admin import credentials, initialise_app
+from firebase_admin import credentials, initialize_app
 
 
 app = Flask(__name__)
