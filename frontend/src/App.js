@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import TutorMatchNavbar from "./components/TutorMatchNavbar";
+import SearchPage from "./pages/SearchPage";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path = "/login" element= { <Login /> }></Route>
         <Route path = "/signup" element = { <Signup /> } ></Route>
         <Route path = "/profile" element = { <Profile /> }></Route>
+        <Route path = "/search" element= { <SearchPage /> }></Route>
         <Route path='/landing' element={<LandingPage  navigate={useNavigate()} />}/>
       </Routes>
     </>
