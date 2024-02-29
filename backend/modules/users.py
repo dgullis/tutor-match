@@ -1,24 +1,46 @@
 from db.mongodb import get_users_collection
 from flask import Flask, redirect, url_for, request, jsonify
+from bson import ObjectId
 
-users_collection = get_users_collection()
+class UserNotFoundError(Exception):
+    pass
 
 #create functions in here to add users / update users / delete users etc
+users_collection = get_users_collection()
 
 def update_bio(userId, bioContent):
     users_collection = get_users_collection()
+    
 
     try:
-        filter_criteria = {"_id": userId}  
+        filter_criteria = {"_id": ObjectId(userId)}  
         update_data = {"$set": {"bio": bioContent}} 
         result = users_collection.update_one(filter_criteria, update_data)
         
-        return result
+        if result.matched_count == 0:
+            raise UserNotFoundError('User not found')
+        else: 
+            return {"message": "Update bio successful"}
+        
+    except Exception as e:
+        raise ValueError(f'Error updating bio: {str(e)}')
+    
+
+def get_user_by_id(userId):
+    users_collection = get_users_collection()
+
+    try:
+        result = users_collection.find_one({"_id": ObjectId(userId)})
+
+        if result:
+            # If user is found create a new dictionary with _id as a string not ObjectId
+            return {**result, '_id': str(ObjectId(userId))}
+        else:
+            raise UserNotFoundError('User not found')
 
     except Exception as e:
-        return e
-
-
+        raise ValueError(f'{str(e)}')
+    
 
 def signup():
     data = request.json
