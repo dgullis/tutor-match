@@ -19,7 +19,9 @@ function App() {
         <Route path = "/login" element= { <Login /> }></Route>
         <Route path = "/signup" element = { <Signup /> } ></Route>
         <Route path = "/profile" element = { <ProtectedRoute> <Profile /> </ProtectedRoute>}></Route>
+        <Route path = "/search" element = {<ProtectedRoute> <SearchPage /> </ProtectedRoute>}></Route>
         <Route path='/' element={<LandingPage  navigate={useNavigate()} />}/>
+      </Routes>
 
     </>
 
