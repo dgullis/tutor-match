@@ -10,20 +10,21 @@ import SearchPage from "./pages/SearchPage";
 
 
 function App() {
-
   return (
-    <>
-      <TutorMatchNavbar />
-
-      <Routes>
-        <Route path = "/login" element= { <Login /> }></Route>
-        <Route path = "/signup" element = { <Signup /> } ></Route>
-        <Route path = "/profile" element = { <ProtectedRoute> <Profile /> </ProtectedRoute>}></Route>
-        <Route path='/' element={<LandingPage  navigate={useNavigate()} />}/>
-
-    </>
-
-);
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/" element={<LandingPage navigate={useNavigate()} />} />
+    </Routes>
+  );
 }
 
 export default App;
