@@ -22,11 +22,7 @@ const Login = () => {
             const result = await getUser(firebase_id)
             storeUserDataMongoDB(result.user)
 
-            if(mongoUser.status === "Student") {
-                navigate(`/search`)
-            } else {
-                navigate(`/profile/${firebase_id}`)
-            }
+            navigate(`/profile/${firebase_id}`)
             
         } catch {
             setNotice("You entered a wrong username or password.");
