@@ -3,9 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { auth } from "../firebase";
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
+
 import { searchSubjects } from "../services/subjects";
 import { AddSubject } from "../components/AddSubject";
-
+import { AddAvailability } from "../components/AddAvailability";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Profile = () => {
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
+
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
     console.log(user)
@@ -24,6 +26,12 @@ const Profile = () => {
         "firebaseId": firebase_id,
         "grade": "alevel"
     }
+
+    const minDate = new Date();
+    const maxDate = new Date("01/01/2025 01:00 AM");
+    const dateValue = new Date()
+
+
 
     useEffect(() => {
         getUser(firebase_id)
@@ -70,9 +78,14 @@ const Profile = () => {
             </div>
         ))}</p>
         </div>
+
         {user.uid === firebase_id && <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} />
         </div>}
+
+        <div className="add-availability">
+            <AddAvailability firebaseId = {firebase_id}/>
+        </div> 
 
         </>
     )    

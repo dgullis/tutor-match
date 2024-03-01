@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useAuth } from "../components/authContext";
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { storeUserDataMongoDB } = useAuth();
+    const { storeUserDataMongoDB, mongoUser } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -33,23 +33,27 @@ const Signup = () => {
     const signupWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-        const emailLocalPart = email.match(/^[^@]+/)[0];
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;  
+        const emailLocalPart = email ? email.match(/^[^@]+/)[0] : null;
         const emaiLocalPartRegex = /^[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*$/;
 
-        if (emaiLocalPartRegex.test(emailLocalPart)) {
 
-            if (passwordRegex.test(password)) {
-
-                if (password === confirmPassword) {
+        if (email) {
+            if (emaiLocalPartRegex.test(emailLocalPart)) {
+                if (passwordRegex.test(password)) {
+                  if (password === confirmPassword) {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
                         firebase_id = auth.currentUser.uid
                         const result = await signup(firebase_id, name, email, status)
                         storeUserDataMongoDB(result.user)
+
+                        if (status === "Student"){
+                                navigate(`/search`);
+                            } else {
+                                navigate(`/profile/${firebase_id}`);
+                            }
                         
-                        
-                        navigate(`/profile/${firebase_id}`);
                     } catch(error){
                         if (error.code === "auth/email-already-in-use") {
                             setNotice("Email is already in use. Please try logging in instead."); 
@@ -58,21 +62,24 @@ const Signup = () => {
                             setNotice("Sorry, something went wrong. Please try again.");
                     }     
                 }
-                } else {
-                    setNotice("Passwords don't match. Please try again.");
-                }
-    
-            } else {
-                setNotice("Password doesn't meet requirements. Please try again.")
-            }
 
+                } else {
+                    setNotice("Password doesn't meet requirements. Please try again.")
+                }
+
+            } else {
+                setNotice("Email address is not valid. Please try again.")
+                }  
         } else {
             setNotice("Email address is not valid. Please try again.")
-            }
-        
-    };
+        }
 
-    return(
+    }
+
+};
+
+
+    return (
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
@@ -80,19 +87,19 @@ const Signup = () => {
                 </div>
                 <div className = "container">
                     <div className = "row justify-content-center">
-                        <form className = "col-md-4 mt-3 pt-3 pb-3">
+                        <form className = "col-md-4 mt-3 pt-3 pb-3" >
                             { "" !== notice &&
                                 <div className = "alert alert-warning" role = "alert">
                                     { notice }    
                                 </div>
                             }
                             <div className = "form-floating mb-3">
-                        <input id = "signupName" type = "email" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value.trim()) }></input>
+                        <input id = "signupName" type = "text" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value.trim()) }></input>
                         <label htmlFor = "signupName" className = "form-label">Enter your name</label>
                         </div>
                         <div className = "form-floating mb-3">
-                            <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value.trim()) }></input>
-                            <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
+                            <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value) }></input>
+                            <label htmlFor = "signupEmail" className = "form-label">Enter your email address</label>
                         </div>
                         <div className = "form-floating mb-3">
                             <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = {handlePasswordChange}></input>
@@ -132,4 +139,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Signup;
