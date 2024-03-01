@@ -54,6 +54,7 @@ def signup():
     if not all([name, email, status]):
         return jsonify({"error": "Missing fields"}), 400
     
+    users_collection = get_users_collection()
 
     new_user = {
         "firebase_id": firebase_id,
@@ -61,9 +62,12 @@ def signup():
         "email": email,
         "status": status
     }
-    users_collection.insert_one(new_user)
 
-    return jsonify({"message": "Account created successfully"}), 201
+    result = users_collection.insert_one(new_user)
+
+    if result.inserted_id:
+        user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
+        return jsonify({"user": user, "message": "Account created successfully"}), 201
 
 def add_availability_for_tutor(userId, availability):
 

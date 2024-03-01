@@ -3,9 +3,11 @@ import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../services/users";
+import { useAuth } from "../components/authContext";
 
 const Signup = () => {
     const navigate = useNavigate();
+    const { storeUserDataMongoDB } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -43,13 +45,17 @@ const Signup = () => {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
                         firebase_id = auth.currentUser.uid
-                        await signup(firebase_id, name, email, status)
+                        const result = await signup(firebase_id, name, email, status)
+                        storeUserDataMongoDB(result.user)
+                        
+                        
                         navigate(`/profile/${firebase_id}`);
                     } catch(error){
                         if (error.code === "auth/email-already-in-use") {
                             setNotice("Email is already in use. Please try logging in instead."); 
                         } else {
-                        setNotice("Sorry, something went wrong. Please try again.");
+                            console.log(error)
+                            setNotice("Sorry, something went wrong. Please try again.");
                     }     
                 }
                 } else {
