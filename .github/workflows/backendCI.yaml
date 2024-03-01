@@ -20,9 +20,8 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pipenv
-        pipenv install --dev
         pip install flask
-        pipenv install flask pymongo
+        pip install flask pymongo
         pip install pytest
         pip install python-dotenv
 
