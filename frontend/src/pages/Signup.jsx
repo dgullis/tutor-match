@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useAuth } from "../components/authContext";
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { storeUserDataMongoDB } = useAuth();
+    const { storeUserDataMongoDB, mongoUser } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -41,29 +41,28 @@ const Signup = () => {
         if (email) {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
+                  if (password === confirmPassword) {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                        firebase_id = auth.currentUser.uid
+                        const result = await signup(firebase_id, name, email, status)
+                        storeUserDataMongoDB(result.user)
 
-                    if (password === confirmPassword) {
-                        try {
-                            console.log("Before creating user");
-                            await createUserWithEmailAndPassword(auth, email, password);
-                            firebase_id = auth.currentUser.uid
-                            const result = await signup(firebase_id, name, email, status)
-                            storeUserDataMongoDB(result.user)
-                            
-                            
-                            navigate(`/profile/${firebase_id}`);
-                        } catch(error){
-                            if (error.code === "auth/email-already-in-use") {
-                                setNotice("Email is already in use. Please try logging in instead."); 
+                        if (status === "Student"){
+                                navigate(`/search`);
                             } else {
-                                console.log(error)
-                                setNotice("Sorry, something went wrong. Please try again.");
-                        }     
-                    }
-                    } else {
-                        setNotice("Passwords don't match. Please try again.");
-                    }
-        
+                                navigate(`/profile/${firebase_id}`);
+                            }
+                        
+                    } catch(error){
+                        if (error.code === "auth/email-already-in-use") {
+                            setNotice("Email is already in use. Please try logging in instead."); 
+                        } else {
+                            console.log(error)
+                            setNotice("Sorry, something went wrong. Please try again.");
+                    }     
+                }
+
                 } else {
                     setNotice("Password doesn't meet requirements. Please try again.")
                 }
@@ -74,9 +73,13 @@ const Signup = () => {
         } else {
             setNotice("Email address is not valid. Please try again.")
         }
+
     }
 
-    return(
+};
+
+
+    return (
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">

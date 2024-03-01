@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
 import { addSubject } from "../services/subjects";
-
+import { AddAvailability } from "../components/AddAvailability";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -14,6 +14,9 @@ const Profile = () => {
     const [userDetails, setUserDetails] = useState({})
     const [subject, setSubject] = useState("")
     const [grade, setGrade] = useState("")
+    const minDate = new Date();
+    const maxDate = new Date("01/01/2025 01:00 AM");
+    const dateValue = new Date()
 
 
     useEffect(() => {
@@ -79,6 +82,9 @@ const Profile = () => {
             </div>
         </div>
         </div>
+        <div className="add-availability">
+            <AddAvailability firebaseId = {firebase_id}/>
+        </div> 
         </>
     )    
 }

@@ -10,7 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [notice, setNotice] = useState("");
-    const { storeUserDataMongoDB } = useAuth();
+    const { user, mongoUser, storeUserDataMongoDB } = useAuth();
     var firebase_id = ""
 
     const loginWithUsernameAndPassword = async (e) => {
@@ -21,8 +21,13 @@ const Login = () => {
             firebase_id = auth.currentUser.uid
             const result = await getUser(firebase_id)
             storeUserDataMongoDB(result.user)
-        
-            navigate(`/profile/${firebase_id}`);
+
+            if(mongoUser.status === "Student") {
+                navigate(`/search`)
+            } else {
+                navigate(`/profile/${firebase_id}`)
+            }
+            
         } catch {
             setNotice("You entered a wrong username or password.");
         }
