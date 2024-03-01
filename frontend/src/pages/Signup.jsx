@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useAuth } from "../components/authContext";
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { storeUserDataMongoDB } = useAuth();
+    const { storeUserDataMongoDB, mongoUser } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -47,9 +47,13 @@ const Signup = () => {
                         firebase_id = auth.currentUser.uid
                         const result = await signup(firebase_id, name, email, status)
                         storeUserDataMongoDB(result.user)
+
+                        if (status === "Student"){
+                                navigate(`/search`);
+                            } else {
+                                navigate(`/profile/${firebase_id}`);
+                            }
                         
-                        
-                        navigate(`/profile/${firebase_id}`);
                     } catch(error){
                         if (error.code === "auth/email-already-in-use") {
                             setNotice("Email is already in use. Please try logging in instead."); 
@@ -68,11 +72,10 @@ const Signup = () => {
 
         } else {
             setNotice("Email address is not valid. Please try again.")
-            }
-        
+        }
     };
 
-    return(
+    return (
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
