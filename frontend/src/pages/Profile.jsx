@@ -83,7 +83,7 @@ const Profile = () => {
         </div>
         </div>
         <div className="add-availability">
-            <AddAvailability />
+            <AddAvailability firebaseId = {firebase_id}/>
         </div> 
         </>
     )    
