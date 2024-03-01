@@ -31,3 +31,14 @@ def test_signup(client):
     response = client.post("/signup", json=user)
     assert response.status_code == 201
     assert response.json == {'user': user, 'message': 'Account created successfully'}
+
+def test_getUser(client):
+    user = {
+        "firebase_id": "rSH3Hv9NtBcvagSbhzZ9A3Dscnf1",
+        "name": "simon",
+        "email": "simon5@email.com",
+        "status": "Tutor"
+    }
+    response = client.post("//users/rSH3Hv9NtBcvagSbhzZ9A3Dscnf1", json=user)
+    assert response.status_code == 201
+    assert response.json == {'user': user}

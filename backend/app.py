@@ -41,7 +41,7 @@ def signup_route():
 def get_user(userId):
     try:
         verify_token()
-        print("decoded token = " + decoded_token)
+        # print("decoded token = " + decoded_token)
         user = get_user_by_id(userId)
         print(user)
         return jsonify({"user": user}), 200
