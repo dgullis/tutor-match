@@ -4,6 +4,7 @@ from flask import Flask
 
 from app import app
 from app import update_user_bio
+from app import signup_route
 
 app.config['TESTING'] = True
 
@@ -20,3 +21,17 @@ def test_update_user_bio_route(client):
 
     assert response.status_code == 200
     assert response.json == {'message': 'Update bio successful'}
+
+def test_signup(client):
+    user = {
+        "firebase_id": "test_firebase_id",
+        "name": "Test name",
+        "email": "test@email.com",
+        "status": "Student"
+    }
+
+    response = client.post("/signup", json=user)
+
+
+    assert response.status_code == 201
+    assert response.json == {'user': user, 'message': 'Account created successfully'}
