@@ -60,42 +60,51 @@ export const AddAvailability = ({firebaseId}) => {
 
 
     return (
-        <>
-        <Form onSubmit={handleSubmit}>
-            <DateTimePickerComponent id="datetimepicker" placeholder="Choose start date and time" min={minDate} max={maxDate}
-                value={startDate}
-                format="dd-MM-yy HH:00"
-                step={60}
-                onChange={handleStartDateChange}
-                >
-            </DateTimePickerComponent>
-            <DateTimePickerComponent id="datetimepicker" placeholder="Choose end date and time" min={minDate} max={maxDate}
-                value={endDate}
-                format="dd-MM-yy HH:00"
-                step={60}
-                onChange={handleEndDateChange}
-                >
-            </DateTimePickerComponent>
+        <div className = "container-fluid">
+            <div className = "row justify-content-center mt-3">
+                <div className = "container">
+                    <div className = "row justify-content-center">
+                        <>
+                        <Form onSubmit={handleSubmit} className = "col-md-4 mt-3 pt-3 pb-3">
+                            <DateTimePickerComponent id="datetimepicker" placeholder="Choose start date and time" min={minDate} max={maxDate}
+                                value={startDate}
+                                format="dd-MM-yy HH:00"
+                                step={60}
+                                onChange={handleStartDateChange}
+                                >
+                            </DateTimePickerComponent>
+                            <DateTimePickerComponent id="datetimepicker" placeholder="Choose end date and time" min={minDate} max={maxDate}
+                                value={endDate}
+                                format="dd-MM-yy HH:00"
+                                step={60}
+                                onChange={handleEndDateChange}
+                                >
+                            </DateTimePickerComponent>
 
-
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>        
-        </Form>
-        
-        <div className="messages">
-            {errorMessage && 
-                <Alert variant="info" style={{ width: '50%', margin: "20px auto", display: 'flex', justifyContent: 'center' }}>
-                    {errorMessage}
-                </Alert>
-            }
-            {successMessage && 
-                <Alert variant="info" style={{ width: '50%', margin: "20px auto", display: 'flex', justifyContent: 'center' }}>
-                    {successMessage}
-                </Alert>
-            }
+                            <div className = "d-grid">
+                                <Button variant="primary" type="submit" className="d-grid" justifyContent="center" >
+                                    Submit
+                                </Button> 
+                            </div>       
+                        </Form>
+                        </>
+                    
+                        <div className = "d-grid">
+                            {errorMessage && 
+                                <Alert variant="info" className="w-100">
+                                    {errorMessage}
+                                </Alert>
+                            }
+                            {successMessage && 
+                                <Alert variant="info" className="w-100">
+                                    {successMessage}
+                                </Alert>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        </>
 
     )
 }
