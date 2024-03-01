@@ -23,6 +23,7 @@ jobs:
         pip install flask
         pip install flask pymongo
         pip install flask-cors
+        pip install firebase-admin
         pip install pytest
         pip install python-dotenv
 
