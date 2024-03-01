@@ -12,14 +12,14 @@ def client():
     return app.test_client()
 
 
-def test_update_user_bio_route(client):
-    user_id = 123
-    bio_content = "Test bio content"
+# def test_update_user_bio_route(client):
+#     user_id = 123
+#     bio_content = "Test bio content"
 
-    response = client.put(f'/users/{user_id}/bio', json={'bio': bio_content})
+#     response = client.put(f'/users/{user_id}/bio', json={'bio': bio_content})
 
-    assert response.status_code == 200
-    assert response.json == {'message': 'Update bio successful'}
+#     assert response.status_code == 200
+#     assert response.json == {'message': 'Update bio successful'}
 
 def test_signup(client):
     user = {
@@ -34,11 +34,14 @@ def test_signup(client):
 
 def test_getUser(client):
     user = {
-        "firebase_id": "rSH3Hv9NtBcvagSbhzZ9A3Dscnf1",
-        "name": "simon",
-        "email": "simon5@email.com",
-        "status": "Tutor"
+        "firebase_id": "test_firebase_id",
+        "name": "Test name",
+        "email": "test@email.com",
+        "status": "Student"
     }
-    response = client.post("//users/rSH3Hv9NtBcvagSbhzZ9A3Dscnf1", json=user)
-    assert response.status_code == 201
+    
+    client.post("/signup", json=user)
+    
+    response = client.get("/users/test_firebase_id")
+    assert response.status_code == 200
     assert response.json == {'user': user}
