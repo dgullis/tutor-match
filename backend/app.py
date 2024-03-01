@@ -7,7 +7,7 @@ import json
 from firebase_admin import credentials, initialize_app
 from modules.users import signup, update_bio, get_user_by_id, add_availability_for_tutor, UserNotFoundError
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, TutorAddingError, SubjectGradeNotFoundError
-
+from lib.firebase_token_auth import verify_token
 
 
 app = Flask(__name__)
@@ -40,6 +40,8 @@ def signup_route():
 @app.route('/users/<string:userId>', methods=['GET'])
 def get_user(userId):
     try:
+        verify_token()
+        print("decoded token = " + decoded_token)
         user = get_user_by_id(userId)
         print(user)
         return jsonify({"user": user}), 200
@@ -48,6 +50,7 @@ def get_user(userId):
         return jsonify({'error': str(ve)}), 400
     
     except Exception as e:
+        print(e)
         return jsonify({'error': f'Error finding user: {str(e)}'}), 500
     
 
