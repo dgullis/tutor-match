@@ -4,6 +4,8 @@ from bson import ObjectId
 
 class UserNotFoundError(Exception):
     pass
+class AddAvailabilityError(Exception):
+    pass
 
 #create functions in here to add users / update users / delete users etc
 users_collection = get_users_collection()
@@ -30,11 +32,11 @@ def get_user_by_id(userId):
     users_collection = get_users_collection()
 
     try:
-        result = users_collection.find_one({"_id": ObjectId(userId)})
+        result = users_collection.find_one({"firebase_id": userId}, {"_id": 0})
 
         if result:
             # If user is found create a new dictionary with _id as a string not ObjectId
-            return {**result, '_id': str(ObjectId(userId))}
+            return {**result}
         else:
             raise UserNotFoundError('User not found')
 
@@ -44,6 +46,7 @@ def get_user_by_id(userId):
 
 def signup():
     data = request.json
+    firebase_id = data.get("firebase_id")
     name = data.get("name")
     email = data.get("email")
     status = data.get("status")
@@ -54,10 +57,32 @@ def signup():
     users_collection = get_users_collection()
 
     new_user = {
+        "firebase_id": firebase_id,
         "name": name,
         "email": email,
         "status": status
     }
-    users_collection.insert_one(new_user)
 
-    return jsonify({"message": "Account created successfully"}), 201
+    result = users_collection.insert_one(new_user)
+
+    if result.inserted_id:
+        user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
+        return jsonify({"user": user, "message": "Account created successfully"}), 201
+
+def add_availability_for_tutor(userId, availability):
+
+    filter_criteria = {"_id": ObjectId(userId)}  
+    for availability in availability:
+        
+        try:
+            update_data = {"$addToSet": {
+                "availability": {
+                    "start_time": availability["start_time"],
+                    "end_time": availability["end_time"],
+                    "available": True  
+                } 
+                }
+            }
+            users_collection.update_one(filter_criteria, update_data)
+        except Exception as e:
+            raise ValueError(f'Error adding availability: {str(e)}')

@@ -7,24 +7,20 @@ import TutorMatchNavbar from "./components/TutorMatchNavbar";
 import ProtectedRoute from "./components/protectedRoutes";
 import SearchPage from "./pages/SearchPage";
 
-
-
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/" element={<LandingPage navigate={useNavigate()} />} />
-    </Routes>
-  );
+    <>
+      <TutorMatchNavbar />
+      <Routes>
+        <Route path = "/login" element= { <Login /> }></Route>
+        <Route path = "/signup" element = { <Signup /> } ></Route>
+        <Route path = "/profile" element = { <ProtectedRoute> <Profile /> </ProtectedRoute>  }></Route>
+        <Route path = "/search" element = {<ProtectedRoute> <SearchPage /> </ProtectedRoute>}></Route>
+        <Route path = "/profile/:id" element = {<ProtectedRoute> <Profile /> </ProtectedRoute>  }></Route>
+        <Route path='/' element={<LandingPage  navigate={useNavigate()} />}/>
+      </Routes>
+    </>
+);
 }
 
 export default App;

@@ -3,9 +3,11 @@ import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../services/users";
+import { useAuth } from "../components/authContext";
 
 const Signup = () => {
     const navigate = useNavigate();
+    const { storeUserDataMongoDB } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ const Signup = () => {
     const [status, setStatus] = useState("");
     const [notice, setNotice] = useState("");   
     const [passwordPrompt, setPasswordPrompt] = useState([]);
+    var firebase_id = ""
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value
@@ -41,13 +44,18 @@ const Signup = () => {
                 if (password === confirmPassword) {
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
-                        await signup(name, email, status)
-                        navigate("/profile");
+                        firebase_id = auth.currentUser.uid
+                        const result = await signup(firebase_id, name, email, status)
+                        storeUserDataMongoDB(result.user)
+                        
+                        
+                        navigate(`/profile/${firebase_id}`);
                     } catch(error){
                         if (error.code === "auth/email-already-in-use") {
                             setNotice("Email is already in use. Please try logging in instead."); 
                         } else {
-                        setNotice("Sorry, something went wrong. Please try again.");
+                            console.log(error)
+                            setNotice("Sorry, something went wrong. Please try again.");
                     }     
                 }
                 } else {
