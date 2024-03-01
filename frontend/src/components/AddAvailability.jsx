@@ -5,6 +5,7 @@ import { addAvailability } from '../services/users';
 import { Alert } from 'react-bootstrap';
 import '../App.css';
 
+
 export const AddAvailability = ({firebaseId}) => {
     const todayDate = new Date()
     todayDate.setHours(0, 0, 0, 0)
@@ -85,22 +86,27 @@ export const AddAvailability = ({firebaseId}) => {
                                 <Button variant="primary" type="submit" className="d-grid" justifyContent="center" >
                                     Submit
                                 </Button> 
-                            </div>       
-                        </Form>
-                        </>
-                    
-                        <div className = "d-grid">
+                            </div>  
+
+                            <div className= "row-md-4 mt-3 pt-3 pb-3">
                             {errorMessage && 
-                                <Alert variant="info" className="w-100">
+                                <Alert variant="info" >
                                     {errorMessage}
                                 </Alert>
                             }
                             {successMessage && 
-                                <Alert variant="info" className="w-100">
+                                <Alert variant="info" >
                                     {successMessage}
                                 </Alert>
                             }
-                        </div>
+                            </div>     
+                        </Form>
+
+                        
+                        </>
+                    
+                        
+                        
                     </div>
                 </div>
             </div>
