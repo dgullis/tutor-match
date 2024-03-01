@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { auth } from "../firebase";
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
-import { addSubject } from "../services/subjects";
+import { addSubject, searchSubjects } from "../services/subjects";
 
 
 const Profile = () => {
@@ -14,7 +14,17 @@ const Profile = () => {
     const [userDetails, setUserDetails] = useState({})
     const [subject, setSubject] = useState("")
     const [grade, setGrade] = useState("")
+    const [gcse, setGcse] = useState([])
+    const [alevel, setAlevel] = useState([])
 
+    const gcseQueryParams = {
+        "firebaseId": firebase_id,
+        "grade": "gcse"
+    }
+    const alevelQueryParams = {
+        "firebaseId": firebase_id,
+        "grade": "alevel"
+    }
 
     useEffect(() => {
         getUser(firebase_id)
@@ -25,6 +35,23 @@ const Profile = () => {
                 console.log(err);
                 navigate("/login");
             });
+        searchSubjects(gcseQueryParams)
+            .then((data) => {
+                console.log(data)
+                console.log(data.result[0].name)
+                setGcse(data.result)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        searchSubjects(alevelQueryParams)
+            .then((data) => {
+                console.log(data)
+                setAlevel(data.result)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     },[]);
 
     const addSubjectAndLevel = async (e) => {
@@ -43,7 +70,16 @@ const Profile = () => {
         <h2>Tutor Details</h2>
         <p>Name: {userDetails.name}<br/>
         Email: {userDetails.email}<br/>
-        Subjects: Maths - GCSE, Science - A Level</p>
+        GCSEs: {gcse.map((subject) => (
+            <div>
+                {subject.name}
+            </div>
+        ))}
+        A Levels: {alevel.map((subject) => (
+            <div>
+                {subject.name}
+            </div>
+        ))}</p>
         </div>
         <div>
             <div className = "container-fluid">

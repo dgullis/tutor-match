@@ -38,6 +38,7 @@ def search_by_subject_and_grade(subject, grade):
     
     try:
         result = subjects_collection.find_one({"name": subject}, {grade: 1})
+        print(result)
 
         if result:
             #returns value of grade key i.e. array of tutorIds
@@ -66,11 +67,11 @@ def returnSubjects(firebase_id, grade):
     subjects_collection = get_subjects_collection()
     
     try:
-        result = subjects_collection.find({grade: firebase_id},{"name":1, "_id":0})
+        result = subjects_collection.find({grade: firebase_id},{"name":1,"_id":0})
+        print(result)
 
         if result:
-            subjects = result.get(grade, [])
-            return subjects
+            return list(result)
     
     
     except Exception as e:
