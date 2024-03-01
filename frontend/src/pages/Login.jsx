@@ -2,12 +2,15 @@ import { useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { getUser } from "../services/users";
+import { useAuth } from "../components/authContext";
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [notice, setNotice] = useState("");
+    const { storeUserDataMongoDB } = useAuth();
     var firebase_id = ""
 
     const loginWithUsernameAndPassword = async (e) => {
@@ -16,6 +19,9 @@ const Login = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             firebase_id = auth.currentUser.uid
+            const result = await getUser(firebase_id)
+            storeUserDataMongoDB(result.user)
+        
             navigate(`/profile/${firebase_id}`);
         } catch {
             setNotice("You entered a wrong username or password.");

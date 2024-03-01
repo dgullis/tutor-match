@@ -19,7 +19,8 @@ export const signup = async (firebase_id, name, email, status) => {
     let response = await fetch(`${BACKEND_URL}/signup`, requestOptions);
 
     if (response.status === 201) {
-        return;
+        const data = await response.json();
+        return data;
     } else {
         throw new Error (await response.json().then((data) => data.message));
     }
@@ -30,13 +31,17 @@ export const getUser = async (firebase_id) => {
         method: "GET",
     }
 
+    try {
     let response = await fetch(`${BACKEND_URL}/users/${firebase_id}`, requestOptions);
     var data = await response.json()
     
-
     if (response.status === 200) {
         return data;
     } else {
-        throw new Error (await response.json().then((data) => data.message));
+        throw new Error('Error fetching user')
+    }
+    } catch (error) {
+        console.error(error)
+        throw error;
     }
 }
