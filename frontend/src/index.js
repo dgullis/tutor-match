@@ -6,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AuthProvider } from './components/authContext';
+import { registerLicense } from '@syncfusion/ej2-base';
+registerLicense(process.env.REACT_APP_SYNC_FUSION_KEY)
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
