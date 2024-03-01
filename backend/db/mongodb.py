@@ -3,15 +3,19 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-db_name= os.getenv('DB_NAME')
+mongo_uri = os.getenv('MONGO_URI')
+mongo_uri = os.getenv('MONGO_URI')
+mongo_client = MongoClient(mongo_uri)
+db_name = os.getenv('DB_NAME')
+db = mongo_client.get_database(db_name)
+mongo_client = MongoClient(mongo_uri)
+db_name = os.getenv('DB_NAME')
 
-mongoClient = MongoClient('mongodb://127.0.0.1:27017')
-db = mongoClient.get_database(db_name)
+db = mongo_client.get_database(db_name)
 
 users_collection = db.get_collection('users')
 subjects_collection = db.get_collection('subjects')
 bookings_collection = db.get_collection('bookings')
-
 
 def get_users_collection():
     return users_collection
@@ -21,3 +25,4 @@ def get_subjects_collection():
 
 def get_bookings_collection():
     return bookings_collection
+    
