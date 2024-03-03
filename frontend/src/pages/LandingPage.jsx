@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 // AboutUsModal component/ button
 const AboutUsModal = () => {
     const [show, setShow] = React.useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 

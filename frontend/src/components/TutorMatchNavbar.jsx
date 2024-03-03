@@ -2,19 +2,23 @@ import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { auth } from "../firebase";
+import { useState } from 'react';
 
 
 
 const TutorMatchNavbar = () => {
     const navigate = useNavigate();
-    const { user, mongoUser, storeUserDataMongoDB } = useAuth()
+    const { user, mongoUser, signOutAuth } = useAuth()
+    const [signOutError, setSignOutError] = useState("")
 
     const handleLogout = async (e) => {
         e.preventDefault();
-
-        await auth.signOut();
-        storeUserDataMongoDB(null)
-        navigate("/");
+        const signOutResult = signOutAuth()
+        if (signOutResult.success){
+            navigate("/")
+        } else {
+            setSignOutError(signOutResult.message)
+        }
     }
 
 
@@ -36,7 +40,7 @@ const TutorMatchNavbar = () => {
                 {mongoUser && mongoUser.status === 'Student' && (
                 <Nav.Link as={Link} to="/search">Search Tutors</Nav.Link>
                 )}
-            <Nav.Link as={Link} to={`/profile/${user.uid}`}>Profile</Nav.Link>
+            <Nav.Link as={Link} to={`/profile/${user.firebase_id}`}>Profile</Nav.Link>
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </Nav>
         ) : (
