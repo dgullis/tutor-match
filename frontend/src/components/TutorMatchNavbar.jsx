@@ -1,5 +1,5 @@
 import { Nav, Navbar, Container } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { auth } from "../firebase";
 import { useState } from 'react';
@@ -22,7 +22,8 @@ const TutorMatchNavbar = () => {
             setSignOutError(signOutResult.message)
         }
     }
-
+    console.log("mongoUser")
+    console.log(mongoUser)
 
     return (
         <Navbar bg="primary" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px' }}>
