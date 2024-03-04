@@ -38,20 +38,20 @@ def get_user(userId):
         return jsonify({'error': f'Error finding user: {str(e)}'}), 500
 
 
-@app.route('/users/<string:userId>/bio', methods=['PUT'])
-def update_user_bio(userId):
-    data = request.json
-    bioContent = data.get('bio')
+# @app.route('/users/<string:userId>/bio', methods=['PUT'])
+# def update_user_bio(userId):
+#     data = request.json
+#     bioContent = data.get('bio')
 
-    try:
-        update_bio(userId, bioContent)
-        return jsonify({'message': 'Update bio successful'}), 200
+#     try:
+#         update_bio(userId, bioContent)
+#         return jsonify({'message': 'Update bio successful'}), 200
     
-    except UserNotFoundError as usnfe:
-        return jsonify({'error': str(usnfe)}), 404
+#     except UserNotFoundError as usnfe:
+#         return jsonify({'error': str(usnfe)}), 404
     
-    except Exception as e:
-        return jsonify({'error': f'Error updating bio: {str(e)}'}), 500
+#     except Exception as e:
+#         return jsonify({'error': f'Error updating bio: {str(e)}'}), 500
 
     
 @app.route('/subjects/<string:subject>/add', methods=['POST'])
