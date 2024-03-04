@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@syncfusion/ej2-base": "^24.2.7",
-    "@syncfusion/ej2-data": "^24.2.3",
     "@syncfusion/ej2-react-calendars": "^24.2.8",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
