@@ -44,7 +44,7 @@ export const acceptBooking = async (bookingId) => {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookings/bookingId`, requestOptions)
+        const response = await fetch(`${BACKEND_URL}/bookings/${bookingId}`, requestOptions)
         const data = await response.json();
 
         if (response.ok) {
@@ -73,7 +73,7 @@ export const denyBooking = async (bookingId) => {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookings/bookingId`, requestOptions)
+        const response = await fetch(`${BACKEND_URL}/bookings/${bookingId}`, requestOptions)
         const data = await response.json();
 
         if (response.ok) {

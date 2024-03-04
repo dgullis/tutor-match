@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, Button } from 'react-bootstrap';
+import { requestBooking } from "../services/bookings";
 
 
 export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const tutorAvailability = tutorDetails.availability
-    const availableDates = []
+    // const tutorFirebaseId = tutorDetails.firebase_id
+    // const loggedInUserFirebaseId = loggedInUser.firebase_id
 
-    
+
         const isAvailableDate = (date) => {
             // Return true if the date is in the availableDates array, otherwise false
             return tutorAvailability.some(
@@ -28,13 +30,13 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
 
         const handleSubmit = async (e) => {
             e.preventDefault()
-            console.log("this is being submiteed", selectedDate)
             // try {
-            //     requestBooking()
+            //     await requestBooking(tutorFirebaseId, loggedInUserFirebaseId, selectedDate)
             //     //tutorId, studentId, start_time
+            // } catch(error){
+            //     console.log(error)
             // }
         }
-
 
 
     

@@ -74,13 +74,16 @@ const Profile = () => {
                 {subject.name}
             </div>
         ))}</p>
-        Requested Bookings: {userDetails.bookings.map((booking) => (
-            (booking.status === "requested") && 
-                <RequestedBooking 
-                    key={booking._id}
-                    booking={booking}
-                />
-            ))}
+        {userDetails.bookings && <div>
+            Requested Bookings: {userDetails.bookings.map((booking) => (
+                (booking.status === "requested") && 
+                    <RequestedBooking 
+                        key={booking._id}
+                        booking={booking}
+                    />
+                ))}
+            </div>
+        }
         </div>
 
         {user.uid === firebase_id && <div className = "addSubject">

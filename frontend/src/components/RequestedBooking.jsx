@@ -1,4 +1,5 @@
 import { Card, Button } from 'react-bootstrap';
+import { acceptBooking, denyBooking } from '../services/bookings';
 
 
 export const RequestedBooking = ( { booking } ) => {
@@ -9,17 +10,22 @@ export const RequestedBooking = ( { booking } ) => {
     const formattedDate = bookingTime.toLocaleDateString('en-UK', options);
 
 
-    const onAccept = (bookingId) => {
-        try{
+    const onAccept = async (bookingId) => {
+        try {
+            console.log(bookingId)
             await acceptBooking(bookingId)
-        } catch {
-            
+        } catch(error) {
+            console.log(error)
         }
     }
     
-    const onDeny = (bookingId) => {
+    const onDeny = async (bookingId) => {
         try {
+            console.log(bookingId)
+
             await denyBooking(bookingId)
+        } catch(error) {
+            console.log(error)
         }
     }
 
