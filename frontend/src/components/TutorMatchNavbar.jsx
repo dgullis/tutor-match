@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { auth } from "../firebase";
 import { useState } from 'react';
+import firebase from '../firebase';
+
 
 
 
@@ -23,18 +25,20 @@ const TutorMatchNavbar = () => {
 
 
     return (
-    <Navbar bg="primary" data-bs-theme="dark" style={{ marginBottom: '20px' }}>
+        <Navbar bg="primary" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px' }}>
         <Container>
         <Navbar.Brand>
             <img
-                src="/images/logo.png"
-                width="35"
+                src="/images/logo4.png"
+                width="200"
                 height="35"
                 className="d-inline-block align-top"
                 alt="Logo"
             />
-            {' TutorMatch'}
+            {/* {' TutorMatch'} */}
         </Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
         {user ? (
             <Nav className="ms-auto">
                 {mongoUser && mongoUser.status === 'Student' && (
@@ -49,9 +53,11 @@ const TutorMatchNavbar = () => {
             <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
             </Nav>
         )}
+        </Navbar.Collapse>
         </Container>
     </Navbar>
     );
 };
+
 
 export default TutorMatchNavbar;

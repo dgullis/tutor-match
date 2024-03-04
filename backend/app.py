@@ -50,7 +50,7 @@ def add_tutor_to_subject_grade(subject):
         return jsonify({'message': 'Tutor added sucessfully'}), 201
     # request successful but nothing to change as tutor already exists for subject/grade so send back 204
     except TutorAddingError as tae:
-        return '', 204
+        return "", 204
     # request not successfull subject or grade not found
     except SubjectGradeNotFoundError as sgnfe:
         return jsonify({'message': str(sgnfe)}), 404

@@ -52,7 +52,7 @@ const LandingPage = () => {
                     <Link to="/signup" className="btn btn-primary mb-3 mb-md-0">Create a free account</Link>
                 </div>
                 <div className="col-md-6">
-                    <img src="/images/logo.png" alt="Logo" className="img-fluid" style={{ maxWidth: '70%' }}/>
+                    <img src="/images/logo4.png" alt="Logo" className="img-fluid" style={{ maxWidth: '70%' }}/>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@ const LandingPage = () => {
                     <span className="star" style={{ fontSize: '24px' }}>&#9733;</span>
                     <span className="star" style={{ fontSize: '24px' }}>&#9733;</span>
                 </div>
-                <p>"TutorMatch helped me find a tutor that I can vibe with!"</p>
+                <p>"TutorMatch helped me find a tutor that I can connect with!"</p>
             </div>
         </div>
         <div className="col-md-4">

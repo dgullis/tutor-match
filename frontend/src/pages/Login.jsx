@@ -28,17 +28,9 @@ const Login = () => {
         const loginResult = logInAuth(email, password) 
 
         if (loginResult.success === false) {
-            setNotice("You entered a wrong username or password.")
+            setNotice("You entered a wrong username or password.")    
         }
     }
-
-    // if (isLoading) {
-    //     return (
-    //         <Spinner animation="border" role="status">
-    //             <span className="visually-hidden">Loading...</span>
-    //         </Spinner>
-    //     )
-    // }
 
     return (
 
