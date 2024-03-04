@@ -39,6 +39,12 @@ export const addSubject = async (subject, grade, firebase_id) => {
     }
 
     let response = await fetch(`${BACKEND_URL}/subjects/${subject}/add`, requestOptions);
+    if(response.status === 204) {
+        return {
+            "error": "You have already added this subject/grade."
+        }
+    }
+    
     const data = await response.json();
 
     if (response.status === 201) {

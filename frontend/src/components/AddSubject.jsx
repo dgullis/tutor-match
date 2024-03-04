@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addSubject } from "../services/subjects";
 import { Alert } from 'react-bootstrap';
+
 //
 
-export const AddSubject = ({firebaseId}) => {
+export const AddSubject = ({firebaseId, onSubjectAdded}) => {
     const [subject, setSubject] = useState("")
     const [grade, setGrade] = useState("")
     const navigate = useNavigate();
@@ -19,21 +20,27 @@ export const AddSubject = ({firebaseId}) => {
     const addSubjectAndLevel = async (e) => {
         e.preventDefault();
 
-        try {
-            const addSubjectResult = await addSubject(subject, grade, firebaseId);
-            console.log("add subject result: ", addSubjectResult.error)
-            if (addSubjectResult.error) {
+        if (!subject || !grade) {
+            setErrorMessage("Please select subject/grade.")
+        } else {
+            try {
+                const addSubjectResult = await addSubject(subject, grade, firebaseId);
+                console.log("add subject result: ", addSubjectResult.error)
+                if (addSubjectResult.error) {
+                    setSuccessMessage("")
+                    setErrorMessage(addSubjectResult.error)
+                } else {
+                    setErrorMessage("")
+                    setSuccessMessage(addSubjectResult.message) 
+                    onSubjectAdded()
+                }
+                
+            } catch(error) {
                 setSuccessMessage("")
-                setErrorMessage(addSubjectResult.error)
-            } else {
-                setErrorMessage("")
-                setSuccessMessage(addSubjectResult.message) 
+                setErrorMessage(error.message) 
             }
-            
-        } catch(error) {
-            setSuccessMessage("")
-            setErrorMessage(error) 
-        }}
+        }
+    }
 
     return(
             <div className = "container-fluid">
