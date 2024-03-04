@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             const firebase_id = auth.currentUser.uid
-            const result = await getUser(firebase_id)
+            const result = await getUser(firebase_id, idToken)
             setMongoUser(result.user)
             setIsLoading(false)
             return { success: true };  
