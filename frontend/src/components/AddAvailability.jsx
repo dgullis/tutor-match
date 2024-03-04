@@ -6,7 +6,7 @@ import { Alert } from 'react-bootstrap';
 import '../App.css';
 
 
-export const AddAvailability = ({firebaseId}) => {
+export const AddAvailability = ({firebaseId, idToken}) => {
     const todayDate = new Date()
     todayDate.setHours(0, 0, 0, 0)
 
@@ -54,7 +54,7 @@ export const AddAvailability = ({firebaseId}) => {
         } else {
             setAvailability([startDate, endDate])
             try {
-                await addAvailability(firebaseId, startDate, endDate)
+                await addAvailability(firebaseId, idToken, startDate, endDate)
                 setErrorMessage("")
                 setSuccessMessage("Availability added")
             } catch (error) {

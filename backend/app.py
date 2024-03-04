@@ -7,7 +7,7 @@ import json
 from firebase_admin import credentials, initialize_app
 from modules.users import signup, update_bio, get_user_by_id, add_availability_for_tutor, UserNotFoundError
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
-
+from lib.firebase_token_auth import verify_token
 
 
 app = Flask(__name__)
@@ -25,6 +25,7 @@ def signup_route():
 def get_tutor_subjects():
     #as this is a GET request subject and grade should be in a query string 
     #e.g. GET /tutors?subject=Maths&grade=alevel
+    verify_token()
     firebaseId = request.args.get('firebaseId')
     grade = request.args.get('grade')
 
@@ -40,6 +41,7 @@ def get_tutor_subjects():
 
 @app.route('/subjects/<string:subject>/add', methods=['POST'])
 def add_tutor_to_subject_grade(subject):
+    verify_token()
     data = request.json
     firebase_id = data.get('firebase_id')
     grade = data.get('grade')
@@ -62,6 +64,7 @@ def add_tutor_to_subject_grade(subject):
 def search_tutors():
     #as this is a GET request subject and grade should be in a query string 
     #e.g. GET /tutors?subject=Maths&grade=alevel
+    verify_token()
     subject = request.args.get('subject')
     grade = request.args.get('grade')
     print("backend subject", subject)
@@ -79,6 +82,7 @@ def search_tutors():
     
 @app.route('/tutors/<string:userId>/availability', methods=['POST'])
 def add_availability(userId):
+    verify_token()
     data = request.json
     availability = data.get('availability')
 
@@ -105,9 +109,10 @@ def update_user_bio(userId):
 
 @app.route('/users/<string:userId>', methods=['GET'])
 def get_user(userId):
+    verify_token()
+    
     try:
         user = get_user_by_id(userId)
-        print(user)
         return jsonify({"user": user}), 200
     
     except UserNotFoundError as ve:
