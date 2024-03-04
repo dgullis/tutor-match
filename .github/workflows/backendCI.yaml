@@ -16,7 +16,7 @@ jobs:
       id: create-json
       uses: jsdaniell/create-json@v1.2.3
       with:
-          name: "backend/firebaseServiceAccountKey.json"
+          name: "firebaseServiceAccountKey.json"
           json: ${{ secrets.FIREBASE_JSON }}    
 
     - name: Start MongoDB
