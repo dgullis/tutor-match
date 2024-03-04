@@ -7,6 +7,7 @@ import { getUser } from "../services/users";
 import { searchSubjects } from "../services/subjects";
 import { AddSubject } from "../components/AddSubject";
 import { AddAvailability } from "../components/AddAvailability";
+import { BookingRequest } from "../components/BookingRequest";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -86,6 +87,10 @@ const Profile = () => {
         <div className="add-availability">
             <AddAvailability firebaseId = {firebase_id}/>
         </div> 
+
+        <div className="booking-request">
+            <BookingRequest />
+        </div>
 
         </>
     )    

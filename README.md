@@ -10,6 +10,7 @@
 8. npm install flask
 9. npm install react-select
 10. npm install @syncfusion/ej2-react-calendars @syncfusion/ej2-base @syncfusion/ej2-data
+11. npm install react-datepicker
 
 
 
