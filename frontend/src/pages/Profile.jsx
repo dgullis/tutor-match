@@ -61,7 +61,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
-    },[refresh]);
+    },[refresh, firebase_id]);
 
     return(
         <>
@@ -73,6 +73,7 @@ const Profile = () => {
         <div className = "profile">
             <UserProfile user = {userDetails} />
         </div>
+        <br/>
         {userDetails.status === "Tutor" &&
         <ProfileSubjects gcse = {gcse} alevel = {alevel} />}
         </div>
@@ -84,7 +85,7 @@ const Profile = () => {
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
           <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} onSubjectAdded={() => 
-            setRefresh(!refresh)/>
+            setRefresh(!refresh)}/>
           </div>}
 
        {user.uid === firebase_id && userDetails.status === "Tutor" && 
