@@ -53,7 +53,7 @@ const LandingPage = () => {
                     <Link to="/signup" className="btn btn-primary mb-3 mb-md-0">Create a free account</Link>
                 </div>
                 <div className="col-md-6">
-                    <img src="/images/logo5.png" alt="Logo" className="img-fluid" style={{ maxWidth: '70%' }}/>
+                    <img src="/images/logo4.png" alt="Logo" className="img-fluid" style={{ maxWidth: '70%' }}/>
                 </div>
             </div>
 

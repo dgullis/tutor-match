@@ -19,11 +19,11 @@ const TutorMatchNavbar = () => {
 
 
     return (
-    <Navbar bg="primary" data-bs-theme="dark" style={{ marginBottom: '20px' }}>
+    <Navbar bg="primary" data-bs-theme="dark" style={{ marginBottom: '20px' }} >
         <Container>
         <Navbar.Brand>
             <img
-                src="/images/logo5.png"
+                src="/images/logo4.png"
                 width="200"
                 height="35"
                 className="d-inline-block align-top"
