@@ -1,13 +1,14 @@
 const BACKEND_URL = "http://localhost:5000";
 
 
-export const searchTutor = async (query) => {
+export const searchTutor = async (query, idToken) => {
     try {
         const queryString = new URLSearchParams(query).toString();
         const response = await fetch(`${BACKEND_URL}/tutors?${queryString}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
             }
         });
 
@@ -25,7 +26,8 @@ export const searchTutor = async (query) => {
 
 }
 
-export const addSubject = async (subject, grade, firebase_id) => {
+export const addSubject = async (subject, grade, firebase_id, idToken) => {
+    console.log(idToken)
     const payload = {
         grade: grade,
         firebase_id: firebase_id
@@ -34,6 +36,7 @@ export const addSubject = async (subject, grade, firebase_id) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`,
         },
         body: JSON.stringify(payload)
     }
@@ -58,13 +61,14 @@ export const addSubject = async (subject, grade, firebase_id) => {
 
 }
 
-export const searchSubjects = async (query) => {
+export const searchSubjects = async (query, idToken) => {
     try {
         const queryString = new URLSearchParams(query).toString();
         const response = await fetch(`${BACKEND_URL}/subjects?${queryString}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
             }
         });
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth } from "../firebase";
+
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
 import { searchSubjects } from "../services/subjects";
@@ -11,7 +11,7 @@ import ProfileSubjects from "../components/ProfileSubjects";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user } = useAuth()
+    const { user, idToken } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
@@ -36,7 +36,11 @@ const Profile = () => {
     const dateValue = new Date()
 
     useEffect(() => {
-        getUser(firebase_id)
+        console.log("line 20 profile.jsx")
+        console.log(user)
+        console.log(userDetails)
+        console.log(idToken)
+        getUser(firebase_id, idToken)
             .then((data) => {
                 setUserDetails(data.user)
             })
@@ -44,7 +48,7 @@ const Profile = () => {
                 console.log(err);
                 navigate("/login");
             });
-        searchSubjects(gcseQueryParams)
+        searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
                 //console.log(data.result[0].name)
@@ -53,7 +57,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
-        searchSubjects(alevelQueryParams)
+        searchSubjects(alevelQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
                 setAlevel(data.result)
@@ -61,7 +65,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
-    },[refresh]);
+    },[refresh, firebase_id]);
 
     return(
         <>
@@ -73,6 +77,7 @@ const Profile = () => {
         <div className = "profile">
             <UserProfile user = {userDetails} />
         </div>
+        <br/>
         {userDetails.status === "Tutor" &&
         <ProfileSubjects gcse = {gcse} alevel = {alevel} />}
         </div>
@@ -82,15 +87,17 @@ const Profile = () => {
 
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
-          <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} onSubjectAdded={() => 
-            setRefresh(!refresh)/>
+            <div className = "addSubject">
+            <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
+            setRefresh(!refresh)}/>
+
           </div>}
 
-       {user.uid === firebase_id && userDetails.status === "Tutor" && 
-          <div className="add-availability">
-              <AddAvailability firebaseId = {firebase_id}/>
-          </div> }
+
+        {user.uid === firebase_id && userDetails.status === "Tutor" && 
+            <div className="add-availability">
+                <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
+            </div> }
 
         </>
     )    

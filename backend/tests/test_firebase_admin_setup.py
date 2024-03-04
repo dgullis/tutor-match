@@ -1,6 +1,11 @@
 import pytest
 import firebase_admin
-from firebase_admin import credentials, auth, firestore
+from firebase_admin import credentials, auth
+from unittest.mock import patch, MagicMock
+from flask import Flask
+
+from lib.firebase_token_auth import verify_token
+
 
 # test on hold 
 #def test_firebase_admin_setup_expect_token_to_fail():
