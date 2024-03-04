@@ -1,17 +1,88 @@
 from db.mongodb import get_users_collection
+from flask import Flask, redirect, url_for, request, jsonify
+from bson import ObjectId
+
+class UserNotFoundError(Exception):
+    pass
+class AddAvailabilityError(Exception):
+    pass
 
 #create functions in here to add users / update users / delete users etc
+users_collection = get_users_collection()
 
 def update_bio(userId, bioContent):
     users_collection = get_users_collection()
+    
 
     try:
-        filter_criteria = {"_id": userId}  
+        filter_criteria = {"_id": ObjectId(userId)}  
         update_data = {"$set": {"bio": bioContent}} 
         result = users_collection.update_one(filter_criteria, update_data)
         
-        return result
+        if result.matched_count == 0:
+            raise UserNotFoundError('User not found')
+        else: 
+            return {"message": "Update bio successful"}
+        
+    except Exception as e:
+        raise ValueError(f'Error updating bio: {str(e)}')
+    
+
+def get_user_by_id(userId):
+    users_collection = get_users_collection()
+
+    try:
+        result = users_collection.find_one({"firebase_id": userId}, {"_id": 0})
+
+        if result:
+            # If user is found create a new dictionary with _id as a string not ObjectId
+            return {**result}
+        else:
+            raise UserNotFoundError('User not found')
 
     except Exception as e:
-        return e
+        raise ValueError(f'{str(e)}')
+    
 
+def signup():
+    data = request.json
+    firebase_id = data.get("firebase_id")
+    name = data.get("name")
+    email = data.get("email")
+    status = data.get("status")
+
+    if not all([name, email, status]):
+        return jsonify({"error": "Missing fields"}), 400
+    
+    users_collection = get_users_collection()
+
+    new_user = {
+        "firebase_id": firebase_id,
+        "name": name,
+        "email": email,
+        "status": status
+    }
+
+    result = users_collection.insert_one(new_user)
+
+    if result.inserted_id:
+        user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
+        return jsonify({"user": user, "message": "Account created successfully"}), 201
+
+def add_availability_for_tutor(userId, availability):
+
+    filter_criteria = {"firebase_id": userId}  
+    for availability in availability:
+        
+        try:
+            update_data = {"$addToSet": {
+                "availability": {
+                    "start_time": availability["start_time"],
+                    "end_time": availability["end_time"],
+                    "available": True  
+                } 
+                }
+            }
+            users_collection.update_one(filter_criteria, update_data)
+        except Exception as e:
+            raise ValueError(f'Error adding availability: {str(e)}')

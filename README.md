@@ -7,6 +7,11 @@
 5. npm install bootstrap
 6. npm install firebase
 7. npm install react-bootstrap
+8. npm install flask
+9. npm install react-select
+10. npm install @syncfusion/ej2-react-calendars @syncfusion/ej2-base @syncfusion/ej2-data
+
+
 
 
 # Backend: Install dependencies and set up virtual environment
@@ -17,7 +22,14 @@
 4. pipenv install flask pymongo
 5. pip install pytest
 6. pip install python-dotenv
+7. pip install firebase-admin
+8. pip install flask-cors
 
+
+While mongo is local only:
+brew tap mongodb/brew
+brew install mongodb-community@6.0
+brew services start mongodb-community@6.0
 
 Group flow Trello board:
 https://trello.com/b/Sea5ymWg/tutormatch
