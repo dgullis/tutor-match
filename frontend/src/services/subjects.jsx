@@ -39,11 +39,15 @@ export const addSubject = async (subject, grade, firebase_id) => {
     }
 
     let response = await fetch(`${BACKEND_URL}/subjects/${subject}/add`, requestOptions);
+    const data = await response.json();
 
     if (response.status === 201) {
-        return;
+        console.log("SEE HERE DATA", data)
+        return data;
     } else {
-        throw new Error (await response.json().then((data) => data.message))
+        console.log("SEE HERE DATA", data)
+        return data;
+        //throw new Error (await response.json().then((data) => data.message))
     }
 
 }

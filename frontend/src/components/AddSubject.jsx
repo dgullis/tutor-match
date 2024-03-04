@@ -1,22 +1,39 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addSubject } from "../services/subjects";
+import { Alert } from 'react-bootstrap';
+//
 
 export const AddSubject = ({firebaseId}) => {
     const [subject, setSubject] = useState("")
     const [grade, setGrade] = useState("")
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("")
+    const [successMessage, setSuccessMessage] = useState("")
 
+    const closeAlert = () => {
+        setErrorMessage("")
+        setSuccessMessage("")
+    }
 
     const addSubjectAndLevel = async (e) => {
         e.preventDefault();
 
         try {
-            await addSubject(subject, grade, firebaseId);
-            navigate(0)
-    } catch(error) {
-        console.log(error)
-    }}
+            const addSubjectResult = await addSubject(subject, grade, firebaseId);
+            console.log("add subject result: ", addSubjectResult.error)
+            if (addSubjectResult.error) {
+                setSuccessMessage("")
+                setErrorMessage(addSubjectResult.error)
+            } else {
+                setErrorMessage("")
+                setSuccessMessage(addSubjectResult.message) 
+            }
+            
+        } catch(error) {
+            setSuccessMessage("")
+            setErrorMessage(error) 
+        }}
 
     return(
             <div className = "container-fluid">
@@ -45,7 +62,19 @@ export const AddSubject = ({firebaseId}) => {
 
                             <div className = "d-grid">
                                 <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => addSubjectAndLevel(e)}>Add Subject</button>
-                            </div>                   
+                            </div>  
+                                <div className= "row-md-4 mt-3 pt-3 pb-3">
+                                {errorMessage &&
+                                    <Alert variant="info" dismissible onClose={closeAlert} >
+                                        {errorMessage}
+                                    </Alert>
+                                }
+                                {successMessage &&
+                                    <Alert variant="info" dismissible onClose={closeAlert} >
+                                        {successMessage}
+                                    </Alert>
+                                }
+                                </div>                 
                         </form>
                     </div>
                 </div>

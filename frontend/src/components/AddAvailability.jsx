@@ -22,6 +22,11 @@ export const AddAvailability = ({firebaseId}) => {
     const minDate = new Date();
     const maxDate = new Date("01/01/2025 01:00 AM");
 
+    const closeAlert = () => {
+        setErrorMessage("")
+        setSuccessMessage("")
+    }
+
     const handleStartDateChange = (args) => {
         const selectedDate = args.value;
         selectedDate.setMinutes(0);
@@ -90,23 +95,18 @@ export const AddAvailability = ({firebaseId}) => {
 
                             <div className= "row-md-4 mt-3 pt-3 pb-3">
                             {errorMessage && 
-                                <Alert variant="info" >
+                                <Alert variant="info" dismissible onClose={closeAlert} >
                                     {errorMessage}
                                 </Alert>
                             }
                             {successMessage && 
-                                <Alert variant="info" >
+                                <Alert variant="info" dismissible onClose={closeAlert} >
                                     {successMessage}
                                 </Alert>
                             }
                             </div>     
                         </Form>
-
-                        
                         </>
-                    
-                        
-                        
                     </div>
                 </div>
             </div>

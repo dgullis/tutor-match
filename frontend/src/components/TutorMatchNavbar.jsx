@@ -2,6 +2,7 @@ import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { auth } from "../firebase";
+import firebase from '../firebase';
 
 
 
