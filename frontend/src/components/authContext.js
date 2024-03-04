@@ -69,27 +69,33 @@ export const AuthProvider = ({ children }) => {
     }
 
     // sets up listener to observe changes in users authentication state
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (user)=> {
+    // refreshed state of user and mongoUSer
+   useEffect(() => {
+          const unsubscribe = auth.onAuthStateChanged(async (user)=> {
 
-            if(user){
-                user.getIdToken().then(function(idToken) {
-                    setIdToken(idToken)
-                    setUser(user)
-                    setIsFetching(false)
-                    console.log(user)
-                }).catch(error => {
-                    console.error("Error fetching data: ", error);
-                });
-                return;
-            }
+              if(user){
+                  setUser(user)
+                  try {
+                      const firebase_id = user.uid;
+                      const result = await getUser(firebase_id);
+                      setMongoUser(result.user);
+                  } catch (error) {
+                      console.log("error refreshing userdetails from mongoDB ", error)
+                  } 
+              } else {
+                  setUser(null)
+                  setMongoUser(null)
+                  setIsFetching(false)
+                  return
+              }
 
-            setUser(null)
-            setIsFetching(false)
-        })
-        // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
-        return () => unsubscribe()
-    }, []);
+              setIsFetching(false)
+
+
+          })
+          // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
+          return () => unsubscribe()
+      }, []);
 
     if (isFetching) {
         return (
@@ -99,7 +105,7 @@ export const AuthProvider = ({ children }) => {
         )
     }
 
-    // provide 'user' state as value to the context makign it acessible to our components pages )
+    // provide 'user' and 'mongoUser' state as value to the context making it acessible to our components pages )
     return (
         <AuthContext.Provider value={{ user, mongoUser, signUpAuth, logInAuth, signOutAuth, isLoading, idToken }}>
             {children}
