@@ -14,13 +14,17 @@ export const requestBooking = async (tutorId, studentId, start_time) => {
         },
         body: JSON.stringify(payload)
     }
-
-    let response = await fetch(`${BACKEND_URL}/bookings`, requestOptions);
-
-    if (response) {
-        return;
-    } else {
-        throw new Error (await response.json().then((data) => data.message))
+    try {
+        const response = await fetch(`${BACKEND_URL}/bookings`, requestOptions);
+        const data = await response.json();
+        if (response.status === 201) {
+            return { "success": true, "message": data.message };
+        } else {
+            return { "success": false, "error": data.message };
+        }
+    } catch (error) {
+        console.error("An error occurred requesting a booking:", error);
+        return { "error": "An error occurred while processing the request." };
     }
 
 }

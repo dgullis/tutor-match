@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, Button } from 'react-bootstrap';
+import { requestBooking } from "../services/bookings";
 
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-export const BookingRequest = ({availability}) => {
+export const BookingRequest = ({tutorDetails, loggedInUser}) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const tutorAvailability = tutorDetails.availability
     const availableDates = []
 
     
         const isAvailableDate = (date) => {
             // Return true if the date is in the availableDates array, otherwise false
-            return availability.some(
+            return tutorAvailability.some(
                 (availableDate) =>
                 new Date(availableDate.start_time).toDateString() === date.toDateString()
             );
@@ -20,16 +20,20 @@ export const BookingRequest = ({availability}) => {
 
         const isAvailableTime = (time) => {
 
-            return availability.some(
+            return tutorAvailability.some(
                 (availableDate) =>
                     new Date(availableDate.start_time).getTime() === new Date(time).getTime()
 
             );
         }
 
-        const handleSubmit = (e) => {
+        const handleSubmit = async (e) => {
             e.preventDefault()
             console.log("this is being submiteed", selectedDate)
+            // try {
+            //     requestBooking()
+            //     //tutorId, studentId, start_time
+            // }
         }
 
 

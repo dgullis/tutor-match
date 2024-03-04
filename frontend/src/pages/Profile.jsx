@@ -11,7 +11,7 @@ import { BookingRequest } from "../components/BookingRequest";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user } = useAuth()
+    const { user, mongoUser } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
@@ -89,7 +89,9 @@ const Profile = () => {
         </div> 
 
         <div className="booking-request">
-            <BookingRequest availability = {userDetails.availability}/>
+            <BookingRequest 
+                tutorDetails = {userDetails}
+                loggedInUser = {mongoUser} />
         </div>
 
         </>
