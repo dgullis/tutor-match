@@ -71,7 +71,7 @@ def signup():
 
 def add_availability_for_tutor(userId, availability):
 
-    filter_criteria = {"_id": ObjectId(userId)}  
+    filter_criteria = {"firebase_id": userId}  
     for availability in availability:
         
         try:

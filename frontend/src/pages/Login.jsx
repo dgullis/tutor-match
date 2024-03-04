@@ -1,34 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { getUser } from "../services/users";
 import { useAuth } from "../components/authContext";
+import Spinner from 'react-bootstrap/Spinner';
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [notice, setNotice] = useState("");
-    const { storeUserDataMongoDB } = useAuth();
-    var firebase_id = ""
+    const { user, mongoUser, isLoading, logInAuth } = useAuth()
+
+    useEffect(() => {
+        if (mongoUser && !isLoading) {
+            if (mongoUser.status === "Student") {
+                navigate(`/search`);
+            } else if (mongoUser.firebase_id){
+                navigate(`/profile/${mongoUser.firebase_id}`);
+            }
+        }
+    }, [mongoUser, isLoading, navigate, user]);
 
     const loginWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            firebase_id = auth.currentUser.uid
-            const result = await getUser(firebase_id)
-            storeUserDataMongoDB(result.user)
-        
-            navigate(`/profile/${firebase_id}`);
-        } catch {
-            setNotice("You entered a wrong username or password.");
+        const loginResult = logInAuth(email, password) 
+
+        if (loginResult.success === false) {
+            setNotice("You entered a wrong username or password.")    
         }
     }
 
-    return(
+    return (
 
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
@@ -57,6 +61,13 @@ const Login = () => {
                             <div className = "mt-3 text-center">
                                 <span>Need to sign up for an account? <Link to = "/signup">Click here.</Link></span>
                             </div>
+                            {isLoading && 
+                                <div className="d-flex justify-content-center">
+                                <Spinner animation="border" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                                </div>
+                            }
                         </form>
                     </div>
                 </div>
