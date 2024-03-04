@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, Button } from 'react-bootstrap';
-import { requestBooking } from "../services/bookings";
 
 
-export const BookingRequest = ({tutorDetails, loggedInUser}) => {
+export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const tutorAvailability = tutorDetails.availability
     const availableDates = []

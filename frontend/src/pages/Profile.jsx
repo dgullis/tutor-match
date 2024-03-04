@@ -7,7 +7,8 @@ import { getUser } from "../services/users";
 import { searchSubjects } from "../services/subjects";
 import { AddSubject } from "../components/AddSubject";
 import { AddAvailability } from "../components/AddAvailability";
-import { BookingRequest } from "../components/BookingRequest";
+import { BookingRequestCalender } from "../components/BookingRequestCalender";
+import { RequestedBooking } from "../components/RequestedBooking";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -15,10 +16,9 @@ const Profile = () => {
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
-
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
-    console.log(user)
+
     const gcseQueryParams = {
         "firebaseId": firebase_id,
         "grade": "gcse"
@@ -27,10 +27,6 @@ const Profile = () => {
         "firebaseId": firebase_id,
         "grade": "alevel"
     }
-
-    const minDate = new Date();
-    const maxDate = new Date("01/01/2025 01:00 AM");
-    const dateValue = new Date()
 
 
 
@@ -78,6 +74,13 @@ const Profile = () => {
                 {subject.name}
             </div>
         ))}</p>
+        Requested Bookings: {userDetails.bookings.map((booking) => (
+            (booking.status === "requested") && 
+                <RequestedBooking 
+                    key={booking._id}
+                    booking={booking}
+                />
+            ))}
         </div>
 
         {user.uid === firebase_id && <div className = "addSubject">
@@ -89,7 +92,7 @@ const Profile = () => {
         </div> 
 
         <div className="booking-request">
-            <BookingRequest 
+            <BookingRequestCalender 
                 tutorDetails = {userDetails}
                 loggedInUser = {mongoUser} />
         </div>

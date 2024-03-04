@@ -28,3 +28,61 @@ export const requestBooking = async (tutorId, studentId, start_time) => {
     }
 
 }
+
+export const acceptBooking = async (bookingId) => {
+
+    const payload = {
+        status: "accepted",
+    };
+
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    };
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/bookings/bookingId`, requestOptions)
+        const data = await response.json();
+
+        if (response.ok) {
+            return { "success": true, "message": data.message };
+        } else {
+            return { "success": false, "error": data.message };
+        }
+    } catch (error) {
+        console.error("An error occurred accepting a booking:", error);
+        return { "error": "An error occurred while processing the request." };
+    }
+}
+
+export const denyBooking = async (bookingId) => {
+    
+    const payload = {
+        status: "accepted",
+    };
+
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    };
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/bookings/bookingId`, requestOptions)
+        const data = await response.json();
+
+        if (response.ok) {
+            return { "success": true, "message": data.message };
+        } else {
+            return { "success": false, "error": data.message };
+        }
+    } catch (error) {
+        console.error("An error occurred denying a booking:", error);
+        return { "error": "An error occurred while processing the request." };
+    }
+}

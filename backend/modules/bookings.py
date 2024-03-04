@@ -1,3 +1,4 @@
+from bson import ObjectId
 from db.mongodb import get_bookings_collection, get_users_collection
 
 bookings_collection = get_bookings_collection()
@@ -5,6 +6,19 @@ users_collection = get_users_collection()
 
 
 #define functions here for bookings
+
+def update_booking_request(bookingId, status):
+    filter_criteria = {"_id": ObjectId(bookingId) }
+    update_operation = {'$set': {'status': status}}
+
+    update_booking_request_result = bookings_collection.update_one(filter_criteria, update_operation)
+
+    if update_booking_request_result.modified_count > 0:
+        return  {"success": True, "message": "Booking status updated", "status_code": 201}
+    else:
+        return  {"success": False, "message": "Booking not found", "status_code": 404}
+
+
 
 def request_booking(tutorId, studentId, start_time):
 
@@ -21,15 +35,16 @@ def request_booking(tutorId, studentId, start_time):
     booking_result = bookings_collection.insert_one(new_booking)
 
     if booking_result.inserted_id:
-        filter_criteria = {"firebase_id": tutorId}
-        update_operation = {"$push": {"bookings": booking_result.inserted_id}}
-
-        add_booking_to_user = users_collection.update_one(filter_criteria, update_operation)
-        if add_booking_to_user.acknowledged:
-            return {"success": True, "message": "Booking successfully requested", "status_code": 201}
-        else:
-            return {"success": False, "message": "Unable to make booking, tutor not found", "status_code": 404}
-
+        return {"success": True, "message": "Booking successfully requested", "status_code": 201}
+        
+        # maybe add this in later
+        # filter_criteria = {"firebase_id": tutorId}
+        # update_operation = {"$push": {"bookings": booking_result.inserted_id}}
+        # add_booking_to_user = users_collection.update_one(filter_criteria, update_operation)
+        # if add_booking_to_user.acknowledged:
+        #     return {"success": True, "message": "Booking successfully requested", "status_code": 201}
+        # else:
+        #     return {"success": False, "message": "Unable to make booking, tutor not found", "status_code": 404}
     else:
         return {"success": False, "message": "Unable to make booking", "status_code": 500}
 
