@@ -12,6 +12,13 @@ jobs:
       with:
         python-version: "3.11"
 
+    - name: create-json
+      id: create-json
+      uses: jsdaniell/create-json@v1.2.3
+      with:
+          name: "backend/firebaseServiceAccountKey.json"
+          json: ${{ secrets.FIREBASE_JSON }}    
+
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.10.0
       with:
