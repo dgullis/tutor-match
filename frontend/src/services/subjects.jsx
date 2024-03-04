@@ -1,13 +1,14 @@
 const BACKEND_URL = "http://localhost:5000";
 
 
-export const searchTutor = async (query) => {
+export const searchTutor = async (query, idToken) => {
     try {
         const queryString = new URLSearchParams(query).toString();
         const response = await fetch(`${BACKEND_URL}/tutors?${queryString}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
             }
         });
 

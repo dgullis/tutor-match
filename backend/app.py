@@ -41,12 +41,12 @@ def get_tutor_subjects():
 
 @app.route('/subjects/<string:subject>/add', methods=['POST'])
 def add_tutor_to_subject_grade(subject):
+    verify_token()
     data = request.json
     firebase_id = data.get('firebase_id')
     grade = data.get('grade')
 
     try:
-        verify_token()
         add_tutor_to_a_subject_grade(firebase_id, subject, grade)
         # request successfull and tutor added to array for subject/grade
         return jsonify({'message': 'Tutor added sucessfully'}), 201
@@ -64,6 +64,7 @@ def add_tutor_to_subject_grade(subject):
 def search_tutors():
     #as this is a GET request subject and grade should be in a query string 
     #e.g. GET /tutors?subject=Maths&grade=alevel
+    verify_token()
     subject = request.args.get('subject')
     grade = request.args.get('grade')
     print("backend subject", subject)
@@ -81,11 +82,11 @@ def search_tutors():
     
 @app.route('/tutors/<string:userId>/availability', methods=['POST'])
 def add_availability(userId):
+    verify_token()
     data = request.json
     availability = data.get('availability')
 
     try:
-        verify_token()
         add_availability_for_tutor(userId, availability)
         return jsonify({"message": "availability added"}), 201
     except Exception as e:
@@ -108,10 +109,10 @@ def update_user_bio(userId):
 
 @app.route('/users/<string:userId>', methods=['GET'])
 def get_user(userId):
+    verify_token()
+    
     try:
-        verify_token()
         user = get_user_by_id(userId)
-        print(user)
         return jsonify({"user": user}), 200
     
     except UserNotFoundError as ve:
