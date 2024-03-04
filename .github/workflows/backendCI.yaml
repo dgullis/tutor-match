@@ -17,7 +17,12 @@ jobs:
       uses: jsdaniell/create-json@v1.2.3
       with:
           name: "firebaseServiceAccountKey.json"
-          json: ${{ secrets.FIREBASE_JSON }}    
+          json: ${{ secrets.FIREBASE_JSON }} 
+    
+    - uses: "finnp/create-file-action@master"
+      env:
+        FILE_NAME: ".env"
+        FILE_DATA: ${{ secrets.BACKEND_ENV }}      
 
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.10.0
