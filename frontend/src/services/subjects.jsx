@@ -26,6 +26,7 @@ export const searchTutor = async (query) => {
 }
 
 export const addSubject = async (subject, grade, firebase_id, idToken) => {
+    console.log(idToken)
     const payload = {
         grade: grade,
         firebase_id: firebase_id
@@ -59,13 +60,14 @@ export const addSubject = async (subject, grade, firebase_id, idToken) => {
 
 }
 
-export const searchSubjects = async (query) => {
+export const searchSubjects = async (query, idToken) => {
     try {
         const queryString = new URLSearchParams(query).toString();
         const response = await fetch(`${BACKEND_URL}/subjects?${queryString}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
             }
         });
 

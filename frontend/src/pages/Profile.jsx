@@ -48,7 +48,7 @@ const Profile = () => {
                 console.log(err);
                 navigate("/login");
             });
-        searchSubjects(gcseQueryParams)
+        searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
                 //console.log(data.result[0].name)
@@ -57,7 +57,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
-        searchSubjects(alevelQueryParams)
+        searchSubjects(alevelQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
                 setAlevel(data.result)
@@ -87,7 +87,7 @@ const Profile = () => {
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} onSubjectAdded={() => 
+            <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
             setRefresh(!refresh)}/>
             </div>}
 

@@ -25,6 +25,7 @@ def signup_route():
 def get_tutor_subjects():
     #as this is a GET request subject and grade should be in a query string 
     #e.g. GET /tutors?subject=Maths&grade=alevel
+    verify_token()
     firebaseId = request.args.get('firebaseId')
     grade = request.args.get('grade')
 
