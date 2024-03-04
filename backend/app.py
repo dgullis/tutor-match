@@ -85,6 +85,7 @@ def add_availability(userId):
     availability = data.get('availability')
 
     try:
+        verify_token()
         add_availability_for_tutor(userId, availability)
         return jsonify({"message": "availability added"}), 201
     except Exception as e:

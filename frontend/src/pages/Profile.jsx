@@ -93,7 +93,7 @@ const Profile = () => {
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className="add-availability">
-                <AddAvailability firebaseId = {firebase_id}/>
+                <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
             </div> }
 
         </>

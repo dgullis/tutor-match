@@ -49,7 +49,7 @@ export const getUser = async (firebase_id, idToken) => {
     }
 }
 
-export const addAvailability = async (firebase_id, startTime, endTime) => {
+export const addAvailability = async (firebase_id, idToken, startTime, endTime) => {
 
     const availabilityInHourSlots = [];
     let currentSlot = new Date(startTime);
@@ -74,6 +74,7 @@ export const addAvailability = async (firebase_id, startTime, endTime) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`
         },
         body: JSON.stringify(payload)
     }
