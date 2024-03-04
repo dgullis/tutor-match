@@ -82,15 +82,15 @@ const Profile = () => {
 
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
-          <div className = "addSubject">
+            <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} onSubjectAdded={() => 
-            setRefresh(!refresh)/>
-          </div>}
+            setRefresh(!refresh)}/>
+            </div>}
 
-       {user.uid === firebase_id && userDetails.status === "Tutor" && 
-          <div className="add-availability">
-              <AddAvailability firebaseId = {firebase_id}/>
-          </div> }
+        {user.uid === firebase_id && userDetails.status === "Tutor" && 
+            <div className="add-availability">
+                <AddAvailability firebaseId = {firebase_id}/>
+            </div> }
 
         </>
     )    
