@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     const [mongoUser, setMongoUser] = useState(null)
     const [isFetching, setIsFetching] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
+    const [idToken, setIdToken] = useState(null)
 
     const storeUserDataMongoDB = (data) => {
         setMongoUser(data)
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             const firebase_id = auth.currentUser.uid
-            const result = await getUser(firebase_id)
+            const result = await getUser(firebase_id, idToken)
             setMongoUser(result.user)
             setIsLoading(false)
             return { success: true };  
@@ -68,32 +69,33 @@ export const AuthProvider = ({ children }) => {
     }
 
     // sets up listener to observe changes in users authentication state
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (user)=> {
+    // refreshed state of user and mongoUSer
+   useEffect(() => {
+          const unsubscribe = auth.onAuthStateChanged(async (user)=> {
 
-            if(user){
-                setUser(user)
-                try {
-                    const firebase_id = user.uid;
-                    const result = await getUser(firebase_id);
-                    setMongoUser(result.user);
-                } catch (error) {
-                    console.log("error refreshing userdetails from mongoDB ", error)
-                } 
-            } else {
-                setUser(null)
-                setMongoUser(null)
-                setIsFetching(false)
-                return
-            }
-            
-            setIsFetching(false)
+              if(user){
+                  setUser(user)
+                  try {
+                      const firebase_id = user.uid;
+                      const result = await getUser(firebase_id);
+                      setMongoUser(result.user);
+                  } catch (error) {
+                      console.log("error refreshing userdetails from mongoDB ", error)
+                  } 
+              } else {
+                  setUser(null)
+                  setMongoUser(null)
+                  setIsFetching(false)
+                  return
+              }
 
-            
-        })
-        // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
-        return () => unsubscribe()
-    }, []);
+              setIsFetching(false)
+
+
+          })
+          // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
+          return () => unsubscribe()
+      }, []);
 
     if (isFetching) {
         return (
@@ -103,9 +105,9 @@ export const AuthProvider = ({ children }) => {
         )
     }
 
-    // provide 'user' state as value to the context makign it acessible to our components pages )
+    // provide 'user' and 'mongoUser' state as value to the context making it acessible to our components pages )
     return (
-        <AuthContext.Provider value={{ user, mongoUser, signUpAuth, logInAuth, signOutAuth, isLoading }}>
+        <AuthContext.Provider value={{ user, mongoUser, signUpAuth, logInAuth, signOutAuth, isLoading, idToken }}>
             {children}
         </AuthContext.Provider>
     )

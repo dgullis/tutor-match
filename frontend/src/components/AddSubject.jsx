@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addSubject } from "../services/subjects";
 import { Alert } from 'react-bootstrap';
+import { onIdTokenChanged } from "firebase/auth";
 
 //
 
-export const AddSubject = ({firebaseId, onSubjectAdded}) => {
+export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
     const [subject, setSubject] = useState("")
     const [grade, setGrade] = useState("")
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const AddSubject = ({firebaseId, onSubjectAdded}) => {
             setErrorMessage("Please select subject/grade.")
         } else {
             try {
-                const addSubjectResult = await addSubject(subject, grade, firebaseId);
+                const addSubjectResult = await addSubject(subject, grade, firebaseId, idToken);
                 console.log("add subject result: ", addSubjectResult.error)
                 if (addSubjectResult.error) {
                     setSuccessMessage("")

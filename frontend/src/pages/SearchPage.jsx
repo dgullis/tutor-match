@@ -11,7 +11,7 @@ const SearchPage = () => {
     const [selectedGrade, setSelectedGrade] = useState([]);
     const [searchResults, setSearchResults] = useState(null)
     const [searchResultMessage, setSearchResultMessage] = useState("")
-    const { user } = useAuth()
+    const { user, idToken } = useAuth()
     const navigate = useNavigate()
 
     const subjects = [
@@ -47,7 +47,7 @@ const SearchPage = () => {
             setSearchResultMessage("Please select a subject and grade before searching")
         } else {
             try {
-                var results = await searchTutor(queryParams)
+                var results = await searchTutor(queryParams, idToken)
                 if (results.result.length >= 1){
                     setSearchResults(results.result)
                     setSearchResultMessage("")
