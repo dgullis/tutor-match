@@ -19,7 +19,7 @@ const TutorMatchNavbar = () => {
 
 
     return (
-    <Navbar bg="primary" data-bs-theme="dark" style={{ marginBottom: '20px' }} >
+        <Navbar bg="primary" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px' }}>
         <Container>
         <Navbar.Brand>
             <img
@@ -31,6 +31,8 @@ const TutorMatchNavbar = () => {
             />
             {/* {' TutorMatch'} */}
         </Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
         {user ? (
             <Nav className="ms-auto">
                 {mongoUser && mongoUser.status === 'Student' && (
@@ -45,9 +47,11 @@ const TutorMatchNavbar = () => {
             <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
             </Nav>
         )}
+        </Navbar.Collapse>
         </Container>
     </Navbar>
     );
 };
+
 
 export default TutorMatchNavbar;
