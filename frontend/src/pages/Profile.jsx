@@ -15,6 +15,8 @@ const Profile = () => {
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
+    const [refresh, setRefresh] = useState(false)
+
 
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
@@ -32,8 +34,6 @@ const Profile = () => {
     const minDate = new Date();
     const maxDate = new Date("01/01/2025 01:00 AM");
     const dateValue = new Date()
-
-
 
     useEffect(() => {
         getUser(firebase_id)
@@ -61,7 +61,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
-    },[]);
+    },[refresh]);
 
     return(
         <>
@@ -80,13 +80,17 @@ const Profile = () => {
         </div>
 
 
-        {user.uid === firebase_id && userDetails.status === "Tutor" && <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} />
-        </div>}
 
-       {user.uid === firebase_id && userDetails.status === "Tutor" && <div className="add-availability">
-            <AddAvailability firebaseId = {firebase_id}/>
-        </div> }
+        {user.uid === firebase_id && userDetails.status === "Tutor" && 
+          <div className = "addSubject">
+            <AddSubject firebaseId={firebase_id} onSubjectAdded={() => 
+            setRefresh(!refresh)/>
+          </div>}
+
+       {user.uid === firebase_id && userDetails.status === "Tutor" && 
+          <div className="add-availability">
+              <AddAvailability firebaseId = {firebase_id}/>
+          </div> }
 
         </>
     )    

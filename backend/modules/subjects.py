@@ -22,14 +22,17 @@ def add_tutor_to_a_subject_grade(firebase_id, subject, grade):
         if result.matched_count == 1:
             if result.modified_count == 0: 
                 # User was already in the tutors list for the given grade
-                raise TutorAddingError('Tutor already added to subject and grade')
+                raise TutorAddingError('You have already added this subject and grade.')
             else:
-                return {'message': 'Tutor added successfully'}
+                return {'message': 'Subject and grade added successfully.'}
         else:
             raise SubjectGradeNotFoundError('Subject or grade not found')
-
+    except TutorAddingError as tae:
+        raise tae
+    except SubjectGradeNotFoundError as sgnfe:
+        raise sgnfe
     except Exception as e:
-        raise ValueError(f'Error adding tutor: {str(e)}')
+        raise ValueError(f'{str(e)}')
     
 
 def search_by_subject_and_grade(subject, grade):
