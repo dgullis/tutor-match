@@ -34,6 +34,7 @@ def test_signup(client):
     assert response.status_code == 201
     assert response.json == {'user': user, 'message': 'Account created successfully'}
 
+#See lines 4 & 5 for imports
 @patch('app.verify_token') #Patch points to where verify_token is used (not where it's defined)
 def test_getUser(mock_verify_token, client):
     # Mock simulates a successful verification
