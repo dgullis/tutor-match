@@ -25,7 +25,7 @@ export const searchTutor = async (query) => {
 
 }
 
-export const addSubject = async (subject, grade, firebase_id) => {
+export const addSubject = async (subject, grade, firebase_id, idToken) => {
     const payload = {
         grade: grade,
         firebase_id: firebase_id
@@ -34,6 +34,7 @@ export const addSubject = async (subject, grade, firebase_id) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`,
         },
         body: JSON.stringify(payload)
     }

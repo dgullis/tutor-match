@@ -1,6 +1,8 @@
 import pytest
 import json
 from flask import Flask
+from unittest.mock import patch
+from lib.firebase_token_auth import verify_token
 
 from app import app
 from app import update_user_bio
@@ -32,7 +34,11 @@ def test_signup(client):
     assert response.status_code == 201
     assert response.json == {'user': user, 'message': 'Account created successfully'}
 
-def test_getUser(client):
+@patch('app.verify_token') #Patch points to where verify_token is used (not where it's defined)
+def test_getUser(mock_verify_token, client):
+    # Mock simulates a successful verification
+    mock_verify_token.return_value = {"firebase_id": "test_firebase_id"}
+
     user = {
         "firebase_id": "test_firebase_id",
         "name": "Test name",
@@ -41,7 +47,7 @@ def test_getUser(client):
     }
     
     client.post("/signup", json=user)
-    
     response = client.get("/users/test_firebase_id")
+    
     assert response.status_code == 200
     assert response.json == {'user': user}

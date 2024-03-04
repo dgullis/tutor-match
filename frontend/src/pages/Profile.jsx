@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth } from "../firebase";
+
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
 import { addSubject } from "../services/subjects";
@@ -8,16 +8,19 @@ import { addSubject } from "../services/subjects";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user } = useAuth()
+    const { user, idToken } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
     const [subject, setSubject] = useState("")
     const [grade, setGrade] = useState("")
 
-
     useEffect(() => {
-        getUser(firebase_id)
+        console.log("line 20 profile.jsx")
+        console.log(user)
+        console.log(userDetails)
+        console.log(idToken)
+        getUser(firebase_id, idToken)
             .then((data) => {
                 setUserDetails(data.user)
             })
@@ -31,8 +34,8 @@ const Profile = () => {
         e.preventDefault();
 
         try {
-            await addSubject(subject, grade, firebase_id);
-            navigate(0)
+            await addSubject(subject, grade, firebase_id, idToken);
+            
     } catch(error) {
         console.log(error)
     }}

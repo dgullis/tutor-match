@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [mongoUser, setMongoUser] = useState(null)
     const [isFetching, setIsFetching] = useState(true)
+    const [idToken, setIdToken] = useState(null)
 
     const storeUserDataMongoDB = (data) => {
         setMongoUser(data)
@@ -22,9 +23,15 @@ export const AuthProvider = ({ children }) => {
         const unsubscribe = auth.onAuthStateChanged(async (user)=> {
 
             if(user){
-                setUser(user)
-                setIsFetching(false)
-                return
+                user.getIdToken().then(function(idToken) {
+                    setIdToken(idToken)
+                    setUser(user)
+                    setIsFetching(false)
+                    console.log(user)
+                }).catch(error => {
+                    console.error("Error fetching data: ", error);
+                });
+                return;
             }
 
             setUser(null)
@@ -44,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     // provide 'user' state as value to the context makign it acessible to our components pages )
     return (
-        <AuthContext.Provider value={{ user, mongoUser, storeUserDataMongoDB }}>
+        <AuthContext.Provider value={{ user, mongoUser, storeUserDataMongoDB, idToken }}>
             {children}
         </AuthContext.Provider>
     )

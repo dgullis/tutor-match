@@ -26,9 +26,12 @@ export const signup = async (firebase_id, name, email, status) => {
     }
 };
 
-export const getUser = async (firebase_id) => {
+export const getUser = async (firebase_id, idToken) => {
     const requestOptions = {
         method: "GET",
+        headers: {
+            'Authorization': `Bearer ${idToken}`
+        }
     }
 
     try {

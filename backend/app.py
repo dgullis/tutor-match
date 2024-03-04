@@ -40,10 +40,8 @@ def signup_route():
 @app.route('/users/<string:userId>', methods=['GET'])
 def get_user(userId):
     try:
-        verify_token()
-        # print("decoded token = " + decoded_token)
+        # verify_token()
         user = get_user_by_id(userId)
-        print(user)
         return jsonify({"user": user}), 200
     
     except UserNotFoundError as ve:
@@ -61,6 +59,7 @@ def add_tutor_to_subject_grade(subject):
     grade = data.get('grade')
 
     try:
+        verify_token()
         add_tutor_to_a_subject_grade(firebase_id, subject, grade)
         # request successfull and tutor added to array for subject/grade
         return jsonify({'message': 'Tutor added sucessfully'}), 201
