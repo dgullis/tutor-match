@@ -35,7 +35,7 @@ jobs:
         pip install python-dotenv
 
     - name: Run app.py
-      run: python backend/app.py
+      run: nohup python backend/app.py > /dev/null 2>&1 &
 
     - name: Run pytest
       run: |
