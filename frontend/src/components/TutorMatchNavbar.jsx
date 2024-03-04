@@ -23,13 +23,13 @@ const TutorMatchNavbar = () => {
         <Container>
         <Navbar.Brand>
             <img
-                src="/images/logo.png"
-                width="35"
+                src="/images/logo5.png"
+                width="200"
                 height="35"
                 className="d-inline-block align-top"
                 alt="Logo"
             />
-            {' TutorMatch'}
+            {/* {' TutorMatch'} */}
         </Navbar.Brand>
         {user ? (
             <Nav className="ms-auto">
