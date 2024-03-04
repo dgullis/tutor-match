@@ -89,7 +89,7 @@ const Profile = () => {
         </div> 
 
         <div className="booking-request">
-            <BookingRequest />
+            <BookingRequest availability = {userDetails.availability}/>
         </div>
 
         </>

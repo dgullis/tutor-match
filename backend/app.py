@@ -7,7 +7,7 @@ import json
 from firebase_admin import credentials, initialize_app
 from modules.users import signup, update_bio, get_user_by_id, add_availability_for_tutor, UserNotFoundError
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
-
+from modules.bookings import request_booking
 
 
 app = Flask(__name__)
@@ -16,6 +16,21 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
+
+@app.route("/bookings", methods=["POST"])
+def request_new_booking():
+    data = request.json
+    tutorId = data.get('tutorId')
+    studentId = data.get('studentId')
+    start_time = data.get('start_time')
+
+    result = request_booking(tutorId, studentId, start_time)
+    status_code = result.get("status_code", 500)
+
+    return jsonify(result), status_code
+
+
+
 
 @app.route("/signup", methods=["POST"])
 def signup_route():

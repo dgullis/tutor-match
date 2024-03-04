@@ -13,7 +13,6 @@ export const AddSubject = ({firebaseId}) => {
 
         try {
             await addSubject(subject, grade, firebaseId);
-            navigate(0)
     } catch(error) {
         console.log(error)
     }}
