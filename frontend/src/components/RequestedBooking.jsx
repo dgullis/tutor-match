@@ -3,7 +3,7 @@ import { acceptBooking, denyBooking } from '../services/bookings';
 import { sendEmail } from '../services/emailCommunications';
 
 
-export const RequestedBooking = ( { booking, onChangeBookingStatus, loggedInUserEmail } ) => {
+export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
 
     const bookingTime = new Date(booking.start_time);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -14,7 +14,6 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus, loggedInUser
     const onAccept = async (bookingId) => {
         try {
             await acceptBooking(bookingId, booking.tutorId, booking.start_time)
-            sendEmail(loggedInUserEmail, "bookingAcepted")
             onChangeBookingStatus()
         } catch(error) {
             console.log(error)
@@ -24,7 +23,6 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus, loggedInUser
     const onDeny = async (bookingId) => {
         try {
             await denyBooking(bookingId)
-            sendEmail(loggedInUserEmail, "bookingDenied")
             onChangeBookingStatus()
         } catch(error) {
             console.log(error)
