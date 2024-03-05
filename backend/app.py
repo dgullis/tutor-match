@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for, request, jsonify
+from flask_mail import Mail, Message
 from pymongo import MongoClient
 from flask_cors import CORS, cross_origin
 from datetime import datetime, timezone
@@ -14,10 +15,34 @@ from lib.firebase_token_auth import verify_token
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'tutormatch01@gmail.com'
+app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
 
+
+@app.route('/send-email', methods=['POST'])
+def send_email():
+    data = request.json
+    to = data['to']
+    subject = data['subject']
+    body = data['body']
+
+    msg = Message(subject, recipients=[to], body=body)
+
+    try:
+        mail.send(msg)
+        return jsonify({'success': True, 'message': 'Email sent successfully'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'message': 'Error sending email'}), 500
 
 @app.route("/signup", methods=["POST"])
 def signup_route():
