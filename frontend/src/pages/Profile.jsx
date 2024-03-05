@@ -86,7 +86,9 @@ const Profile = () => {
         </div>
         </div>
 
+        <div className="d-flex align-items-center justify-content-center">
         <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
+        </div>
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
