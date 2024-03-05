@@ -14,6 +14,7 @@ import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import PendingTutorList from "../components/PendingTutors";
 import { TutorRating } from "../components/TutorRating/TutorRating";
+import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
 
 
 const Profile = () => {
@@ -22,7 +23,6 @@ const Profile = () => {
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
-
     const [refresh, setRefresh] = useState(false)
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
@@ -38,6 +38,8 @@ const Profile = () => {
         "firebaseId": firebase_id,
         "grade": "alevel"
     }
+
+   
 
     useEffect(() => {
         //console.log("line 20 profile.jsx")
@@ -79,7 +81,7 @@ const Profile = () => {
             })
     },[refresh, firebase_id]);
 
-    return(
+    return (
         <>
 
         <div className = "container-fluid">
@@ -99,6 +101,14 @@ const Profile = () => {
         </div>
         </div>
         </div>
+        
+        {userDetails.reviews && 
+        <div className="show-rating">
+            <TutorStarRating 
+                tutorReviews={userDetails.reviews}
+            />
+        </div>
+        }
 
 
 
