@@ -71,46 +71,31 @@ export const AuthProvider = ({ children }) => {
     // sets up listener to observe changes in users authentication state
     // refreshed state of user and mongoUSer
     useEffect(() => {
-            const unsubscribe = auth.onAuthStateChanged(async (user)=> {
-
-                if(user){
-                    setUser(user)
-                    user.getIdToken().then(function(idToken) {
-                        setIdToken(idToken)
-                    }).catch(error => {
-                        console.error("Error fetching data: ", error);
-                    })
-                    try {
-                        const firebase_id = user.uid;
-                        const result = await getUser(firebase_id, idToken);
-                        setMongoUser(result.user);
-                    } catch (error) {
-                        console.log("error refreshing userdetails from mongoDB ", error)
-                    } 
-                } else {
-                    setUser(null)
-                    setMongoUser(null)
-                    setIsFetching(false)
-                    return
-                }
-
-            if(user){
-                setUser(user)
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            setIsFetching(true);
+    
+            if (user) {
+                setUser(user);
+    
                 try {
+                    const idToken = await user.getIdToken();
+                    setIdToken(idToken);
+    
                     const firebase_id = user.uid;
-                    const result = await getUser(firebase_id);
+                    const result = await getUser(firebase_id, idToken);
                     setMongoUser(result.user);
                 } catch (error) {
-                    console.log("error refreshing userdetails from mongoDB ", error)
-                } 
+                    console.error("Error fetching user details from MongoDB: ", error);
+                    setMongoUser(null);
+                } finally {
+                    setIsFetching(false);
+                }
             } else {
-                setUser(null)
-                setMongoUser(null)
-                setIsFetching(false)
-                return
+                setUser(null);
+                setMongoUser(null);
+                setIsFetching(false);
             }
-            setIsFetching(false)
-        })
+        });
           // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
         return () => unsubscribe()
     }, []);

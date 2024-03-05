@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for, request, jsonify
+from flask_mail import Mail, Message
 from pymongo import MongoClient
 from flask_cors import CORS, cross_origin
 from datetime import datetime, timezone
@@ -11,12 +12,22 @@ from modules.users import *
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
 from modules.bookings import request_booking, update_booking_request
 from lib.firebase_token_auth import verify_token
+import os
 
 
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'tutor.match01@gmail.com'
+app.config['MAIL_PASSWORD'] = os.environ.get('GMAIL_PASS')
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEFAULT_SENDER'] = 'tutor.match01@gmail.com'
+mail = Mail(app)
+
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
@@ -67,6 +78,22 @@ def get_pending_tutors_route():
         return jsonify({"result": result}),200
     except Exception as e:
         return jsonify({f'Error retrieving tutors: {str(e)}'}), 500
+
+@app.route('/send-email', methods=['POST'])
+def send_email():
+    data = request.json
+    to = data['to']
+    subject = data['subject']
+    body = data['body']
+
+    msg = Message(subject, recipients=[to], body=body)
+
+    try:
+        mail.send(msg)
+        return jsonify({'success': True, 'message': 'Email sent successfully'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'message': 'Error sending email'}), 500
 
 @app.route("/signup", methods=["POST"])
 def signup_route():

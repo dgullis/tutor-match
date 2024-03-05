@@ -27,6 +27,7 @@
 6. pip install python-dotenv
 7. pip install firebase-admin
 8. pip install flask-cors
+9. pip install Flask-Mail
 
 
 While mongo is local only:

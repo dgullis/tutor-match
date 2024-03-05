@@ -3,6 +3,7 @@ import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
+import { sendEmail } from "../services/emailCommunications";
 
 
 const Signup = () => {
@@ -57,21 +58,23 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
-
                         console.log(safeguarding)
                         const signUpResult = await signUpAuth(email, password, name, status, safeguarding)
-
 
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
                                 setNotice("Email is already in use. Please try logging in instead."); 
                             } else {
-                                console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
                             }
-                        } else if (signUpResult.success === true){
+                        } else if (signUpResult.success === true) {
                             setNotice("Sign up successfull!")
-                        }
+                            if (status === "Student"){
+                                sendEmail(email, "signUpStudent")
+                            } else if (status === "Tutor"){
+                                sendEmail(email, "signUpTutor")
+                            }
+                        } 
                     }
                 } else {
                     setNotice("Password doesn't meet requirements. Please try again.")

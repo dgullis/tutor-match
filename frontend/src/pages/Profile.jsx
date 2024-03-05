@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
 import { searchSubjects } from "../services/subjects";
@@ -18,7 +17,7 @@ import PendingTutorList from "../components/PendingTutors";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user, mongoUser } = useAuth()
+    const { user, mongoUser, idToken } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
@@ -81,7 +80,7 @@ const Profile = () => {
 
     return(
         <>
-      
+
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
@@ -101,10 +100,11 @@ const Profile = () => {
         </div>
 
 
-       
+
         {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
             <RequestedBookingsScrollable 
-            userDetails={userDetails} 
+            userDetails={userDetails}
+            loggedInUserEmail={mongoUser.email}
             onChangeBookingStatus={() => 
                 setRefresh(!refresh)} />
         )}
@@ -114,7 +114,7 @@ const Profile = () => {
             <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
             setRefresh(!refresh)}/>
 
-          </div>}
+        </div>}
 
 
 
@@ -125,7 +125,7 @@ const Profile = () => {
                     firebaseId = {firebase_id} 
                     idToken={idToken}
                     onChangeAvailability={() => 
-                      setRefresh(!refresh)}
+                        setRefresh(!refresh)}
                     />
             </div> }
         
