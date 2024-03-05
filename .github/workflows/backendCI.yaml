@@ -39,6 +39,7 @@ jobs:
         pip install firebase-admin
         pip install pytest
         pip install python-dotenv
+        pip install Flask-Mail
 
     - name: Run app.py
       run: nohup python backend/app.py > /dev/null 2>&1 &
