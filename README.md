@@ -11,6 +11,8 @@
 9. npm install react-select
 10. npm install @syncfusion/ej2-react-calendars @syncfusion/ej2-base @syncfusion/ej2-data
 11. npm install react-datepicker
+10. npm install --save-dev @vitejs/plugin-react-swc
+11. npm install jsdom --save-dev
 
 
 
