@@ -98,7 +98,23 @@ const Profile = () => {
             <div className="add-availability">
                 <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
             </div> }
+        
+            {/* Bios for Students/Tutors*/}
+            <div>
+            {userDetails.status === "Tutor" && (
+                <div>
+                    <h2>Tutor Bio</h2>
+                    {/* Tutor Details Here */}
+                </div>
+            )}
 
+            {userDetails.status === "Student" && (
+                <div>
+                    <h2>Student Bio</h2>
+                    {/* Student Details Here */}
+                </div>
+            )}
+        </div>
         </>
     )    
 }
