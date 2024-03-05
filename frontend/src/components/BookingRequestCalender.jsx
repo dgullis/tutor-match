@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import { Form, Button, Alert } from 'react-bootstrap';
 import { requestBooking } from "../services/bookings";
 import { useEffect } from "react";
+import { sendEmail } from "../services/emailCommunications";
 
 
 export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBooking}) => {
@@ -60,6 +61,8 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
                     setErrorMessage("")
                     setSuccessMessage(result.message)
                     onRequestBooking()
+                    sendEmail(tutorDetails.email, "requestBooking")
+
                 } else {
                     setSuccessMessage("")
                     setErrorMessage(result.error)
