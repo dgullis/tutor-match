@@ -33,10 +33,13 @@ export const requestBooking = async (tutorId, studentId, start_time) => {
 
 }
 
-export const acceptBooking = async (bookingId) => {
+export const acceptBooking = async (bookingId, tutorId, bookingTime) => {
 
+    //tutor id references a firebase_id in users collection
     const payload = {
         status: "accepted",
+        tutorId: tutorId,
+        bookingTime: bookingTime
     };
 
     const requestOptions = {
@@ -65,7 +68,7 @@ export const acceptBooking = async (bookingId) => {
 export const denyBooking = async (bookingId) => {
     
     const payload = {
-        status: "accepted",
+        status: "denied",
     };
 
     const requestOptions = {

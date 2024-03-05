@@ -13,7 +13,7 @@ export const RequestedBooking = ( { booking } ) => {
     const onAccept = async (bookingId) => {
         try {
             console.log(bookingId)
-            await acceptBooking(bookingId)
+            await acceptBooking(bookingId, booking.tutorId, booking.start_time)
         } catch(error) {
             console.log(error)
         }
@@ -22,7 +22,6 @@ export const RequestedBooking = ( { booking } ) => {
     const onDeny = async (bookingId) => {
         try {
             console.log(bookingId)
-
             await denyBooking(bookingId)
         } catch(error) {
             console.log(error)

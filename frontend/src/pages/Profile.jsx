@@ -84,6 +84,7 @@ const Profile = () => {
                         booking={booking}
                     />
                 ))}
+                {/* <div>{userDetails.bookings}</div> */}
             </div>
         }
         </div>

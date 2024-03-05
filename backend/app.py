@@ -33,8 +33,10 @@ def request_new_booking():
 def update_booking(bookingId):
     data = request.json
     status = data.get('status')
+    tutor_id = data.get('tutorId')
+    booking_time = data.get('bookingTime')
 
-    result = update_booking_request(bookingId, status)
+    result = update_booking_request(bookingId, tutor_id, booking_time, status)
 
     status_code = result.get("status_code", 500)
     return jsonify(result), status_code
