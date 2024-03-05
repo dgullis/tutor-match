@@ -1,11 +1,12 @@
 const BACKEND_URL = "http://localhost:5000";
 
-export const signup = async (firebase_id, name, email, status) => {
+export const signup = async (firebase_id, name, email, status, safeguarding) => {
     const payload = {
         firebase_id: firebase_id,
         name: name,
         email: email,
-        status: status
+        status: status,
+        safeguarding: safeguarding
     };
     console.log(payload)
     const requestOptions = {
@@ -95,4 +96,44 @@ export const addAvailability = async (firebase_id, idToken, startTime, endTime) 
         throw error;
     }
 
+}
+
+export const getPendingTutors = async(idToken) => {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${idToken}`
+        }
+    }
+
+    try {
+    let response = await fetch(`${BACKEND_URL}/pending`, requestOptions);
+    var data = await response.json()
+    
+    if (response.status === 200) {
+        return data;
+    } else {
+        throw new Error('Error fetching users')
+    }
+    } catch (error) {
+        console.error(error)
+        throw error;
+    }
+}
+
+export const updatePendingTutor = async(idToken,firebase_id) => {
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Authorization': `Bearer ${idToken}`
+        }
+    }
+    let response = await fetch(`${BACKEND_URL}/pending/${firebase_id}`, requestOptions);
+
+    if (response.status === 204) {
+        return;
+    } else {
+        throw new Error (await response.json().then((data) => data.message));
+    }
+    
 }

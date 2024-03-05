@@ -5,7 +5,7 @@ class Availability:
         self.available = available
 
 class User:
-    def __init__(self, firebase_id, name, email, status, availability=None, bio=None, profileImage=None):
+    def __init__(self, firebase_id, name, email, status, safeguarding, availability=None, bio=None, profileImage=None):
         self.firebase_id = firebase_id
         self.name = name
         self.email = email
@@ -13,4 +13,5 @@ class User:
         self.availability = availability
         self.bio = bio
         self.profileImage = profileImage
+        self.safeguarding = safeguarding
 
