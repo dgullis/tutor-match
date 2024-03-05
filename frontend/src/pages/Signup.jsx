@@ -51,9 +51,7 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
-
-                        const signUpResult = signUpAuth(email, password, name, status)
-
+                        const signUpResult = await signUpAuth(email, password, name, status)
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
                                 setNotice("Email is already in use. Please try logging in instead."); 
@@ -61,7 +59,9 @@ const Signup = () => {
                                 console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
                             }
-                        } 
+                        } else if (signUpResult.success === true){
+                            setNotice("Sign up successfull!")
+                        }
                     }
                 } else {
                     setNotice("Password doesn't meet requirements. Please try again.")
@@ -86,7 +86,7 @@ const Signup = () => {
                 <div className = "container">
                     <div className = "row justify-content-center">
                         <form className = "col-md-4 mt-3 pt-3 pb-3" >
-                            { "" !== notice &&
+                            { notice &&
                                 <div className = "alert alert-warning" role = "alert">
                                     { notice }    
                                 </div>
