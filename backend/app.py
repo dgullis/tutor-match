@@ -6,7 +6,9 @@ from datetime import datetime, timezone
 from bson import BSON
 import json
 from firebase_admin import credentials, initialize_app
+
 from modules.users import *
+
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
 from modules.bookings import request_booking, update_booking_request
 from lib.firebase_token_auth import verify_token
@@ -29,7 +31,6 @@ mail = Mail(app)
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
-
 
 @app.route("/bookings", methods=["POST"])
 def request_new_booking():
@@ -55,6 +56,28 @@ def update_booking(bookingId):
     status_code = result.get("status_code", 500)
     return jsonify(result), status_code
 
+@app.route("/pending/<string:firebaseId>", methods = ["PUT"])
+def approve_tutor_route(firebaseId):
+    verify_token()
+    try:
+        approve_tutor(firebaseId)
+        return jsonify({'message': 'Update status successful'}), 204
+    
+    except UserNotFoundError as usnfe:
+        return jsonify({'error': str(usnfe)}), 404
+    
+    except Exception as e:
+        return jsonify({'error': f'Error updating status: {str(e)}'}), 500
+
+
+@app.route("/pending", methods = ["GET"])
+def get_pending_tutors_route():
+    verify_token()
+    try:
+        result = get_pending_tutors()
+        return jsonify({"result": result}),200
+    except Exception as e:
+        return jsonify({f'Error retrieving tutors: {str(e)}'}), 500
 
 @app.route('/send-email', methods=['POST'])
 def send_email():

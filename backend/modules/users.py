@@ -105,6 +105,7 @@ def signup():
     name = data.get("name")
     email = data.get("email")
     status = data.get("status")
+    safeguarding = data.get("safeguarding")
 
     if not all([name, email, status]):
         return jsonify({"error": "Missing fields"}), 400
@@ -115,7 +116,8 @@ def signup():
         "firebase_id": firebase_id,
         "name": name,
         "email": email,
-        "status": status
+        "status": status,
+        "safeguarding": safeguarding
     }
 
     result = users_collection.insert_one(new_user)
@@ -141,3 +143,35 @@ def add_availability_for_tutor(userId, availability):
             users_collection.update_one(filter_criteria, update_data)
         except Exception as e:
             raise ValueError(f'Error adding availability: {str(e)}')
+        
+def get_pending_tutors():
+
+    try:
+        result = users_collection.find({"safeguarding":"Pending"}, {"_id": 0})
+
+        if result:
+            # If user is found create a new dictionary with _id as a string not ObjectId
+            return list(result)
+        else:
+            raise UserNotFoundError('User not found')
+
+    except Exception as e:
+        raise ValueError(f'{str(e)}')
+    
+
+def approve_tutor(firebase_id):
+
+    filter_criteria = {"firebase_id": firebase_id}
+    update_data = {"$set": {"safeguarding": "Approved"}}
+    try:
+        result = users_collection.update_one(filter_criteria,update_data)
+    
+        if result.matched_count == 0:
+           raise UserNotFoundError('User not found')
+        else: 
+            return {"message": "Update bio successful"}
+        
+    except Exception as e:
+        raise ValueError(f'Error updating bio: {str(e)}')
+    
+        

@@ -13,6 +13,7 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [status, setStatus] = useState("");
+    const [safeguarding, setSafeguarding] = useState("Approved");
     const [notice, setNotice] = useState("");   
     const [passwordPrompt, setPasswordPrompt] = useState([]);
     const { user, mongoUser, signUpAuth, isLoading  } = useAuth()
@@ -39,6 +40,11 @@ const Signup = () => {
         setPassword(newPassword);
     }
 
+    const setTutor = () => {
+        setSafeguarding("Pending")
+        setStatus("Tutor")
+    }
+
     
     const signupWithUsernameAndPassword = async (e) => {
         e.preventDefault();
@@ -52,8 +58,9 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
+                        console.log(safeguarding)
+                        const signUpResult = await signUpAuth(email, password, name, status, safeguarding)
 
-                        const signUpResult = await signUpAuth(email, password, name, status)
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
                                 setNotice("Email is already in use. Please try logging in instead."); 
@@ -98,7 +105,7 @@ const Signup = () => {
                                 </div>
                             }
                             <div className = "form-floating mb-3">
-                        <input id = "signupName" type = "text" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value.trim()) }></input>
+                        <input id = "signupName" type = "text" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value) }></input>
                         <label htmlFor = "signupName" className = "form-label">Enter your name</label>
                         </div>
                         <div className = "form-floating mb-3">
@@ -114,7 +121,7 @@ const Signup = () => {
                             <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
                         </div>
                         <div className="custom-control custom-radio">
-                        <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" onChange = { (e) => setStatus("Tutor")}></input>
+                        <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" onChange = { (e) => setTutor()}></input>
                         <label className="custom-control-label" htmlFor="customRadio1">Tutor</label>
                         </div>
                         <div className="custom-control custom-radio">

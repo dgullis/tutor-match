@@ -20,12 +20,12 @@ export const AuthProvider = ({ children }) => {
         setMongoUser(data)
     }
 
-    const signUpAuth = async (email, password, name, status) => {
+    const signUpAuth = async (email, password, name, status, safeguarding) => {
         setIsLoading(true)
         try {
             await createUserWithEmailAndPassword(auth, email, password)
             const firebase_id = auth.currentUser.uid
-            const result = await signup(firebase_id, name, email, status)
+            const result = await signup(firebase_id, name, email, status, safeguarding)
             setMongoUser(result.user)
             setIsLoading(false)
             return { success: true };

@@ -7,7 +7,7 @@ export const TutorSearchResult = ( { tutor }) => {
 
     return (
         <Card style={{ width: '18rem', margin: "20px" }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
+            {/*<Card.Img variant="top" src="holder.js/100px180" />*/}
             <Card.Body>
             <Card.Title>{tutor.name}</Card.Title>
             <Card.Text>
