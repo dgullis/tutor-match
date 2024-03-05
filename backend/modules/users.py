@@ -27,11 +27,11 @@ def update_bio(firebase_id, bio):
         raise ValueError(f'Error updating bio: {str(e)}')
     
 
-def get_user_by_id(userId):
+def get_user_by_id(firebase_id):
     users_collection = get_users_collection()
 
     try:
-        result = users_collection.find_one({"firebase_id": userId}, {"_id": 0})
+        result = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
 
         if result:
             # If user is found create a new dictionary with _id as a string not ObjectId
@@ -68,9 +68,9 @@ def signup():
         user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
         return jsonify({"user": user, "message": "Account created successfully"}), 201
 
-def add_availability_for_tutor(userId, availability):
+def add_availability_for_tutor(firebase_id, availability):
 
-    filter_criteria = {"firebase_id": userId}  
+    filter_criteria = {"firebase_id": firebase_id}  
     for availability in availability:
         
         try:
