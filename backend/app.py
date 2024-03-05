@@ -93,12 +93,12 @@ def add_availability(userId):
         return jsonify({f'Error adding availability: {str(e)}'}), 500
 
 @app.route('/users/<string:userId>/bio', methods=['PUT'])
-def update_user_bio(userId):
+def update_user_bio(firebase_id):
     data = request.json
     bioContent = data.get('bio')
 
     try:
-        update_bio(userId, bioContent)
+        update_bio(firebase_id, bioContent)
         return jsonify({'message': 'Update bio successful'}), 200
     
     except UserNotFoundError as usnfe:
