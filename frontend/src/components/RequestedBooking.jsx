@@ -2,7 +2,7 @@ import { Card, Button } from 'react-bootstrap';
 import { acceptBooking, denyBooking } from '../services/bookings';
 
 
-export const RequestedBooking = ( { booking } ) => {
+export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
 
     const bookingTime = new Date(booking.start_time);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -12,8 +12,8 @@ export const RequestedBooking = ( { booking } ) => {
 
     const onAccept = async (bookingId) => {
         try {
-            console.log(bookingId)
             await acceptBooking(bookingId, booking.tutorId, booking.start_time)
+            onChangeBookingStatus()
         } catch(error) {
             console.log(error)
         }
@@ -21,8 +21,8 @@ export const RequestedBooking = ( { booking } ) => {
     
     const onDeny = async (bookingId) => {
         try {
-            console.log(bookingId)
             await denyBooking(bookingId)
+            onChangeBookingStatus()
         } catch(error) {
             console.log(error)
         }

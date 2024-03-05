@@ -6,7 +6,7 @@ import { Alert } from 'react-bootstrap';
 import '../App.css';
 
 
-export const AddAvailability = ({firebaseId}) => {
+export const AddAvailability = ({firebaseId, onChangeAvailability}) => {
     const todayDate = new Date()
     todayDate.setHours(0, 0, 0, 0)
 
@@ -48,6 +48,7 @@ export const AddAvailability = ({firebaseId}) => {
             setErrorMessage("End date and time must be at least one hour after start date")
         } else {
             setAvailability([startDate, endDate])
+            onChangeAvailability()
             try {
                 await addAvailability(firebaseId, startDate, endDate)
                 setErrorMessage("")

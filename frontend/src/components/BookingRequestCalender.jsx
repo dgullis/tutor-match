@@ -5,22 +5,25 @@ import { requestBooking } from "../services/bookings";
 import { useEffect } from "react";
 
 
-export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
+export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBooking}) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [availableDates, setAvailableDates] = useState([])
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
 
-    const tutorAvailability = tutorDetails.availability
     const tutorFirebaseId = tutorDetails.firebase_id
     const loggedInUserFirebaseId = loggedInUser.firebase_id
 
 
     useEffect(()=> {
 
-        // var  = array.filter(function(item) {
-        //     return condition;
-        //   });
+        if (tutorDetails.availability) {
+            var tutorsAvailability = tutorDetails.availability.filter((availableSlot) =>{
+                return availableSlot.available === true;
+            });
+        }
+
+        setAvailableDates(tutorsAvailability)
 
     }, [tutorDetails])
 
@@ -32,8 +35,8 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
 
         const isAvailableDate = (date) => {
             // Return true if the date is in the availableDates array, otherwise false
-            if (tutorAvailability && tutorAvailability.length > 0) {
-            return tutorAvailability.some(
+            if (availableDates && availableDates.length > 0) {
+            return availableDates.some(
                 (availableDate) =>
                 new Date(availableDate.start_time).toDateString() === date.toDateString()
             );
@@ -41,8 +44,8 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
         }
 
         const isAvailableTime = (time) => {
-            if (tutorAvailability && tutorAvailability.length > 0) {
-            return tutorAvailability.some(
+            if (availableDates && availableDates.length > 0) {
+            return availableDates.some(
                 (availableDate) =>
                     new Date(availableDate.start_time).getTime() === new Date(time).getTime()
             );
@@ -52,11 +55,11 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser}) => {
         const handleSubmit = async (e) => {
             e.preventDefault()
             try {
-                console.log("this is beign submitted", selectedDate.toISOString())
                 const result = await requestBooking(tutorFirebaseId, loggedInUserFirebaseId, selectedDate.toISOString())
                 if (result.success){
                     setErrorMessage("")
                     setSuccessMessage(result.message)
+                    onRequestBooking()
                 } else {
                     setSuccessMessage("")
                     setErrorMessage(result.error)

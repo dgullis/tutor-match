@@ -3,12 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { auth } from "../firebase";
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
-
 import { searchSubjects } from "../services/subjects";
 import { AddSubject } from "../components/AddSubject";
 import { AddAvailability } from "../components/AddAvailability";
 import { BookingRequestCalender } from "../components/BookingRequestCalender";
 import { RequestedBooking } from "../components/RequestedBooking";
+import { Card, CardTitle } from "react-bootstrap";
+import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -76,31 +77,32 @@ const Profile = () => {
                 {subject.name}
             </div>
         ))}</p>
-        {userDetails.bookings && <div>
-            Requested Bookings: {userDetails.bookings.map((booking) => (
-                (booking.status === "requested") && 
-                    <RequestedBooking 
-                        key={booking._id}
-                        booking={booking}
-                    />
-                ))}
-                {/* <div>{userDetails.bookings}</div> */}
-            </div>
-        }
-        </div>
+        </div> 
+
+        {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
+            <RequestedBookingsScrollable 
+            userDetails={userDetails} 
+            onChangeBookingStatus={() => 
+                setRefresh(!refresh)} />
+        )}
 
         {user.uid === firebase_id && <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} />
         </div>}
 
         <div className="add-availability">
-            <AddAvailability firebaseId = {firebase_id}/>
+            <AddAvailability 
+                firebaseId = {firebase_id}
+                onChangeAvailability={() => 
+                    setRefresh(!refresh)}/>
         </div> 
 
         <div className="booking-request">
             <BookingRequestCalender 
                 tutorDetails = {userDetails}
-                loggedInUser = {mongoUser} />
+                loggedInUser = {mongoUser}
+                onRequestBooking={() => 
+                    setRefresh(!refresh)} />
         </div>
 
         </>
