@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../services/users";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
+import { sendEmail } from "../services/emailCommunications";
 
 
 const Signup = () => {
@@ -54,7 +55,7 @@ const Signup = () => {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
 
-                        const signUpResult = signUpAuth(email, password, name, status)
+                        const signUpResult = await signUpAuth(email, password, name, status)
 
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
@@ -63,7 +64,13 @@ const Signup = () => {
                                 console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
                             }
-                        } 
+                        } else if (signUpResult.success === true) {
+                            if (status === "Student"){
+                                sendEmail(email, "signUpStudent")
+                            } else if (status === "Tutor"){
+                                sendEmail(email, "signUpTutor")
+                            }
+                        }
                     }
                 } else {
                     setNotice("Password doesn't meet requirements. Please try again.")

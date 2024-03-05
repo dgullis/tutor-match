@@ -9,6 +9,7 @@ from firebase_admin import credentials, initialize_app
 from modules.users import *
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
 from lib.firebase_token_auth import verify_token
+import os
 
 
 
@@ -17,10 +18,11 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'tutormatch01@gmail.com'
-app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_USERNAME'] = 'tutor.match01@gmail.com'
+app.config['MAIL_PASSWORD'] = os.environ.get('GMAIL_PASS')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEFAULT_SENDER'] = 'tutor.match01@gmail.com'
 mail = Mail(app)
 
 
