@@ -167,7 +167,7 @@ def approve_tutor(firebase_id):
         result = users_collection.update_one(filter_criteria,update_data)
     
         if result.matched_count == 0:
-           raise UserNotFoundError('User not found')
+            raise UserNotFoundError('User not found')
         else: 
             return {"message": "Update bio successful"}
         
@@ -175,3 +175,36 @@ def approve_tutor(firebase_id):
         raise ValueError(f'Error updating bio: {str(e)}')
     
         
+def submit_review(userId, rating, comment, reviewer_id):
+    
+    if is_duplicate_review(reviewer_id, userId):
+        return {"success": False, "message": "You have already submiited a review for this tutor", "status_code": 400}
+    
+    #reviewer_id referenes the firebase_id of the user leaving the review
+    filter_criteria = {"firebase_id": userId}
+    update_data = {"$push": {"reviews": {
+        "rating": rating,
+        "comment": comment,
+        "reviewer_id": reviewer_id
+    }}}
+
+    try :
+        submit_review_result = users_collection.update_one(filter_criteria, update_data)
+
+        if submit_review_result.modified_count > 0:
+            return  {"success": True, "message": "Review submitted sucessfully", "status_code": 201}
+        else:
+            return {"success": False, "message": "Unable to submit review. User not found", "status_code": 404} 
+    except Exception as e:
+        return {"success": False, "message": {str(e)}, "status_code": 500}
+    
+
+def is_duplicate_review(reviewer_id, user_id):
+    filter_criteria = {"firebase_id": user_id, "reviews": {"$elemMatch": {"reviewer_id": reviewer_id}}}
+
+    user_with_review = users_collection.find_one(filter_criteria)
+
+    return user_with_review is not None
+        
+
+

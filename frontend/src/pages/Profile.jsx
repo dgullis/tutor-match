@@ -13,6 +13,7 @@ import RequestedBookingsScrollable from "../components/RequestedBookingsScrollab
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import PendingTutorList from "../components/PendingTutors";
+import { TutorRating } from "../components/TutorRating/TutorRating";
 
 
 const Profile = () => {
@@ -141,6 +142,13 @@ const Profile = () => {
                 loggedInUser = {mongoUser}
                 onRequestBooking={() => 
                     setRefresh(!refresh)} />
+        </div>
+
+        <div className="tutor-rating">
+            <TutorRating 
+                tutorId={firebase_id}
+                loggedInUser = {mongoUser}
+            />
         </div>
 
         </>
