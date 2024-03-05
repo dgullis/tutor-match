@@ -7,6 +7,7 @@ import json
 from firebase_admin import credentials, initialize_app
 from modules.users import *
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
+from modules.bookings import request_booking, update_booking_request
 from lib.firebase_token_auth import verify_token
 
 
@@ -17,6 +18,31 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
+
+
+@app.route("/bookings", methods=["POST"])
+def request_new_booking():
+    data = request.json
+    tutorId = data.get('tutorId')
+    studentId = data.get('studentId')
+    start_time = data.get('start_time')
+
+    result = request_booking(tutorId, studentId, start_time)
+    status_code = result.get("status_code", 500)
+
+    return jsonify(result), status_code
+
+@app.route("/bookings/<string:bookingId>", methods=["PUT"])
+def update_booking(bookingId):
+    data = request.json
+    status = data.get('status')
+    tutor_id = data.get('tutorId')
+    booking_time = data.get('bookingTime')
+
+    result = update_booking_request(bookingId, tutor_id, booking_time, status)
+
+    status_code = result.get("status_code", 500)
+    return jsonify(result), status_code
 
 
 @app.route("/signup", methods=["POST"])

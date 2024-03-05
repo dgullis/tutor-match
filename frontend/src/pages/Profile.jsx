@@ -6,22 +6,23 @@ import { getUser } from "../services/users";
 import { searchSubjects } from "../services/subjects";
 import { AddSubject } from "../components/AddSubject";
 import { AddAvailability } from "../components/AddAvailability";
+import { BookingRequestCalender } from "../components/BookingRequestCalender";
+import { RequestedBooking } from "../components/RequestedBooking";
+import { Card, CardTitle } from "react-bootstrap";
+import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user, idToken } = useAuth()
+    const { user, mongoUser } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
-    const [refresh, setRefresh] = useState(false)
-
-
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
-    console.log("user")
-    console.log(user)
+    const [refresh, setRefresh] = useState(false)
+
     const gcseQueryParams = {
         "firebaseId": firebase_id,
         "grade": "gcse"
@@ -30,10 +31,6 @@ const Profile = () => {
         "firebaseId": firebase_id,
         "grade": "alevel"
     }
-
-    const minDate = new Date();
-    const maxDate = new Date("01/01/2025 01:00 AM");
-    const dateValue = new Date()
 
     useEffect(() => {
         console.log("line 20 profile.jsx")
@@ -69,6 +66,7 @@ const Profile = () => {
 
     return(
         <>
+      
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
@@ -85,6 +83,13 @@ const Profile = () => {
         </div>
 
 
+       
+        {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
+            <RequestedBookingsScrollable 
+            userDetails={userDetails} 
+            onChangeBookingStatus={() => 
+                setRefresh(!refresh)} />
+        )}
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
@@ -94,10 +99,25 @@ const Profile = () => {
           </div>}
 
 
+
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className="add-availability">
-                <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
+                <AddAvailability 
+                    firebaseId = {firebase_id} 
+                    idToken={idToken}
+                    onChangeAvailability={() => 
+                      setRefresh(!refresh)}
+                    />
             </div> }
+
+
+        <div className="booking-request">
+            <BookingRequestCalender 
+                tutorDetails = {userDetails}
+                loggedInUser = {mongoUser}
+                onRequestBooking={() => 
+                    setRefresh(!refresh)} />
+        </div>
 
         </>
     )    

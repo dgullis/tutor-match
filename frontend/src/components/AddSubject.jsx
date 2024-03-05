@@ -21,27 +21,28 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
     const addSubjectAndLevel = async (e) => {
         e.preventDefault();
 
-        if (!subject || !grade) {
-            setErrorMessage("Please select subject/grade.")
-        } else {
-            try {
-                const addSubjectResult = await addSubject(subject, grade, firebaseId, idToken);
-                console.log("add subject result: ", addSubjectResult.error)
-                if (addSubjectResult.error) {
-                    setSuccessMessage("")
-                    setErrorMessage(addSubjectResult.error)
-                } else {
-                    setErrorMessage("")
-                    setSuccessMessage(addSubjectResult.message) 
-                    onSubjectAdded()
-                }
-                
-            } catch(error) {
+    if (!subject || !grade) {
+        setErrorMessage("Please select subject/grade.")
+    } else {
+        try {
+            const addSubjectResult = await addSubject(subject, grade, firebaseId, idToken);
+            console.log("add subject result: ", addSubjectResult.error)
+            if (addSubjectResult.error) {
                 setSuccessMessage("")
-                setErrorMessage(error.message) 
+                setErrorMessage(addSubjectResult.error)
+            } else {
+                setErrorMessage("")
+                setSuccessMessage(addSubjectResult.message) 
+                onSubjectAdded()
             }
+
+        } catch(error) {
+            setSuccessMessage("")
+            setErrorMessage(error.message) 
         }
     }
+}
+
 
     return(
             <div className = "container-fluid">
