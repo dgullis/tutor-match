@@ -131,17 +131,17 @@ const Profile = () => {
         
         {user.uid === firebase_id && userDetails.status === "Admin" &&
         <div>
-        <PendingTutorList pending = {pendingTutors} idToken = {idToken} userApproved={() => setRefresh(!refresh)}/>
+        <PendingTutorList idToken = {idToken}/>
         </div>}
 
-
+        {userDetails.status != "Admin" &&
         <div className="booking-request">
             <BookingRequestCalender 
                 tutorDetails = {userDetails}
                 loggedInUser = {mongoUser}
                 onRequestBooking={() => 
                     setRefresh(!refresh)} />
-        </div>
+                </div>}
 
         </>
     )    

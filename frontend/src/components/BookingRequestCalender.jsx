@@ -10,6 +10,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
     const [availableDates, setAvailableDates] = useState([])
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    console.log(tutorDetails)
 
     const tutorFirebaseId = tutorDetails.firebase_id && tutorDetails.firebase_id;
     const loggedInUserFirebaseId = loggedInUser.firebase_id && loggedInUser.firebase_id
