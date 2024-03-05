@@ -23,7 +23,7 @@ def update_booking_request(bookingId, status):
 def request_booking(tutorId, studentId, start_time):
 
     if is_booking_duplicate(tutorId, studentId, start_time):
-        return {"success": False, "message": "Booking already exists", "status_code": 400}
+        return {"success": False, "message": "Booking request already exists for this time and date", "status_code": 400}
     
     new_booking = {
         "tutorId": tutorId,
@@ -35,7 +35,28 @@ def request_booking(tutorId, studentId, start_time):
     booking_result = bookings_collection.insert_one(new_booking)
 
     if booking_result.inserted_id:
-        return {"success": True, "message": "Booking successfully requested", "status_code": 201}
+
+        update_fields = {
+        'availability.$.available': False,
+        }
+
+        filter_criteria = {
+            'firebase_id': tutorId,
+            'availability': {
+                '$elemMatch': {
+                    'start_time': start_time
+                }
+            }
+        }
+
+        update_availability_result = users_collection.update_one(filter_criteria, {'$set': update_fields})
+
+        if update_availability_result.modified_count > 0:
+        # Add more fields to update as needed
+            return {"success": True, "message": "Booking successfully requested", "status_code": 201}
+        else:
+
+            return {"success": False, "message": "Unable to make booking", "status_code": 500}
         
         # maybe add this in later
         # filter_criteria = {"firebase_id": tutorId}
@@ -45,7 +66,9 @@ def request_booking(tutorId, studentId, start_time):
         #     return {"success": True, "message": "Booking successfully requested", "status_code": 201}
         # else:
         #     return {"success": False, "message": "Unable to make booking, tutor not found", "status_code": 404}
+    
     else:
+
         return {"success": False, "message": "Unable to make booking", "status_code": 500}
 
 def is_booking_duplicate(tutorId, studentId, start_time):

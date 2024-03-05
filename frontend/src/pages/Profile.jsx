@@ -18,6 +18,8 @@ const Profile = () => {
     const [userDetails, setUserDetails] = useState({})
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
+    const [refresh, setRefresh] = useState(false)
+
 
     const gcseQueryParams = {
         "firebaseId": firebase_id,
@@ -56,7 +58,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
-    },[]);
+    },[refresh, firebase_id]);
 
     return(
         <>
