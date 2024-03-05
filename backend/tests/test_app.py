@@ -39,10 +39,10 @@ def test_get_user(client):
     }
 
     # user_id = str(ObjectId()) 
-    # users_collection = app.users_collection  
+    users_collection = app.users_collection  
     # users_collection.insert_one({**new_user, "_id": ObjectId(user_id)})
     
-    # print(users_collection)
+    print(users_collection)
 
     response = client.get('/users/test_firebase_id')
 
@@ -76,16 +76,3 @@ def test_get_user(client):
 
 
 
-# def test_add_tutor_to_subject_grade(client):
-#     subject = "mathematics"
-#     firebase_id = "test_firebase_id"
-#     grade = "alevel"
-#     data = {
-#         'firebase_id': firebase_id,
-#         'grade': grade
-#     }
-
-#     response = client.post(f'/subjects/{subject}/add', json=data)
-
-#     assert response.status_code == 201
-#     assert response.json == {'message': 'Tutor added successfully'}

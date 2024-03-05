@@ -9,6 +9,9 @@
 7. npm install react-bootstrap
 8. npm install flask
 9. npm install react-select
+10. npm install --save-dev @vitejs/plugin-react-swc
+11. npm install jsdom --save-dev
+
 
 
 
