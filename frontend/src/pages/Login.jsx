@@ -24,7 +24,7 @@ const Login = () => {
     const loginWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
-        const loginResult = logInAuth(email, password) 
+        const loginResult = await logInAuth(email, password) 
 
         if (loginResult.success === false) {
             setNotice("You entered a wrong username or password.")    
