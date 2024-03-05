@@ -1,41 +1,33 @@
-//AINT NOTHING LIKE REAL THING
-
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { updateBio } from '../services/users';
 
-
-
-const AboutMe = ({ userDetails, firebase_id }) => {
-    console.log(userDetails.bio)
-    //USESTATE
+const AboutMe = ({ userDetails, firebase_id, setUserDetails }) => {
+    //console.log(userDetails.bio)
     const [bio, setBio] = useState(userDetails.bio);
     const [Editing, setIsEditing] = useState(false)
-    
 
-    //HANDLES CHANGE BIO
+    //Helper Functions.
     const handleChangeBio = (e) => {
         console.log(e.target.value);
         setBio(e.target.value);
-        console.log("BIOO")
+        //console.log("CHECK CONSOLE.")
         console.log(bio)
       };
 
-    //HANDLES SUBMIT /users/${firebaseId}/bio // (`${BACKEND_URL}/tutors?${queryString}`
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await updateBio(firebase_id, bio); //
+            await updateBio(firebase_id, bio); 
             console.log("Updated Bio:", bio);
             setIsEditing(false);
-            setBio(bio)
+            setUserDetails(prevUserDetails => ({ ...prevUserDetails, bio: bio }));
         } catch (error) {
             console.error('Error updating bio:', error);
-            
         }
     };
-
+    
       return (
         <div>
             {/* Bios for Students/Tutors */}
@@ -57,7 +49,7 @@ const AboutMe = ({ userDetails, firebase_id }) => {
             {Editing ? (
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="bioTextArea">
-                        <Form.Label>Bio</Form.Label>
+                        {/* <Form.Label>Bio</Form.Label>*/}
                         <Form.Control
                             as="textarea"
                             rows={3}

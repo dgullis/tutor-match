@@ -10,6 +10,7 @@ class AddAvailabilityError(Exception):
 #create functions in here to add users / update users / delete users etc
 users_collection = get_users_collection()
 
+#Function to Update Bio.
 def update_bio(firebase_id, bio):
     users_collection = get_users_collection()
     try:
