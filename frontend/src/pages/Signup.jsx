@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../services/users";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
 import { sendEmail } from "../services/emailCommunications";
@@ -54,9 +52,13 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
+<<<<<<< HEAD
 
                         const signUpResult = await signUpAuth(email, password, name, status)
 
+=======
+                        const signUpResult = await signUpAuth(email, password, name, status)
+>>>>>>> origin/main
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
                                 setNotice("Email is already in use. Please try logging in instead."); 
@@ -64,12 +66,17 @@ const Signup = () => {
                                 console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
                             }
+<<<<<<< HEAD
                         } else if (signUpResult.success === true) {
                             if (status === "Student"){
                                 sendEmail(email, "signUpStudent")
                             } else if (status === "Tutor"){
                                 sendEmail(email, "signUpTutor")
                             }
+=======
+                        } else if (signUpResult.success === true){
+                            setNotice("Sign up successfull!")
+>>>>>>> origin/main
                         }
                     }
                 } else {
@@ -95,7 +102,7 @@ const Signup = () => {
                 <div className = "container">
                     <div className = "row justify-content-center">
                         <form className = "col-md-4 mt-3 pt-3 pb-3" >
-                            { "" !== notice &&
+                            { notice &&
                                 <div className = "alert alert-warning" role = "alert">
                                     { notice }    
                                 </div>

@@ -22,10 +22,9 @@ const TutorMatchNavbar = () => {
             setSignOutError(signOutResult.message)
         }
     }
-    console.log("mongoUser")
-    console.log(mongoUser)
-    console.log("user")
-    console.log(user)
+   
+    console.log("mongoUser", mongoUser)
+    console.log("user", user)
 
 
     return (
@@ -64,4 +63,6 @@ const TutorMatchNavbar = () => {
 };
 
 
+
 export default TutorMatchNavbar;
+
