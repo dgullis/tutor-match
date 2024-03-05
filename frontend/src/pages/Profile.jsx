@@ -8,6 +8,7 @@ import { AddSubject } from "../components/AddSubject";
 import { AddAvailability } from "../components/AddAvailability";
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
+import AboutMe from "../components/AboutMe";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -84,8 +85,6 @@ const Profile = () => {
         </div>
         </div>
 
-
-
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
@@ -99,22 +98,7 @@ const Profile = () => {
                 <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
             </div> }
         
-            {/* Bios for Students/Tutors*/}
-            <div>
-            {userDetails.status === "Tutor" && (
-                <div>
-                    <h2>Tutor Bio</h2>
-                    {/* Tutor Details Here */}
-                </div>
-            )}
-
-            {userDetails.status === "Student" && (
-                <div>
-                    <h2>Student Bio</h2>
-                    {/* Student Details Here */}
-                </div>
-            )}
-        </div>
+            <AboutMe userDetails={userDetails} />
         </>
     )    
 }
