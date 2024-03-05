@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../services/users";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -59,8 +57,10 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
+
                         console.log(safeguarding)
-                        const signUpResult = signUpAuth(email, password, name, status, safeguarding)
+                        const signUpResult = await signUpAuth(email, password, name, status, safeguarding)
+
 
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
@@ -69,7 +69,9 @@ const Signup = () => {
                                 console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
                             }
-                        } 
+                        } else if (signUpResult.success === true){
+                            setNotice("Sign up successfull!")
+                        }
                     }
                 } else {
                     setNotice("Password doesn't meet requirements. Please try again.")
@@ -94,7 +96,7 @@ const Signup = () => {
                 <div className = "container">
                     <div className = "row justify-content-center">
                         <form className = "col-md-4 mt-3 pt-3 pb-3" >
-                            { "" !== notice &&
+                            { notice &&
                                 <div className = "alert alert-warning" role = "alert">
                                     { notice }    
                                 </div>

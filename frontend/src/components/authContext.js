@@ -94,13 +94,27 @@ export const AuthProvider = ({ children }) => {
                     return
                 }
 
+            if(user){
+                setUser(user)
+                try {
+                    const firebase_id = user.uid;
+                    const result = await getUser(firebase_id);
+                    setMongoUser(result.user);
+                } catch (error) {
+                    console.log("error refreshing userdetails from mongoDB ", error)
+                } 
+            } else {
+                setUser(null)
+                setMongoUser(null)
                 setIsFetching(false)
+                return
+            }
+            setIsFetching(false)
+        })
+          // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
+        return () => unsubscribe()
+    }, []);
 
-
-            })
-            // unsubcribe is a cleaunup function ensures listener is detached when the componenet is not in use
-            return () => unsubscribe()
-        }, []);
 
     if (isFetching) {
         return (

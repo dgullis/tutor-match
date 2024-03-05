@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser } from "../services/users";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
 

@@ -16,7 +16,6 @@ export const TutorSearchResult = ( { tutor }) => {
                 <Button variant="primary">See Tutor</Button>
             </Link>
             </Card.Body>
-            
         </Card>
     );
 }

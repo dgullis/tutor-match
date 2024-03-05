@@ -32,16 +32,71 @@ def get_user_by_id(userId):
     users_collection = get_users_collection()
 
     try:
-        result = users_collection.find_one({"firebase_id": userId}, {"_id": 0})
+        pipeline = [
+            {
+                "$match": {"firebase_id": userId}
+            },
+            {
+                "$lookup": {
+                    "from": "bookings", 
+                    "localField": "firebase_id",  
+                    "foreignField": "tutorId",  
+                    "as": "bookings"
+                }
+            },
+            {
+                "$project": {"_id": 0}
+            }
+        ]
+
+        result = list(users_collection.aggregate(pipeline))
 
         if result:
-            # If user is found create a new dictionary with _id as a string not ObjectId
-            return {**result}
+            for booking in result[0].get("bookings", []):
+                booking["_id"] = str(booking["_id"])
+
+            return result[0]
         else:
             raise UserNotFoundError('User not found')
 
     except Exception as e:
         raise ValueError(f'{str(e)}')
+    
+# def get_user_by_id_with_bookings(userId):
+#     users_collection = get_users_collection()
+
+#     try:
+#         # Perform a $lookup to get bookings related to the user
+#         pipeline = [
+#             {
+#                 "$match": {"firebase_id": userId}
+#             },
+#             {
+#                 "$lookup": {
+#                     "from": "bookings",  # Replace with the actual name of your bookings collection
+#                     "localField": "firebase_id",  # Replace with the actual field in the users collection
+#                     "foreignField": "tutorId",  # Replace with the actual field in the bookings collection
+#                     "as": "bookings"
+#                 }
+#             },
+#             {
+#                 "$project": {"_id": 0}
+#             }
+#         ]
+
+#         result = list(users_collection.aggregate(pipeline))
+
+#         if result:
+#             for booking in result[0].get("bookings", []):
+#                 booking["_id"] = str(booking["_id"])
+
+#             return result[0]
+#         else:
+#             raise UserNotFoundError('User not found')
+
+#     except Exception as e:
+#         raise ValueError(str(e))
+
     
 
 def signup():
