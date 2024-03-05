@@ -36,6 +36,7 @@ const Profile = () => {
     const maxDate = new Date("01/01/2025 01:00 AM");
     const dateValue = new Date()
 
+    //React Life cycle
     useEffect(() => {
         console.log("line 20 profile.jsx")
         console.log(user)
@@ -43,6 +44,7 @@ const Profile = () => {
         console.log(idToken)
         getUser(firebase_id, idToken)
             .then((data) => {
+                console.log(data)
                 setUserDetails(data.user)
             })
             .catch((err) => {
@@ -98,7 +100,7 @@ const Profile = () => {
                 <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
             </div> }
         
-            <AboutMe userDetails={userDetails} />
+            <AboutMe userDetails={userDetails} firebase_id={firebase_id} />
         </>
     )    
 }

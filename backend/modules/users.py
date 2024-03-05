@@ -10,13 +10,11 @@ class AddAvailabilityError(Exception):
 #create functions in here to add users / update users / delete users etc
 users_collection = get_users_collection()
 
-def update_bio(userId, bioContent):
+def update_bio(firebase_id, bio):
     users_collection = get_users_collection()
-    
-
     try:
-        filter_criteria = {"_id": ObjectId(userId)}  
-        update_data = {"$set": {"bio": bioContent}} 
+        filter_criteria = {"firebase_id":(firebase_id)}  
+        update_data = {"$set": {"bio": bio}} 
         result = users_collection.update_one(filter_criteria, update_data)
         
         if result.matched_count == 0:

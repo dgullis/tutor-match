@@ -1,26 +1,41 @@
+//AINT NOTHING LIKE REAL THING
+
 import React from 'react';
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { updateBio } from '../services/users';
 
 
-const AboutMe = ({ userDetails }) => {
 
+const AboutMe = ({ userDetails, firebase_id }) => {
+    console.log(userDetails.bio)
     //USESTATE
-    const [bio, setBio] = useState("");
+    const [bio, setBio] = useState(userDetails.bio);
     const [Editing, setIsEditing] = useState(false)
+    
 
     //HANDLES CHANGE BIO
     const handleChangeBio = (e) => {
         console.log(e.target.value);
         setBio(e.target.value);
+        console.log("BIOO")
+        console.log(bio)
       };
 
-    //HANDLES SUBMIT
-    const handleSubmit = (e) => {
-       e.preventDefault();
-       console.log("Updated Bio:", bio)
-       setIsEditing(false);
-      };
+    //HANDLES SUBMIT /users/${firebaseId}/bio // (`${BACKEND_URL}/tutors?${queryString}`
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await updateBio(firebase_id, bio); //
+            console.log("Updated Bio:", bio);
+            setIsEditing(false);
+            setBio(bio)
+        } catch (error) {
+            console.error('Error updating bio:', error);
+            
+        }
+    };
+
       return (
         <div>
             {/* Bios for Students/Tutors */}

@@ -49,6 +49,29 @@ export const getUser = async (firebase_id, idToken) => {
     }
 }
 
+//Bio 
+export const updateBio = async (firebase_id, bio) => {
+    try {
+        console.log(firebase_id)
+        console.log(bio)
+        const response = await fetch(`${BACKEND_URL}/users/${firebase_id}/bio`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+            body: JSON.stringify({ bio })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update bio');
+        }
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error updating bio:', error);
+    }
+};
+//
+
 export const addAvailability = async (firebase_id, idToken, startTime, endTime) => {
 
     const availabilityInHourSlots = [];
