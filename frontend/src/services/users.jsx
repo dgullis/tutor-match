@@ -26,9 +26,12 @@ export const signup = async (firebase_id, name, email, status) => {
     }
 };
 
-export const getUser = async (firebase_id) => {
+export const getUser = async (firebase_id, idToken) => {
     const requestOptions = {
         method: "GET",
+        headers: {
+            'Authorization': `Bearer ${idToken}`
+        }
     }
 
     try {
@@ -44,4 +47,52 @@ export const getUser = async (firebase_id) => {
         console.error(error)
         throw error;
     }
+}
+
+export const addAvailability = async (firebase_id, idToken, startTime, endTime) => {
+
+    const availabilityInHourSlots = [];
+    let currentSlot = new Date(startTime);
+    currentSlot.setMinutes(0, 0, 0);
+
+    while (currentSlot < endTime) {
+        const nextSlot = new Date(currentSlot);
+        nextSlot.setHours(currentSlot.getHours() + 1);
+
+        availabilityInHourSlots.push({
+            start_time: new Date(currentSlot),
+            end_time: new Date(nextSlot)
+        });
+
+        currentSlot.setHours(currentSlot.getHours() + 1);
+    }
+
+    const payload = {
+        "availability": availabilityInHourSlots
+    };
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`
+        },
+        body: JSON.stringify(payload)
+    }
+
+    try {
+        let response = await fetch(`${BACKEND_URL}/tutors/${firebase_id}/availability`, requestOptions);
+
+        const data = await response.json()
+
+        if (response.status === 201) {
+            return data;
+        } else {
+            console.error("Error adding availability:", data.message);
+            throw new Error(data.message);
+        }
+    } catch (error){
+        console.error("Unexpected error:", error);
+        throw error;
+    }
+
 }

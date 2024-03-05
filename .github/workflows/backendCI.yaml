@@ -1,0 +1,54 @@
+name: backendCI
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+
+    - name: create-json
+      id: create-json
+      uses: jsdaniell/create-json@v1.2.3
+      with:
+          name: "firebaseServiceAccountKey.json"
+          json: ${{ secrets.FIREBASE_JSON }} 
+
+    - name: Create backend ENV from secret
+      run: |
+          cat << EOF > ./backend/.env
+          ${{ secrets.BACKEND_ENV }}
+          EOF    
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.10.0
+      with:
+        mongodb-version: "6.0"
+
+    - name: Install dependencies
+      run: |
+        pip install pipenv
+        pip install flask
+        pip install flask pymongo
+        pip install flask-cors
+        pip install firebase-admin
+        pip install pytest
+        pip install python-dotenv
+
+    - name: Run app.py
+      run: nohup python backend/app.py > /dev/null 2>&1 &
+
+    - name: Run pytest
+      run: |
+        pipenv run pytest
+
+
+
+
+
+
