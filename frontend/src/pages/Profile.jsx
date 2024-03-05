@@ -86,6 +86,8 @@ const Profile = () => {
         </div>
         </div>
 
+        <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
+
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
@@ -93,13 +95,12 @@ const Profile = () => {
 
           </div>}
 
-
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className="add-availability">
                 <AddAvailability firebaseId = {firebase_id} idToken={idToken}/>
             </div> }
         
-            <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
+            
         </>
     )    
 }

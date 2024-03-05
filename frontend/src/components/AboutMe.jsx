@@ -55,6 +55,7 @@ const AboutMe = ({ userDetails, firebase_id, setUserDetails }) => {
                             rows={3}
                             value={bio}
                             onChange={handleChangeBio}
+                            style={{width: '300px'}}
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit">
@@ -64,7 +65,7 @@ const AboutMe = ({ userDetails, firebase_id, setUserDetails }) => {
             ) : (
                 <>
                     <p>{bio}</p>
-                    <Button variant="success" onClick={() => setIsEditing(true)}>
+                    <Button variant="primary" onClick={() => setIsEditing(true)}>
                         Edit Bio
                     </Button>
                 </>
