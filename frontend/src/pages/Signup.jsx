@@ -52,32 +52,22 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
-<<<<<<< HEAD
 
                         const signUpResult = await signUpAuth(email, password, name, status)
-
-=======
-                        const signUpResult = await signUpAuth(email, password, name, status)
->>>>>>> origin/main
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
                                 setNotice("Email is already in use. Please try logging in instead."); 
                             } else {
-                                console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
                             }
-<<<<<<< HEAD
                         } else if (signUpResult.success === true) {
+                            setNotice("Sign up successfull!")
                             if (status === "Student"){
                                 sendEmail(email, "signUpStudent")
                             } else if (status === "Tutor"){
                                 sendEmail(email, "signUpTutor")
                             }
-=======
-                        } else if (signUpResult.success === true){
-                            setNotice("Sign up successfull!")
->>>>>>> origin/main
-                        }
+                        } 
                     }
                 } else {
                     setNotice("Password doesn't meet requirements. Please try again.")
