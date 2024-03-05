@@ -26,9 +26,12 @@ export const signup = async (firebase_id, name, email, status) => {
     }
 };
 
-export const getUser = async (firebase_id) => {
+export const getUser = async (firebase_id, idToken) => {
     const requestOptions = {
         method: "GET",
+        headers: {
+            'Authorization': `Bearer ${idToken}`
+        }
     }
 
     try {
@@ -46,7 +49,7 @@ export const getUser = async (firebase_id) => {
     }
 }
 
-export const addAvailability = async (firebase_id, startTime, endTime) => {
+export const addAvailability = async (firebase_id, idToken, startTime, endTime) => {
 
     const availabilityInHourSlots = [];
     let currentSlot = new Date(startTime);
@@ -71,6 +74,7 @@ export const addAvailability = async (firebase_id, startTime, endTime) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`
         },
         body: JSON.stringify(payload)
     }

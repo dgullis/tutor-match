@@ -1,27 +1,23 @@
-from flask import Flask, request, jsonify
-from functools import wraps
-import firebase_admin.auth as firebase_auth
+from flask import request
+from firebase_admin import auth
 
-app = Flask(__name__)
+def verify_token():
+    id_token = request.headers.get('Authorization')
+    print("firebase_token_auth line 6 id token: ")
+    print(id_token)
+    if not id_token or not id_token.startswith('Bearer '):
+        raise ValueError('Authorization token not found or invalid')
 
-def verify_token(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'Authorization' not in request.headers:
-            return jsonify({'message': 'No token provided'}), 401
-        try:
-            auth_header = request.headers['Authorization']
-            token = auth_header.split(' ')[1]
-            firebase_auth.verify_id_token(token)
-        except Exception as e:
-            return jsonify({'message': 'Invalid or expired token'}), 403
-        return f(*args, **kwargs)
-    return wrap
+    id_token = id_token.split('Bearer ')[1]
 
-# Example code to include in 
-# Example of a protected route
-@app.route('/your-endpoint')
-@verify_token
-def protected_endpoint():
-    # Your endpoint logic here
-    return jsonify({'message': 'This is a protected route'})
+    try:
+        decoded_token = auth.verify_id_token(id_token)
+        print("fb token auth line 15")
+        print(decoded_token)
+        return decoded_token
+    except auth.InvalidIdTokenError:
+        raise ValueError('Invalid ID token')
+    except auth.ExpiredIdTokenError:
+        raise ValueError('ID token has expired')
+    
+

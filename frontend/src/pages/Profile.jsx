@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth } from "../firebase";
+
 import { useAuth } from "../components/authContext";
 import { getUser } from "../services/users";
 import { searchSubjects } from "../services/subjects";
@@ -10,6 +10,8 @@ import { BookingRequestCalender } from "../components/BookingRequestCalender";
 import { RequestedBooking } from "../components/RequestedBooking";
 import { Card, CardTitle } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
+import UserProfile from "../components/User";
+import ProfileSubjects from "../components/ProfileSubjects";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -21,7 +23,6 @@ const Profile = () => {
     const [alevel, setAlevel] = useState([])
     const [refresh, setRefresh] = useState(false)
 
-
     const gcseQueryParams = {
         "firebaseId": firebase_id,
         "grade": "gcse"
@@ -31,10 +32,12 @@ const Profile = () => {
         "grade": "alevel"
     }
 
-
-
     useEffect(() => {
-        getUser(firebase_id)
+        console.log("line 20 profile.jsx")
+        console.log(user)
+        console.log(userDetails)
+        console.log(idToken)
+        getUser(firebase_id, idToken)
             .then((data) => {
                 setUserDetails(data.user)
             })
@@ -42,18 +45,18 @@ const Profile = () => {
                 console.log(err);
                 navigate("/login");
             });
-        searchSubjects(gcseQueryParams)
+        searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
-                console.log(data)
-                console.log(data.result[0].name)
+                //console.log(data)
+                //console.log(data.result[0].name)
                 setGcse(data.result)
             })
             .catch((err) => {
                 console.log(err);
             })
-        searchSubjects(alevelQueryParams)
+        searchSubjects(alevelQueryParams, idToken)
             .then((data) => {
-                console.log(data)
+                //console.log(data)
                 setAlevel(data.result)
             })
             .catch((err) => {
@@ -63,22 +66,24 @@ const Profile = () => {
 
     return(
         <>
-        <div>
-        <h2>Tutor Details</h2>
-        <p>Name: {userDetails.name}<br/>
-        Email: {userDetails.email}<br/>
-        GCSEs: {gcse.map((subject) => (
-            <div>
-                {subject.name}
-            </div>
-        ))}
-        A Levels: {alevel.map((subject) => (
-            <div>
-                {subject.name}
-            </div>
-        ))}</p>
-        </div> 
+      
+        <div className = "container-fluid">
+            <div className = "row justify-content-center mt-3">
+                <div className = "col-md-4 text-center">
+        {userDetails.status === "Tutor" && <h2>Tutor Details</h2> }
+        {userDetails.status === "Student" && <h2>Student Details</h2>}
+        <div className = "profile">
+            <UserProfile user = {userDetails} />
+        </div>
+        <br/>
+        {userDetails.status === "Tutor" &&
+        <ProfileSubjects gcse = {gcse} alevel = {alevel} />}
+        </div>
+        </div>
+        </div>
 
+
+       
         {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
             <RequestedBookingsScrollable 
             userDetails={userDetails} 
@@ -86,16 +91,25 @@ const Profile = () => {
                 setRefresh(!refresh)} />
         )}
 
-        {user.uid === firebase_id && <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} />
-        </div>}
+        {user.uid === firebase_id && userDetails.status === "Tutor" && 
+            <div className = "addSubject">
+            <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
+            setRefresh(!refresh)}/>
 
-        <div className="add-availability">
-            <AddAvailability 
-                firebaseId = {firebase_id}
-                onChangeAvailability={() => 
-                    setRefresh(!refresh)}/>
-        </div> 
+          </div>}
+
+
+
+        {user.uid === firebase_id && userDetails.status === "Tutor" && 
+            <div className="add-availability">
+                <AddAvailability 
+                    firebaseId = {firebase_id} 
+                    idToken={idToken}
+                    onChangeAvailability={() => 
+                      setRefresh(!refresh)}
+                    />
+            </div> }
+
 
         <div className="booking-request">
             <BookingRequestCalender 
