@@ -5,9 +5,10 @@ from datetime import datetime, timezone
 from bson import BSON
 import json
 from firebase_admin import credentials, initialize_app
-from modules.users import signup, update_bio, get_user_by_id, add_availability_for_tutor, UserNotFoundError
+from modules.users import *
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
 from lib.firebase_token_auth import verify_token
+
 
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
+
 
 @app.route("/signup", methods=["POST"])
 def signup_route():
@@ -39,6 +41,23 @@ def get_tutor_subjects():
     except Exception as e:
         return jsonify({f'Error retrieving subjects: {str(e)}'}), 500
 
+
+# @app.route('/users/<string:userId>/bio', methods=['PUT'])
+# def update_user_bio(userId):
+#     data = request.json
+#     bioContent = data.get('bio')
+
+#     try:
+#         update_bio(userId, bioContent)
+#         return jsonify({'message': 'Update bio successful'}), 200
+    
+#     except UserNotFoundError as usnfe:
+#         return jsonify({'error': str(usnfe)}), 404
+    
+#     except Exception as e:
+#         return jsonify({'error': f'Error updating bio: {str(e)}'}), 500
+
+    
 @app.route('/subjects/<string:subject>/add', methods=['POST'])
 def add_tutor_to_subject_grade(subject):
     verify_token()
@@ -123,4 +142,4 @@ def get_user(userId):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)  
