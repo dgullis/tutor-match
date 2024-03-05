@@ -26,7 +26,6 @@ export const signup = async (firebase_id, name, email, status) => {
     }
 };
 
-
 export const getUser = async (firebase_id, idToken) => {
     const requestOptions = {
         method: "GET",
@@ -71,7 +70,6 @@ export const updateBio = async (firebase_id, bio) => {
         throw new Error('Error updating bio:', error);
     }
 };
-//
 
 export const addAvailability = async (firebase_id, idToken, startTime, endTime) => {
 
