@@ -104,7 +104,7 @@ const Profile = () => {
         {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
             <RequestedBookingsScrollable 
             userDetails={userDetails}
-            tutorEmail={userDetails.email}
+            loggedInUserEmail={mongoUser.email}
             onChangeBookingStatus={() => 
                 setRefresh(!refresh)} />
         )}

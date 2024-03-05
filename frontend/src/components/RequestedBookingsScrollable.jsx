@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardTitle } from 'react-bootstrap';
 import { RequestedBooking } from './RequestedBooking';
 
-const RequestedBookingsScrollable = ({ userDetails, onChangeBookingStatus, tutorEmail }) => {
+const RequestedBookingsScrollable = ({ userDetails, onChangeBookingStatus, loggedInUserEmail }) => {
     return (
         <div className="requested-bookings">
             {userDetails.bookings && (
@@ -17,7 +17,7 @@ const RequestedBookingsScrollable = ({ userDetails, onChangeBookingStatus, tutor
                         <RequestedBooking 
                             key={booking._id}
                             booking={booking}
-                            tutorEmail={tutorEmail}
+                            loggedInUserEmail={loggedInUserEmail}
                             onChangeBookingStatus={onChangeBookingStatus}
                         />
                         ))}

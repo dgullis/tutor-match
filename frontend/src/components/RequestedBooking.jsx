@@ -14,7 +14,7 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus, loggedInUser
     const onAccept = async (bookingId) => {
         try {
             await acceptBooking(bookingId, booking.tutorId, booking.start_time)
-            // sendEmail(loggedInUserEmail, "bookingAcepted")
+            sendEmail(loggedInUserEmail, "bookingAcepted")
             onChangeBookingStatus()
         } catch(error) {
             console.log(error)
@@ -24,7 +24,7 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus, loggedInUser
     const onDeny = async (bookingId) => {
         try {
             await denyBooking(bookingId)
-            // sendEmail(loggedInUserEmail, "bookingDenied")
+            sendEmail(loggedInUserEmail, "bookingDenied")
             onChangeBookingStatus()
         } catch(error) {
             console.log(error)
