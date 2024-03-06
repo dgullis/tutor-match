@@ -10,9 +10,9 @@ export const TutorSearchResult = ( { tutor }) => {
             <Card.Body>
             <Row>
             <Col md={4}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img style={{ width: "80px", height: "80px", borderRadius: "50%" }} variant="top" src={tutor.profileImage ? tutor.profileImage : "https://res.cloudinary.com/dzkvzncgr/image/upload/v1707228333/ph2p8wvxud1qbsqqfxqk.png"}/>
             </Col>
-            <Col md={8}>
+            <Col md={8} className="d-flex align-items-center">
                 <Link to={`/profile/${tutor.firebase_id}`} style={{color: 'hsl(0, 0%, 20%)', textDecoration: 'none'}}>
                     <Card.Title>{tutor.name}</Card.Title>
                 </Link>
@@ -22,3 +22,18 @@ export const TutorSearchResult = ( { tutor }) => {
         </Card>
     );
 }
+
+//const DEFAULT_PFP = "https://res.cloudinary.com/dzkvzncgr/image/upload/v1707228333/ph2p8wvxud1qbsqqfxqk.png";
+//user.profileImage ? (
+//     <img
+//     src={props.user.profileImage}
+//     alt="Profile"
+//     style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+//     />
+// ) : (
+//     <img
+//     src={props.defaultPicture} 
+//     alt="Default Profile"
+//     style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+//     />
+// )}

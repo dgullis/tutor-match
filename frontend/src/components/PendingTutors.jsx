@@ -36,13 +36,14 @@ const PendingTutorList = (props) => {
     }
 
     return (
-        <div class = "container">
+        <div className = "container">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
                 <h4>Pending Tutors: </h4>
                 {pendingTutors.map((user) => (
                     <>
-                    <div>
+                    {console.log(user.firebase_id)}
+                    <div key={user.firebase_id}>
                         Name: {user.name}<br/>
                         E-mail: {user.email}<br/>
                     </div>
