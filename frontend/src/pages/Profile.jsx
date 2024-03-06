@@ -15,8 +15,7 @@ import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
 import { addProfilePicture } from "../services/users";
-import { storage } from "../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 import { TutorReview } from "../components/TutorRating/TutorRating";
 import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
 
@@ -32,7 +31,7 @@ const Profile = () => {
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
     const [pendingTutors, setPendingTutors] = useState([])
-    const [image, setImage] = useState(null)
+    const [isCurrentUser, setIsCurrentUser] = useState(false)
     //console.log("user")
     //console.log(user)
 
@@ -54,6 +53,9 @@ const Profile = () => {
             .then((data) => {
                 console.log(data)
                 setUserDetails(data.user)
+                if(user.uid === firebase_id){
+                    setIsCurrentUser(true)
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -86,42 +88,11 @@ const Profile = () => {
             })
     },[refresh, firebase_id]);
 
-    const handleImageChange = (e) => {
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
-    };
     
-    const handleUpload = async () => {
-        if (image) {
-            const imageRef = ref(storage, `profile-images/${image.name}`);
-            const uploadTask = uploadBytesResumable(imageRef, image);
-            // Event listeners:
-            // When you perform an upload or download operation, Firebase Storage provides you with a snapshot object that allows you to monitor the progress of the task and handle various events related to it.
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    console.log('Uploaded file succesfully')
-                },
-                (error) => {
-                    console.log(error);
-                },
-                );
+    
+    
 
-            try {
-                await getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                    setUserDetails((prevDetails => ({
-                        ...prevDetails,
-                        profileImage: downloadURL,
-                    })));
-                    const result = await addProfilePicture(firebase_id, downloadURL)
-                    
-                })
-            } catch (error) {
-                console.log("error", error);
-            }
-    };
-    }
-
+    //student profile page, not belonging to logged in user
     if (userDetails && userDetails.status === "Student" && user.uid !== firebase_id){
         return (
         <Container className="d-flex justify-content-center align-items-center" >
@@ -132,9 +103,40 @@ const Profile = () => {
                         <Card.Title>
                             Student Details
                         </Card.Title>
-                        <UserProfile user = {userDetails}/>
+                        <UserProfile user = {userDetails} isCurrentUser firebase_id={firebase_id}/>
                     </Card.Body>
                 </Card>
+                </Col>
+            </Row>
+        </Container>
+        )
+    }
+
+    // student profile page, belonging to logged in user
+    if (userDetails && userDetails.status === "Student" && user.uid === firebase_id){
+        return (
+        <Container className="d-flex justify-content-center align-items-center" >
+            <Row>
+                <Col>
+                <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minWidth: '400px', maxWidth: '400px', padding: "20px" }}>
+                    <Card.Body className="text-center">
+                        <Card.Title>
+                            Student Details
+                        </Card.Title>
+                        <UserProfile 
+                            user = {userDetails} 
+                            isCurrentUser 
+                            onChangeProfileImage={() => 
+                                setRefresh(!refresh)}/>
+                    </Card.Body>
+                </Card>
+                </Col>
+                <Col>
+                    <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minHeight: '450px', minWidth: '400px', maxWidth: '400px', padding: "20px" }}>    
+                    <Card.Title>
+                        Calender
+                    </Card.Title>
+                    </Card>
                 </Col>
             </Row>
         </Container>
@@ -155,12 +157,7 @@ const Profile = () => {
         {userDetails.status === "Admin" && <h2>Admin Account</h2>}
         <div className = "profile">
             <UserProfile user = {userDetails} defaultPicture = {DEFAULT_PFP} />
-            {mongoUser.firebase_id === firebase_id && (
-            <div>
-                <input type="file" onChange={handleImageChange} />
-                <button onClick={handleUpload}>Upload</button>
-            </div>
-        )}
+            
         </div>
         <br/>
         {userDetails.status === "Tutor" &&

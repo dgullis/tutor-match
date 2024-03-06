@@ -1,3 +1,5 @@
+import UploadImage from "./UploadImage";
+
 const UserProfile = (props) => {
     return (
         <div key={props.user.firebase_id} style={{ marginBottom: '20px' }}>
@@ -7,6 +9,13 @@ const UserProfile = (props) => {
                 alt="Image description" 
                 style={{ width: "150px", height: "150px", borderRadius: "50%", margin: '10px' }}
             />
+            {props.isCurrentUser &&
+            <div style={{ marginBottom: '10px' }}>
+                <UploadImage 
+                    firebase_id={props.user.firebase_id}
+                    onChangeProfileImage={props.onChangeProfileImage} />
+            </div>
+            }
             <div>
                 <strong>Name:</strong><br/> {props.user.name} 
             </div>
