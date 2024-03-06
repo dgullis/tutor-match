@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import { Form, Button, Alert } from 'react-bootstrap';
 import { requestBooking } from "../services/bookings";
 import { useEffect } from "react";
+import { sendEmail } from "../services/emailCommunications";
 
 
 export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBooking}) => {
@@ -10,9 +11,11 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
     const [availableDates, setAvailableDates] = useState([])
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    console.log(tutorDetails)
 
     const tutorFirebaseId = tutorDetails.firebase_id && tutorDetails.firebase_id;
     const loggedInUserFirebaseId = loggedInUser.firebase_id && loggedInUser.firebase_id
+
 
 
     useEffect(()=> {
@@ -60,6 +63,8 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
                     setErrorMessage("")
                     setSuccessMessage(result.message)
                     onRequestBooking()
+                    sendEmail(tutorDetails.email, "requestBooking")
+
                 } else {
                     setSuccessMessage("")
                     setErrorMessage(result.error)

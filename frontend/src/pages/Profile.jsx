@@ -116,7 +116,6 @@ const Profile = () => {
         {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
             <RequestedBookingsScrollable 
             userDetails={userDetails}
-            loggedInUserEmail={mongoUser.email}
             onChangeBookingStatus={() => 
                 setRefresh(!refresh)} />
         )}
@@ -127,6 +126,7 @@ const Profile = () => {
             setRefresh(!refresh)}/>
 
         </div>}
+
 
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
@@ -142,16 +142,19 @@ const Profile = () => {
         
         {user.uid === firebase_id && userDetails.status === "Admin" &&
         <div>
-        <PendingTutorList pending = {pendingTutors} idToken = {idToken} userApproved={() => setRefresh(!refresh)}/>
+        <PendingTutorList idToken = {idToken}/>
         </div>}
 
+
         {user.uid != firebase_id && userDetails.status === "Tutor" &&
+
         <div className="booking-request">
             <BookingRequestCalender 
                 tutorDetails = {userDetails}
                 loggedInUser = {mongoUser}
                 onRequestBooking={() => 
                     setRefresh(!refresh)} />
+
         </div> }
 
         {user.uid != firebase_id && userDetails.status === "Tutor" &&
@@ -163,6 +166,9 @@ const Profile = () => {
                     setRefresh(!refresh)}
             />
         </div> }
+
+                </div>}
+
 
         </>
     )    
