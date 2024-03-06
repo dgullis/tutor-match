@@ -29,7 +29,7 @@ const TutorMatchNavbar = () => {
     //console.log(user)
 
     return (
-        <Navbar bg="primary" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px' }}>
+        <Navbar bg="primary" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px', color: "#025E84" }}>
         <Container>
         <Navbar.Brand>
             <img

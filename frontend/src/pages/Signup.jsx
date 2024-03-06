@@ -131,7 +131,7 @@ const Signup = () => {
 
 
                             <div className = "d-grid">
-                                <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Sign up</button>
+                                <button style={{ backgroundColor: '#025E84', color: 'white' }} type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Sign up</button>
                             </div>
 
                             {password && (
