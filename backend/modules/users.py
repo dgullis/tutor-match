@@ -224,3 +224,13 @@ def updating_rating(user_firebase_id):
         
 
 
+def update_profile_picture(firebase_id, profilePitureUrl):
+    try:
+        result = users_collection.update_one({"firebase_id":firebase_id}, {"$set": {"profileImage": profilePitureUrl}})
+
+        if result.matched_count == 0:
+            return {"sucess": False, "error": "unable to update profile picture URL", "status_code": 404}
+        else:
+            return {"sucess": True, "error": "profile picture URL updated", "status_code": 201}
+    except Exception as e:
+        raise ValueError(f'Error updating profile picture URL: {str(e)}')

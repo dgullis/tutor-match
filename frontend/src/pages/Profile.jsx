@@ -14,8 +14,13 @@ import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
+import { addProfilePicture } from "../services/users";
+import { storage } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { TutorReview } from "../components/TutorRating/TutorRating";
 import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
+
+const DEFAULT_PFP = "https://res.cloudinary.com/dzkvzncgr/image/upload/v1707228333/ph2p8wvxud1qbsqqfxqk.png";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -27,6 +32,7 @@ const Profile = () => {
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
     const [pendingTutors, setPendingTutors] = useState([])
+    const [image, setImage] = useState(null)
     //console.log("user")
     //console.log(user)
 
@@ -80,6 +86,43 @@ const Profile = () => {
             })
     },[refresh, firebase_id]);
 
+    const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
+    
+    const handleUpload = async () => {
+        if (image) {
+            const imageRef = ref(storage, `profile-images/${image.name}`);
+            const uploadTask = uploadBytesResumable(imageRef, image);
+            // Event listeners:
+            // When you perform an upload or download operation, Firebase Storage provides you with a snapshot object that allows you to monitor the progress of the task and handle various events related to it.
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    console.log('Uploaded file succesfully')
+                },
+                (error) => {
+                    console.log(error);
+                },
+                );
+
+            try {
+                await getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                    setUserDetails((prevDetails => ({
+                        ...prevDetails,
+                        profileImage: downloadURL,
+                    })));
+                    const result = await addProfilePicture(firebase_id, downloadURL)
+                    
+                })
+            } catch (error) {
+                console.log("error", error);
+            }
+    };
+    }
+
+
     return (
         <>
 
@@ -92,7 +135,13 @@ const Profile = () => {
         {userDetails.status === "Student" && <h2>Student Details</h2>}
         {userDetails.status === "Admin" && <h2>Admin Account</h2>}
         <div className = "profile">
-            <UserProfile user = {userDetails} />
+            <UserProfile user = {userDetails} defaultPicture = {DEFAULT_PFP} />
+            {mongoUser.firebase_id === firebase_id && (
+            <div>
+                <input type="file" onChange={handleImageChange} />
+                <button onClick={handleUpload}>Upload</button>
+            </div>
+        )}
         </div>
         <br/>
         {userDetails.status === "Tutor" &&
