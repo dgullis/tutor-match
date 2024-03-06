@@ -65,8 +65,9 @@ return (
     <>
 
     <Container style={{ width: "75%" }} className="d-flex justify-content-center">
-    <Row>
-    <Col>
+    <Row >
+    <Col className="text-center">
+        Select a subject and grade to find suitable tutors
     <Form onSubmit={handleSubmit}>
         <Form.Group controlId="subject" style={{ margin: '20px', minWidth: '500px' }}>
             <Select

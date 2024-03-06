@@ -1,24 +1,22 @@
 const UserProfile = (props) => {
     return (
-        <article key={props.user.firebase_id}>
-        {props.user.profileImage ? (
-            <img
-            src={props.user.profileImage}
-            alt="Profile"
-            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+        <div key={props.user.firebase_id} style={{ marginBottom: '20px' }}>
+        
+            <img 
+                src={props.user.profileImage ? props.user.profileImage : "https://res.cloudinary.com/dzkvzncgr/image/upload/v1707228333/ph2p8wvxud1qbsqqfxqk.png"} 
+                alt="Image description" 
+                style={{ width: "150px", height: "150px", borderRadius: "50%", margin: '10px' }}
             />
-        ) : (
-            <img
-            src={props.defaultPicture} 
-            alt="Default Profile"
-            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-            />
-        )}
-
-        <br />
-        Name: {props.user.name} <br />
-        Email: {props.user.email}<br/>
-        </article>
+            <div>
+                <strong>Name:</strong><br/> {props.user.name} 
+            </div>
+            <div>
+            <strong>Email:</strong> <br/>{props.user.email}
+            </div>
+            <div>
+            <strong>About me:</strong> <br/>{props.user.bio}
+            </div>
+        </div>
     );
     };
 

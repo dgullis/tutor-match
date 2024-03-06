@@ -8,7 +8,7 @@ import { AddSubject } from "../components/AddSubject";
 import { AddAvailability } from "../components/AddAvailability";
 import { BookingRequestCalender } from "../components/BookingRequestCalender";
 import { RequestedBooking } from "../components/RequestedBooking";
-import { Card, CardTitle } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
@@ -120,6 +120,25 @@ const Profile = () => {
                 console.log("error", error);
             }
     };
+    }
+
+    if (userDetails && userDetails.status === "Student" && user.uid !== firebase_id){
+        return (
+        <Container className="d-flex justify-content-center align-items-center" >
+            <Row>
+                <Col>
+                <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minWidth: '400px', maxWidth: '400px', padding: "20px" }}>
+                    <Card.Body className="text-center">
+                        <Card.Title>
+                            Student Details
+                        </Card.Title>
+                        <UserProfile user = {userDetails}/>
+                    </Card.Body>
+                </Card>
+                </Col>
+            </Row>
+        </Container>
+        )
     }
 
 
