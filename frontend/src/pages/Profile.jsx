@@ -39,7 +39,6 @@ const Profile = () => {
         "grade": "alevel"
     }
 
-
     useEffect(() => {
         //console.log("line 20 profile.jsx")
         //console.log(user)
@@ -102,7 +101,6 @@ const Profile = () => {
         </div>
         </div>
 
-
         {userDetails.reviews && 
         <div className="show-rating">
             <TutorStarRating 
@@ -112,8 +110,6 @@ const Profile = () => {
             />
         </div>
         }
-
-
 
         <div className="d-flex align-items-center justify-content-center">
         <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
@@ -134,12 +130,7 @@ const Profile = () => {
 
         </div>}
 
-
-
-
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
-
-
 
             <div className="add-availability">
                 <AddAvailability 
@@ -176,10 +167,6 @@ const Profile = () => {
                     setRefresh(!refresh)}
             />
         </div> }
-
-                </div>}
-
-
         </>
     )    
 }
