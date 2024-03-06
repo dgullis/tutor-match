@@ -14,6 +14,8 @@ import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
+import { TutorReview } from "../components/TutorRating/TutorRating";
+import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -21,7 +23,6 @@ const Profile = () => {
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
-
     const [refresh, setRefresh] = useState(false)
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
@@ -37,6 +38,7 @@ const Profile = () => {
         "firebaseId": firebase_id,
         "grade": "alevel"
     }
+
 
     useEffect(() => {
         //console.log("line 20 profile.jsx")
@@ -79,7 +81,7 @@ const Profile = () => {
             })
     },[refresh, firebase_id]);
 
-    return(
+    return (
         <>
 
         <div className = "container-fluid">
@@ -100,11 +102,25 @@ const Profile = () => {
         </div>
         </div>
 
+
+        {userDetails.reviews && 
+        <div className="show-rating">
+            <TutorStarRating 
+                tutorReviews={userDetails.reviews}
+                tutorRating={userDetails.rating}
+                
+            />
+        </div>
+        }
+
+
+
         <div className="d-flex align-items-center justify-content-center">
         <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
         </div>
 
-        {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
+
+        {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && (
             <RequestedBookingsScrollable 
             userDetails={userDetails}
             onChangeBookingStatus={() => 
@@ -118,7 +134,11 @@ const Profile = () => {
 
         </div>}
 
-        {user.uid === firebase_id && userDetails.status === "Tutor"  && 
+
+
+
+        {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
+
 
 
             <div className="add-availability">
@@ -135,14 +155,30 @@ const Profile = () => {
         <PendingTutorList idToken = {idToken}/>
         </div>}
 
-        {userDetails.status != "Admin" &&
+
+        {user.uid != firebase_id && userDetails.status === "Tutor" &&
+
         <div className="booking-request">
             <BookingRequestCalender 
                 tutorDetails = {userDetails}
                 loggedInUser = {mongoUser}
                 onRequestBooking={() => 
                     setRefresh(!refresh)} />
+
+        </div> }
+
+        {user.uid != firebase_id && userDetails.status === "Tutor" &&
+        <div className="tutor-rating">
+            <TutorReview 
+                tutorId={firebase_id}
+                loggedInUser = {mongoUser}
+                onSubmitReview={() => 
+                    setRefresh(!refresh)}
+            />
+        </div> }
+
                 </div>}
+
 
         </>
     )    

@@ -16,17 +16,14 @@ export const requestBooking = async (tutorId, studentId, start_time) => {
     }
     try {
         const response = await fetch(`${BACKEND_URL}/bookings`, requestOptions);
-        console.log("here 1")
         const data = await response.json();
-        console.log("data", data)
+
         if (response.status === 201) {
             return { "success": true, "message": data.message };
         } else {
             return { "success": false, "error": data.message };
         }
     } catch (error) {
-        console.log("here 2")
-
         console.error("An error occurred requesting a booking:", error);
         return { "error": "An error occurred while processing the request."}
     }

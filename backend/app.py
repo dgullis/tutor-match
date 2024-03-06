@@ -218,6 +218,18 @@ def get_user(userId):
     except Exception as e:
         return jsonify({'error': f'Error finding user: {str(e)}'}), 500
 
+@app.route('/users/<string:userId>/review', methods=['POST'])
+def add_review(userId):
+    data = request.json
+    rating = data.get('rating')
+    comment = data.get('comment')
+    reviewer_id = data.get('reviewerId')
+    print(reviewer_id)
+
+    result = submit_review(userId, rating, comment, reviewer_id)
+    status_code = result.get("status_code", 500)
+    updating_rating(userId)
+    return jsonify(result), status_code
 
 if __name__ == '__main__':
     app.run(debug=True)  

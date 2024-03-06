@@ -159,3 +159,37 @@ export const updatePendingTutor = async(idToken,firebase_id) => {
     }
     
 }
+
+export const submitReview = async (tutorId, rating, comment, reviewerId) => {
+    const payload = {
+        "rating": rating,
+        "comment": comment,
+        "reviewerId": reviewerId
+    };
+
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload)
+    };
+
+    try {      
+    
+        let response = await fetch(`${BACKEND_URL}/users/${tutorId}/review`, requestOptions);
+        const data = await response.json();
+
+        if (response.status === 201) {
+            return { "success": true, "message": data.message };        
+        } else {
+            return { "success": false, "error": data.message };
+        }
+    } catch (error) {
+        console.error("An error occurred requesting a booking:", error);
+        return { "error": "An error occurred while processing the request."}
+    }
+}
+
+
+

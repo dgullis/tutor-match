@@ -27,6 +27,7 @@ def test_signup(client):
         "email": "test@email.com",
         "status": "Student",
         "safeguarding": "Approved"
+
     }
     response = client.post("/signup", json=user)
 
