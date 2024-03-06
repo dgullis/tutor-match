@@ -115,10 +115,10 @@ const Profile = () => {
     // student profile page, belonging to logged in user
     if (userDetails && userDetails.status === "Student" && user.uid === firebase_id){
         return (
-        <Container className="d-flex justify-content-center align-items-center" >
+        <Container className="d-flex justify-content-center" >
             <Row>
                 <Col>
-                <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minWidth: '400px', maxWidth: '400px', padding: "20px" }}>
+                <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minWidth: '500px', maxWidth: '500px', padding: "20px" }}>
                     <Card.Body className="text-center">
                         <Card.Title>
                             Student Details
@@ -132,7 +132,7 @@ const Profile = () => {
                 </Card>
                 </Col>
                 <Col>
-                    <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minHeight: '450px', minWidth: '400px', maxWidth: '400px', padding: "20px" }}>    
+                    <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minHeight: '450px', minWidth: '500px', maxWidth: '400px', padding: "20px" }}>    
                     <Card.Title>
                         Calender
                     </Card.Title>

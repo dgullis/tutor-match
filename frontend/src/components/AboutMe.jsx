@@ -1,75 +1,87 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { updateBio } from '../services/users';
 
-const AboutMe = ({ userDetails, firebase_id, setUserDetails }) => {
+const AboutMe = ({ userDetails }) => {
     //console.log(userDetails.bio)
     const [bio, setBio] = useState(userDetails.bio);
-    const [Editing, setIsEditing] = useState(false)
+    const [editing, setIsEditing] = useState(false)
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = 'auto'; // Reset the height
+            textarea.style.height = `${textarea.scrollHeight}px`; // Set the new height
+        }
+    }, [bio]);
+
 
     //Helper Functions.
     const handleChangeBio = (e) => {
-        console.log(e.target.value);
         setBio(e.target.value);
-        //console.log("CHECK CONSOLE.")
-        console.log(bio)
-      };
+    };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         try {
-            await updateBio(firebase_id, bio); 
-            console.log("Updated Bio:", bio);
+            await updateBio(userDetails.firebase_id, bio); 
             setIsEditing(false);
-            setUserDetails(prevUserDetails => ({ ...prevUserDetails, bio: bio }));
         } catch (error) {
             console.error('Error updating bio:', error);
         }
     };
     
-      return (
+    return (
         <div>
-            {/* Bios for Students/Tutors */}
-            <div>
-                {userDetails.status === "Tutor" && (
-                    <div>
-                        <h2>Tutor Bio</h2>
-                    </div>
-                )}
-
-                {userDetails.status === "Student" && (
-                    <div>
-                        <h2>Student Bio</h2> 
-                    </div>
-                )}
-            </div>
-            
             {/* Updating Bio */}
-            {Editing ? (
-                <Form onSubmit={handleSubmit}>
+                <Form>
                     <Form.Group controlId="bioTextArea">
                         {/* <Form.Label>Bio</Form.Label>*/}
                         <Form.Control
                             as="textarea"
-                            rows={3}
+                            ref={textareaRef}
                             value={bio}
                             onChange={handleChangeBio}
-                            style={{width: '300px'}}
+                            disabled={editing? false : true}
+                            style={{
+                                width: '100%',
+                                height: 'auto',
+                                pointerEvents: editing ? 'auto' : 'none', // Disable pointer events when isDisabled is true
+                                background: editing ? '#white' : 'white', // Custom background color when disabled
+                                border: editing ? '1px solid grey' : 'none',
+                                resize: 'none',
+                                textAlign: 'center',
+                                padding: '0px',
+                                overflow: 'hidden',
+                                marginBottom: '10px'
+
+                            }}
+                            
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    </Form>
+
+                    {editing ? 
+                    <Button 
+                        variant="primary" 
+                        type="button" 
+                        onClick={() => {
+                            setIsEditing(false) 
+                            handleSubmit()}}
+                    >
                         Save
                     </Button>
-                </Form>
-            ) : (
-                <>
-                    <p>{bio}</p>
+
+                    :
+
                     <Button variant="primary" onClick={() => setIsEditing(true)}>
                         Edit Bio
                     </Button>
-                </>
-            )}
+                    }
+
+
+
         </div>
     );
 };

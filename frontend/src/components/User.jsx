@@ -1,4 +1,5 @@
 import UploadImage from "./UploadImage";
+import AboutMe from "./AboutMe";
 
 const UserProfile = (props) => {
     return (
@@ -20,10 +21,21 @@ const UserProfile = (props) => {
                 <strong>Name:</strong><br/> {props.user.name} 
             </div>
             <div>
-            <strong>Email:</strong> <br/>{props.user.email}
+                <strong>Email:</strong> <br/>{props.user.email}
             </div>
             <div>
-            <strong>About me:</strong> <br/>{props.user.bio}
+                <strong>About me:</strong> <br/>
+            {props.isCurrentUser ? (
+            <div>
+                <AboutMe
+                    userDetails={props.user} 
+                />
+            </div>
+            ) : (
+            <div>
+                {props.user.bio}
+            </div>
+            )}
             </div>
         </div>
     );
