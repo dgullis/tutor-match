@@ -191,5 +191,35 @@ export const submitReview = async (tutorId, rating, comment, reviewerId) => {
     }
 }
 
+export const addProfilePicture = async (firebase_id, profilePictureUrl) => {
+    
+    const payload = {
+        "profilePictureUrl": profilePictureUrl
+    };
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload)
+    }
+
+    try {
+        let response = await fetch(`${BACKEND_URL}/users/${firebase_id}/profile-picture`, requestOptions);
+
+        const data = await response.json()
+
+        if (response.status === 201) {
+            return data;
+        } else {
+            console.error("Error adding profile picture:", data.error);
+            throw new Error(data.message);
+        }
+    } catch (error){
+        console.error("Unexpected error:", error);
+        throw error;
+    }
+}
+
 
 
