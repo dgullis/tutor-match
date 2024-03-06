@@ -15,13 +15,15 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
         setAvgRating(tutorRating ? tutorRating.toFixed(1) : 0)
         setNumRatings(tutorReviews ? tutorReviews.length: 0)
 
+    }, [tutorReviews, tutorRating])
+
+    useEffect(() => {
         const starsArray = Array.from({ length: avgRating }, (_, index) => (
             <span key={index} style={{ color: "#ffc107" }}> &#9733; </span>
         ));
-        
-        setStars(starsArray)
-    }, [tutorReviews, tutorRating])
-
+    
+        setStars(starsArray);
+    }, [avgRating]);
 
     return (
         <>
