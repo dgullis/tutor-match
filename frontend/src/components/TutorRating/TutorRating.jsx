@@ -38,6 +38,7 @@ export const TutorReview = ({tutorId, loggedInUser, onSubmitReview}) => {
 
     return (
         <div className="container text-center">
+            <div className="tutorRating">
             <div className="m-3">
                 {[...Array(totalStars)].map((star, index) => {
                     const currentRating = index + 1;
@@ -65,6 +66,7 @@ export const TutorReview = ({tutorId, loggedInUser, onSubmitReview}) => {
                     </label>
                     );
                 })}
+                </div>
                 </div>
                 <div>
                 <input

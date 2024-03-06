@@ -29,16 +29,18 @@ const TutorMatchNavbar = () => {
     //console.log(user)
 
     return (
-        <Navbar bg="primary" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px' }}>
+        <Navbar bg="myColor" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px'}}>
         <Container>
         <Navbar.Brand>
+            <div className="d-inline-block align-top">
             <img
                 src="/images/logo4.png"
                 width="200"
                 height="35"
-                className="d-inline-block align-top"
+                className="myImage"
                 alt="Logo"
             />
+            </div>
             {/* {' TutorMatch'} */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
