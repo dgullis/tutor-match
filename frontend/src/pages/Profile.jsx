@@ -12,10 +12,10 @@ import { Card, CardTitle } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
+import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
 import { TutorReview } from "../components/TutorRating/TutorRating";
 import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
-
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -47,6 +47,7 @@ const Profile = () => {
         //console.log(idToken)
         getUser(firebase_id, idToken)
             .then((data) => {
+                console.log(data)
                 setUserDetails(data.user)
             })
             .catch((err) => {
@@ -101,6 +102,7 @@ const Profile = () => {
         </div>
         </div>
 
+
         {userDetails.reviews && 
         <div className="show-rating">
             <TutorStarRating 
@@ -113,7 +115,12 @@ const Profile = () => {
 
 
 
-        {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
+        <div className="d-flex align-items-center justify-content-center">
+        <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
+        </div>
+
+
+        {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && (
             <RequestedBookingsScrollable 
             userDetails={userDetails}
             onChangeBookingStatus={() => 
@@ -129,7 +136,10 @@ const Profile = () => {
 
 
 
+
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
+
+
 
             <div className="add-availability">
                 <AddAvailability 

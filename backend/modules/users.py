@@ -10,13 +10,12 @@ class AddAvailabilityError(Exception):
 #create functions in here to add users / update users / delete users etc
 users_collection = get_users_collection()
 
-def update_bio(userId, bioContent):
+#Function to Update Bio.
+def update_bio(firebase_id, bio):
     users_collection = get_users_collection()
-    
-
     try:
-        filter_criteria = {"_id": ObjectId(userId)}  
-        update_data = {"$set": {"bio": bioContent}} 
+        filter_criteria = {"firebase_id":(firebase_id)}  
+        update_data = {"$set": {"bio": bio}} 
         result = users_collection.update_one(filter_criteria, update_data)
         
         if result.matched_count == 0:
@@ -28,13 +27,13 @@ def update_bio(userId, bioContent):
         raise ValueError(f'Error updating bio: {str(e)}')
     
 
-def get_user_by_id(userId):
+def get_user_by_id(firebase_id):
     users_collection = get_users_collection()
 
     try:
         pipeline = [
             {
-                "$match": {"firebase_id": userId}
+                "$match": {"firebase_id": firebase_id}
             },
             {
                 "$lookup": {
@@ -126,9 +125,9 @@ def signup():
         user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
         return jsonify({"user": user, "message": "Account created successfully"}), 201
 
-def add_availability_for_tutor(userId, availability):
+def add_availability_for_tutor(firebase_id, availability):
 
-    filter_criteria = {"firebase_id": userId}  
+    filter_criteria = {"firebase_id": firebase_id}  
     for availability in availability:
         
         try:
