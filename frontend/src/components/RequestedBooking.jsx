@@ -30,7 +30,7 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
     }
 
     return (
-        <Card style={{ width: '18rem', marginBottom: '10px', fontSize: '0.8rem' }}>
+        <Card style={{ width: '100%', marginBottom: '10px', fontSize: '0.8rem' }}>
             <Card.Body>
             <Card.Text>
                 {formattedDate}

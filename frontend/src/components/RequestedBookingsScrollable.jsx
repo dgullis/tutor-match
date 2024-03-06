@@ -8,9 +8,8 @@ const RequestedBookingsScrollable = ({ userDetails, onChangeBookingStatus }) => 
             {userDetails.bookings && (
             <div className="container text-center">
                 <div className="row justify-content-center">
-                <Card style={{ minWidth: '291.33px', maxWidth: 'fit-content', maxHeight: '300px', overflowY: 'auto' }}>
-                    <CardTitle>Requested Bookings:</CardTitle>
-                    <Card.Body>
+
+    
                     <div>
                         {userDetails.bookings.map((booking) => (
                         booking.status === "requested" && 
@@ -21,8 +20,7 @@ const RequestedBookingsScrollable = ({ userDetails, onChangeBookingStatus }) => 
                         />
                         ))}
                     </div>
-                    </Card.Body>
-                </Card>
+
                 </div>
             </div>
             )}

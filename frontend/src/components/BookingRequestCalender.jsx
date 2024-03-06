@@ -79,7 +79,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
     
     return (
                 <div className = "text-center mt-4">
-                    <div className = "row justify-content-center">
+                    <div className = "justify-content-center">
                     
                         <Form onSubmit={handleSubmit} >
                         <DatePicker 

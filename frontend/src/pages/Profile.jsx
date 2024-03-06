@@ -92,18 +92,18 @@ const Profile = () => {
     
     
 
-    //student profile page, not belonging to logged in user
+    // student profile page, not belonging to logged in user
     if (userDetails && userDetails.status === "Student" && user.uid !== firebase_id){
         return (
-        <Container className="d-flex justify-content-center align-items-center" >
-            <Row>
-                <Col>
-                <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minWidth: '400px', maxWidth: '400px', padding: "20px" }}>
+            <Container fluid className="px-5">
+                <Row className="gx-5">
+                <Col md={{ span: 6, offset: 3 }}>
+                <Card className="shadow-sm p-3 mb-3 bg-white rounded" >
                     <Card.Body className="text-center">
                         <Card.Title>
                             Student Details
                         </Card.Title>
-                        <UserProfile user = {userDetails} isCurrentUser firebase_id={firebase_id}/>
+                        <UserProfile user = {userDetails} isCurrentUser = {false} firebase_id={firebase_id}/>
                     </Card.Body>
                 </Card>
                 </Col>
@@ -115,24 +115,25 @@ const Profile = () => {
     // student profile page, belonging to logged in user
     if (userDetails && userDetails.status === "Student" && user.uid === firebase_id){
         return (
-        <Container className="d-flex justify-content-center" >
-            <Row>
+
+            <Container fluid className="px-5">
+            <Row className="gx-5">
                 <Col>
-                <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minWidth: '500px', maxWidth: '500px', padding: "20px" }}>
+                <Card className="shadow-sm p-3 mb-3 bg-white rounded">
                     <Card.Body className="text-center">
                         <Card.Title>
                             Student Details
                         </Card.Title>
                         <UserProfile 
                             user = {userDetails} 
-                            isCurrentUser 
+                            isCurrentUser = {true}
                             onChangeProfileImage={() => 
                                 setRefresh(!refresh)}/>
                     </Card.Body>
                 </Card>
                 </Col>
                 <Col>
-                    <Card className="shadow-sm p-3 mb-5 bg-white rounded" style={{ minHeight: '450px', minWidth: '500px', maxWidth: '400px', padding: "20px" }}>    
+                <Card className="shadow-sm p-3 mb-3 bg-white rounded">
                     <Card.Title>
                         Calender
                     </Card.Title>
@@ -143,6 +144,155 @@ const Profile = () => {
         )
     }
 
+    // approved tutor profile page, belonging to logged in user
+    if (userDetails && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && user.uid === firebase_id) {
+        return (
+            
+            
+            <Container fluid className="px-5">
+            <Row className="gx-5">
+            <Col md={6}>
+                    <Row>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+                        <Card.Body className="text-center">
+                            <Card.Title>
+                                Tutor Details
+                            </Card.Title>
+                            <UserProfile 
+                                user = {userDetails} 
+                                isCurrentUser = {true}
+                                gcse = {gcse} 
+                                alevel = {alevel}
+                                onChangeProfileImage={() => 
+                                    setRefresh(!refresh)}/>
+                                
+                        </Card.Body>
+                        </Card>
+                    </Row>
+                        <Row>
+                        <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+                        <Card.Body className="text-center">
+                        <Card.Title style={{marginBottom: "20px"}}>
+                            Update subjects
+                        </Card.Title>
+                        <AddSubject 
+                            firebaseId={firebase_id} 
+                            idToken={idToken} 
+                            onSubjectAdded={() => 
+                                setRefresh(!refresh)}
+                        />
+                        </Card.Body>
+                        </Card>
+                    </Row>
+                </Col>
+                <Col md={6} className="pl-md-5">
+                    <Row>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{ maxHeight: '500px', overflowY: 'auto'}}>
+                            <Card.Body className="text-center">
+                                <Card.Title style={{marginBottom: "20px"}}> 
+                                    Requested Bookings
+                                </Card.Title>
+                                    <RequestedBookingsScrollable 
+                                        userDetails={userDetails}
+                                        onChangeBookingStatus={() => 
+                                            setRefresh(!refresh)} 
+                                    />   
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                    <Row>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+
+                            <Card.Body className="text-center">
+                                <Card.Title style={{marginBottom: "20px"}}>
+                                    Calender
+                                </Card.Title>
+                                    
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                    <Row>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+
+                            <Card.Body className="text-center">
+                                <Card.Title style={{marginBottom: "20px"}}>
+                                    Update Availability
+                                </Card.Title>
+                                <AddAvailability 
+                                    firebaseId = {firebase_id} 
+                                    idToken={idToken}
+                                    onChangeAvailability={() => 
+                                        setRefresh(!refresh)}
+                                />
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                </Col>
+                </Row>
+            </Container>
+        )
+    }
+    // approved tutor profile page, not belonging to logged in user
+    if (userDetails && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && user.uid !== firebase_id) {
+        return (
+            <Container fluid className="px-5">
+            <Row className="gx-5">
+            <Col md={6}>
+                <Row>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+                    <Card.Body className="text-center">
+                        <Card.Title>
+                            Tutor Details
+                        </Card.Title>
+                        <UserProfile 
+                            user = {userDetails} 
+                            isCurrentUser = {false}
+                            gcse = {gcse} 
+                            alevel = {alevel}
+                        />
+                    </Card.Body>
+                    </Card>
+                </Row>
+                <Row>
+                <Card className="shadow-sm p-3 bg-white rounded">
+                    <Card.Body className="text-center">
+                    <Card.Title style={{marginBottom: "20px"}}>
+                        Leave a review
+                    </Card.Title>
+                    <TutorReview 
+                        tutorId={firebase_id}
+                        loggedInUser = {mongoUser}
+                        onSubmitReview={() => 
+                            setRefresh(!refresh)}
+                    />
+                    </Card.Body>
+                    </Card>
+                </Row>
+            </Col>
+
+            <Col md={6}>
+                <Row>
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+
+                        <Card.Body className="text-center">
+                            <Card.Title style={{marginBottom: "20px"}}> 
+                                Request session
+                            </Card.Title>
+                            <BookingRequestCalender 
+                                tutorDetails = {userDetails}
+                                loggedInUser = {mongoUser}
+                                onRequestBooking={() => 
+                                    setRefresh(!refresh)} />
+
+                                
+                        </Card.Body>
+                    </Card>
+                </Row>
+            </Col>
+            </Row>
+        </Container>
+        )
+    }
 
     return (
         <>
@@ -188,7 +338,7 @@ const Profile = () => {
                 setRefresh(!refresh)} />
         )}
 
-        {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
+        {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
             <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
             setRefresh(!refresh)}/>
@@ -237,3 +387,4 @@ const Profile = () => {
 }
 
 export default Profile
+

@@ -12,8 +12,8 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
     
 
     useEffect(() => {
-        setAvgRating(Math.round(tutorRating))
-        setNumRatings(tutorReviews.length)
+        setAvgRating(tutorRating ? tutorRating.toFixed(1) : 0)
+        setNumRatings(tutorReviews ? tutorReviews.length: 0)
 
         const starsArray = Array.from({ length: avgRating }, (_, index) => (
             <span key={index} style={{ color: "#ffc107" }}> &#9733; </span>
@@ -37,6 +37,22 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
                     see reviews
                 </div>
 
+                <Modal show={showReviews} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Reviews</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {tutorReviews.map((review) => {
+                            return <p>"{review.comment}"</p>
+                        })}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer> 
+                </Modal>
+
             </div>
 
         ) : (
@@ -47,22 +63,7 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
         
         )}
         
-
-        <Modal show={showReviews} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Reviews</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {tutorReviews.map((review) => {
-                    return <p>"{review.comment}"</p>
-                })}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-            </Modal.Footer> 
-        </Modal>
+       
 
         </>
     )
