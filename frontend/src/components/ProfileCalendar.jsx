@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import 'react-calendar/dist/Calendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ProfileCalendarItem } from "./ProfileCalendarItem";

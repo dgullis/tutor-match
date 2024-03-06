@@ -13,7 +13,6 @@
 11. npm install react-datepicker
 10. npm install --save-dev @vitejs/plugin-react-swc
 11. npm install jsdom --save-dev
-11. npm install react-calendar
 
 
 

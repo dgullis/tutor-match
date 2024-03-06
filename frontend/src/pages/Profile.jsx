@@ -18,7 +18,7 @@ import PendingTutorList from "../components/PendingTutors";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user, idToken, mongoUser } = useAuth()
+    const { user, mongoUser, idToken } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
@@ -27,8 +27,6 @@ const Profile = () => {
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
     const [pendingTutors, setPendingTutors] = useState([])
-    //console.log("user")
-    //console.log(user)
 
     const gcseQueryParams = {
         "firebaseId": firebase_id,
@@ -49,16 +47,9 @@ const Profile = () => {
                 console.log(err);
                 navigate("/login");
             });
-        console.log("line 52")
-        console.log(userDetails)
-        console.log("line 54")
-        console.log(user)
-        console.log("line 56")
-        console.log(mongoUser)
         searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
-                //console.log(data.result[0].name)
                 setGcse(data.result)
             })
             .catch((err) => {
