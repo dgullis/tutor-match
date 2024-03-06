@@ -33,7 +33,7 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
                 <span style={{ fontSize: '14px' }}>{numRatings}{numRatings > 1 ? ' reviews' : ' review'}</span>
             
 
-                <div onClick={handleClick} style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>
+                <div onClick={handleClick} style={{ fontSize: '14px', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>
                     see reviews
                 </div>
 
