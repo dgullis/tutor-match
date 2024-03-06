@@ -45,3 +45,16 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-link {
+  color: #025E84; 
+  text-decoration: none; 
+}
+
+.custom-link:hover {
+  text-decoration: underline; 
+}
+
+.custom-link:active {
+  text-decoration: underline; 
+}

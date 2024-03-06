@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../App.css';
 
 // AboutUsModal component/ button
 const AboutUsModal = () => {
@@ -21,13 +22,13 @@ const AboutUsModal = () => {
                 <Modal.Body>
                     <p>This is a Makers Academy final project using FReMP tech stack by:</p>
                     <ul>
-                        <li>Ann Galloway - <a href="https://github.com/AnnGalloway" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@AnnGalloway</a></li>
-                        <li>Leah Simon - <a href="https://github.com/nsleeah" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@Nsleeah</a></li>
-                        <li>Kat Bielecka - <a href="https://github.com/KatBiel" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@KatBiel</a></li>
-                        <li>Dan Gullis - <a href="https://github.com/dgullis" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@dgullis</a></li>
-                        <li>Simon Budden - <a href="https://github.com/fantastito" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@fantastito</a></li>
-                        <li>Muhtadi Maahir - <a href="https://github.com/MMaahir" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@MMaahir</a></li>
-                        <li>Pier Bruno Pompilii - <a href="https://github.com/PierPompilii" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>@PierPompilii</a></li>
+                        <li>Ann Galloway - <a href="https://github.com/AnnGalloway" target="_blank" rel="noopener noreferrer" className="custom-link">@AnnGalloway</a></li>
+                        <li>Leah Simon - <a href="https://github.com/nsleeah" target="_blank" rel="noopener noreferrer" className="custom-link">@Nsleeah</a></li>
+                        <li>Kat Bielecka - <a href="https://github.com/KatBiel" target="_blank" rel="noopener noreferrer" className="custom-link">@KatBiel</a></li>
+                        <li>Dan Gullis - <a href="https://github.com/dgullis" target="_blank" rel="noopener noreferrer" className="custom-link">@dgullis</a></li>
+                        <li>Simon Budden - <a href="https://github.com/fantastito" target="_blank" rel="noopener noreferrer" className="custom-link">@fantastito</a></li>
+                        <li>Muhtadi Maahir - <a href="https://github.com/MMaahir" target="_blank" rel="noopener noreferrer" className="custom-link">@MMaahir</a></li>
+                        <li>Pier Bruno Pompilii - <a href="https://github.com/PierPompilii" target="_blank" rel="noopener noreferrer" className="custom-link">@PierPompilii</a></li>
                     </ul>
                     <p>Please, do not sign in :)</p>
                 </Modal.Body>
