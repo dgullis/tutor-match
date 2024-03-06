@@ -12,8 +12,8 @@ import { Card, CardTitle } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
+import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
-
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -45,6 +45,7 @@ const Profile = () => {
         //console.log(idToken)
         getUser(firebase_id, idToken)
             .then((data) => {
+                console.log(data)
                 setUserDetails(data.user)
             })
             .catch((err) => {
@@ -99,7 +100,9 @@ const Profile = () => {
         </div>
         </div>
 
-
+        <div className="d-flex align-items-center justify-content-center">
+        <AboutMe userDetails={userDetails} firebase_id={firebase_id} setUserDetails={setUserDetails} />
+        </div>
 
         {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
             <RequestedBookingsScrollable 
@@ -115,9 +118,8 @@ const Profile = () => {
 
         </div>}
 
-
-
         {user.uid === firebase_id && userDetails.status === "Tutor"  && 
+
 
             <div className="add-availability">
                 <AddAvailability 
