@@ -10,6 +10,7 @@ import { BookingRequestCalender } from "../components/BookingRequestCalender";
 import { RequestedBooking } from "../components/RequestedBooking";
 import { Card, CardTitle } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
+import { ProfileCalendar } from "../components/ProfileCalendar";
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
@@ -32,6 +33,7 @@ const Profile = () => {
     const [gcse, setGcse] = useState([])
     const [alevel, setAlevel] = useState([])
     const [pendingTutors, setPendingTutors] = useState([])
+
     const [image, setImage] = useState(null)
     //console.log("user")
     //console.log(user)
@@ -46,10 +48,6 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        //console.log("line 20 profile.jsx")
-        //console.log(user)
-        //console.log(userDetails)
-        //console.log(idToken)
         getUser(firebase_id, idToken)
             .then((data) => {
                 console.log(data)
@@ -62,7 +60,6 @@ const Profile = () => {
         searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
-                //console.log(data.result[0].name)
                 setGcse(data.result)
             })
             .catch((err) => {
@@ -128,7 +125,7 @@ const Profile = () => {
 
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
-                <div className = "col-md-4 text-center">
+                <div className = "col-md-4 text-center"
         {userDetails.safeguarding === "Pending" && <p>Your account is awaiting background checks. <br/> Please ensure you respond to all requests for further information promptly.
         </p>}
         {userDetails.status === "Tutor" && <h2>Tutor Details</h2> }
@@ -174,10 +171,9 @@ const Profile = () => {
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
             <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
-            setRefresh(!refresh)}/>
-
-        </div>}
+                <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
+                setRefresh(!refresh)}/>
+            </div>}
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
 
@@ -189,6 +185,23 @@ const Profile = () => {
                         setRefresh(!refresh)}
                     />
             </div> }
+        
+        { user.uid === firebase_id &&
+            <div className="profileCalendar">
+                <ProfileCalendar
+                    mongoUser = {mongoUser}
+                />
+            </div>
+        }
+
+
+        <div className="booking-request">
+            <BookingRequestCalender 
+                tutorDetails = {userDetails}
+                loggedInUser = {mongoUser}
+                onRequestBooking={() => 
+                    setRefresh(!refresh)} />
+        </div>
         
         {user.uid === firebase_id && userDetails.status === "Admin" &&
         <div>
