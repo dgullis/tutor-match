@@ -25,7 +25,7 @@ def test_signup(client):
         "firebase_id": "test_firebase_id",
         "name": "Test name",
         "email": "test@email.com",
-        "status": "Student"
+        "status": "Student",
         "safeguarding": "Approved",
     }
     response = client.post("/signup", json=user)
