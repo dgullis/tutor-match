@@ -104,7 +104,6 @@ const Profile = () => {
         {user.uid === userDetails.firebase_id && userDetails.status === "Tutor" && (
             <RequestedBookingsScrollable 
             userDetails={userDetails}
-            loggedInUserEmail={mongoUser.email}
             onChangeBookingStatus={() => 
                 setRefresh(!refresh)} />
         )}
@@ -118,7 +117,7 @@ const Profile = () => {
 
 
 
-        {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
+        {user.uid === firebase_id && userDetails.status === "Tutor"  && 
 
             <div className="add-availability">
                 <AddAvailability 
