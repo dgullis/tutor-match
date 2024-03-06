@@ -38,7 +38,7 @@ def test_signup(client):
         "name": "Test name",
         "email": "test@email.com",
         "status": "Student",
-        "safeguarding": None
+        "safeguarding": "Approved"
     }
     response = client.post("/signup", json=user)
     assert response.status_code == 201
