@@ -125,7 +125,7 @@ const Profile = () => {
 
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
-                <div className = "col-md-4 text-center"
+                <div className = "col-md-4 text-center">
         {userDetails.safeguarding === "Pending" && <p>Your account is awaiting background checks. <br/> Please ensure you respond to all requests for further information promptly.
         </p>}
         {userDetails.status === "Tutor" && <h2>Tutor Details</h2> }
