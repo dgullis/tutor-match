@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }) => {
     
             if (user) {
                 setUser(user);
-    
                 try {
                     const idToken = await user.getIdToken();
                     setIdToken(idToken);
