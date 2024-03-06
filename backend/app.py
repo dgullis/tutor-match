@@ -226,7 +226,7 @@ def add_review(userId):
 
     result = submit_review(userId, rating, comment, reviewer_id)
     status_code = result.get("status_code", 500)
-
+    updating_rating(userId)
     return jsonify(result), status_code
 
 if __name__ == '__main__':

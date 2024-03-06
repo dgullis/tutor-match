@@ -101,11 +101,13 @@ const Profile = () => {
         </div>
         </div>
         </div>
-        
+
         {userDetails.reviews && 
         <div className="show-rating">
             <TutorStarRating 
                 tutorReviews={userDetails.reviews}
+                tutorRating={userDetails.rating}
+                
             />
         </div>
         }
@@ -158,6 +160,8 @@ const Profile = () => {
             <TutorRating 
                 tutorId={firebase_id}
                 loggedInUser = {mongoUser}
+                onSubmitReview={() => 
+                    setRefresh(!refresh)}
             />
         </div>
 

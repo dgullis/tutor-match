@@ -176,9 +176,9 @@ def approve_tutor(firebase_id):
     
         
 def submit_review(userId, rating, comment, reviewer_id):
-    
+
     if is_duplicate_review(reviewer_id, userId):
-        return {"success": False, "message": "You have already submiited a review for this tutor", "status_code": 400}
+        return {"success": False, "message": "You have already submited a review for this tutor", "status_code": 400}
     
     #reviewer_id referenes the firebase_id of the user leaving the review
     filter_criteria = {"firebase_id": userId}
@@ -205,6 +205,23 @@ def is_duplicate_review(reviewer_id, user_id):
     user_with_review = users_collection.find_one(filter_criteria)
 
     return user_with_review is not None
+
+def updating_rating(user_firebase_id):
+    pipeline = [
+    {'$match': {'firebase_id': user_firebase_id}},
+    {'$project': {'_id': 0, 'reviews': 1}}
+    ]
+
+    result = list(users_collection.aggregate(pipeline))
+
+    if result:
+        reviews = result[0].get('reviews', [])
+        ratings = [review['rating'] for review in reviews]
+        aggregate = sum(ratings)
+        avgRating = aggregate/len(reviews)
+
+
+        users_collection.update_one({"firebase_id": user_firebase_id}, {"$set": {"rating":round(avgRating, 2)}})
         
 
 

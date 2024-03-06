@@ -4,7 +4,7 @@ import { submitReview } from '../../services/users';
 
 import './TutorRating.css'
 
-export const TutorRating = ({tutorId, loggedInUser}) => {
+export const TutorRating = ({tutorId, loggedInUser, onSubmitReview}) => {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
     const [totalStars, setTotalStars] = useState(5);
@@ -20,11 +20,11 @@ export const TutorRating = ({tutorId, loggedInUser}) => {
     }
 
     const handleSubmit = async () => {
-        console.log(tutorId, totalStars, ratingComment, loggedInUser.firebase_id)
         try {
             const submitReviewResult = await submitReview(tutorId, totalStars, ratingComment, loggedInUser.firebase_id)
             if(submitReviewResult.success === true){
                 setNotice(submitReviewResult.message)
+                onSubmitReview()
             } else {
                 setNotice(submitReviewResult.error)
             }

@@ -1,31 +1,34 @@
 import { useState, useEffect } from "react";
 
-export const TutorStarRating = ({tutorReviews}) => {
+export const TutorStarRating = ({tutorReviews, tutorRating}) => {
     const [avgRating, setAvgRating] = useState(null)
     const [stars, setStars] = useState([])
+    const [numRatings, setNumRatings] = useState(null)
 
     useEffect(() => {
-        // return sum of tutors ratings
-        const sumOfRatings = tutorReviews.reduce((accumulator, currentReview) => {
-            return accumulator + currentReview.rating;
-            }, 0);
-        
-        // set average rating rounded to nearest whole number
-        const averageRating = sumOfRatings / tutorReviews.length;
-        setAvgRating(Math.round(averageRating))
-        
-        //create new array to length of tutors avg rating
-        //for each item in array create span element which contains a yellow star
+        setAvgRating(Math.round(tutorRating))
+        setNumRatings(tutorReviews.length)
+
         const starsArray = Array.from({ length: avgRating }, (_, index) => (
             <span key={index} style={{ color: "#ffc107" }}> &#9733; </span>
         ));
         
         setStars(starsArray)
-    }, [tutorReviews])
+    }, [tutorReviews, tutorRating])
+
 
     return (
+        numRatings > 0 ? 
         <div className="container text-center">
+            <span style={{ fontSize: '14px' }}>({avgRating})</span>
             {stars}
+            <span style={{ fontSize: '14px' }}>{numRatings}{numRatings > 1 ? ' reviews' : ' review'}</span>
+        </div>
+
+        :
+
+        <div className="container text-center">
+            <span style={{ fontSize: '14px' }}>No reviews</span>
         </div>
 
 
