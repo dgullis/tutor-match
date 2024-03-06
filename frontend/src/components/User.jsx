@@ -14,6 +14,7 @@ const UserProfile = (props) => {
             style={{ width: "100px", height: "100px", borderRadius: "50%" }}
             />
         )}
+
         <br />
         Name: {props.user.name} <br />
         Email: {props.user.email}<br/>

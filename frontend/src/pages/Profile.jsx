@@ -136,6 +136,12 @@ const Profile = () => {
         {userDetails.status === "Admin" && <h2>Admin Account</h2>}
         <div className = "profile">
             <UserProfile user = {userDetails} defaultPicture = {DEFAULT_PFP} />
+            {mongoUser.firebase_id === firebase_id && (
+            <div>
+                <input type="file" onChange={handleImageChange} />
+                <button onClick={handleUpload}>Upload</button>
+            </div>
+        )}
         </div>
         <br/>
         {userDetails.status === "Tutor" &&
