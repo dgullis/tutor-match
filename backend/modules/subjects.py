@@ -49,8 +49,8 @@ def search_by_subject_and_grade(subject, grade):
             tutor_firebase_ids = result.get(grade, [])
             print("fb ids", tutor_firebase_ids)
             
-            #iterates through list of tutur_firebase_ids to find the corresponding tutor from the users collection.
-                    #adds the tutos documents to the tutor_information array
+            #iterates through list of tutor_firebase_ids to find the corresponding tutor from the users collection.
+                    #adds the tutors documents to the tutor_information array
             tutor_information = [
                 {**users_collection.find_one({"firebase_id": tutor_firebase_id}, {"_id": 0})}
                 for tutor_firebase_id in tutor_firebase_ids

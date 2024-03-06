@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser } from "../services/users";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -25,7 +24,7 @@ const Login = () => {
     const loginWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
-        const loginResult = logInAuth(email, password) 
+        const loginResult = await logInAuth(email, password) 
 
         if (loginResult.success === false) {
             setNotice("You entered a wrong username or password.")    

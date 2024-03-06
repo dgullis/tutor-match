@@ -10,6 +10,9 @@
 8. npm install flask
 9. npm install react-select
 10. npm install @syncfusion/ej2-react-calendars @syncfusion/ej2-base @syncfusion/ej2-data
+11. npm install react-datepicker
+10. npm install --save-dev @vitejs/plugin-react-swc
+11. npm install jsdom --save-dev
 
 
 
@@ -24,6 +27,7 @@
 6. pip install python-dotenv
 7. pip install firebase-admin
 8. pip install flask-cors
+9. pip install Flask-Mail
 
 
 While mongo is local only:

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../services/users";
 import { useAuth } from "../components/authContext";
 import Spinner from 'react-bootstrap/Spinner';
+import { sendEmail } from "../services/emailCommunications";
 
 
 const Signup = () => {
@@ -14,6 +13,7 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [status, setStatus] = useState("");
+    const [safeguarding, setSafeguarding] = useState("Approved");
     const [notice, setNotice] = useState("");   
     const [passwordPrompt, setPasswordPrompt] = useState([]);
     const { user, mongoUser, signUpAuth, isLoading  } = useAuth()
@@ -40,6 +40,11 @@ const Signup = () => {
         setPassword(newPassword);
     }
 
+    const setTutor = () => {
+        setSafeguarding("Pending")
+        setStatus("Tutor")
+    }
+
     
     const signupWithUsernameAndPassword = async (e) => {
         e.preventDefault();
@@ -53,15 +58,21 @@ const Signup = () => {
             if (emaiLocalPartRegex.test(emailLocalPart)) {
                 if (passwordRegex.test(password)) {
                     if (password === confirmPassword) {
-
-                        const signUpResult = signUpAuth(email, password, name, status)
+                        console.log(safeguarding)
+                        const signUpResult = await signUpAuth(email, password, name, status, safeguarding)
 
                         if (signUpResult.success === false) {
                             if (signUpResult.errorType === "emailInUse") {
                                 setNotice("Email is already in use. Please try logging in instead."); 
                             } else {
-                                console.log(signUpResult.message)
                                 setNotice("Sorry, something went wrong. Please try again.");
+                            }
+                        } else if (signUpResult.success === true) {
+                            setNotice("Sign up successfull!")
+                            if (status === "Student"){
+                                sendEmail(email, "signUpStudent")
+                            } else if (status === "Tutor"){
+                                sendEmail(email, "signUpTutor")
                             }
                         } 
                     }
@@ -88,13 +99,13 @@ const Signup = () => {
                 <div className = "container">
                     <div className = "row justify-content-center">
                         <form className = "col-md-4 mt-3 pt-3 pb-3" >
-                            { "" !== notice &&
+                            { notice &&
                                 <div className = "alert alert-warning" role = "alert">
                                     { notice }    
                                 </div>
                             }
                             <div className = "form-floating mb-3">
-                        <input id = "signupName" type = "text" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value.trim()) }></input>
+                        <input id = "signupName" type = "text" className = "form-control" aria-describedby = "nameHelp" placeholder = "Your Name" value = { name } onChange = { (e) => setName(e.target.value) }></input>
                         <label htmlFor = "signupName" className = "form-label">Enter your name</label>
                         </div>
                         <div className = "form-floating mb-3">
@@ -110,7 +121,7 @@ const Signup = () => {
                             <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
                         </div>
                         <div className="custom-control custom-radio">
-                        <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" onChange = { (e) => setStatus("Tutor")}></input>
+                        <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" onChange = { (e) => setTutor()}></input>
                         <label className="custom-control-label" htmlFor="customRadio1">Tutor</label>
                         </div>
                         <div className="custom-control custom-radio">
