@@ -37,6 +37,18 @@
   color: #61dafb;
 }
 
+.custom-link {
+  color: #025E84; 
+  text-decoration: none; 
+}
+
+.custom-link:hover {
+  text-decoration: underline; 
+}
+
+.custom-link:active {
+  text-decoration: underline; 
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -44,4 +56,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn {
+  background-color: #025E84 !important;
+  color: whitesmoke !important;
+  border: none !important
+}
+
+
+.bg-myColor {
+  background-color: #025E84;
+  background-image: none;
+}
+
+.myImage{
+  -webkit-filter: invert(100%); /* Safari/Chrome */
+  filter: invert(100%);
 }

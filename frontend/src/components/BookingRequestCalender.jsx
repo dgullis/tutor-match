@@ -78,7 +78,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
 
     
     return (
-                <div className = "container text-center">
+                <div className = "text-center mt-4">
                     <div className = "row justify-content-center">
                     
                         <Form onSubmit={handleSubmit} >
@@ -95,13 +95,14 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
                             open={true}
                             inline
                         />
-                        
+                        <div className="m-3">
                             <Button className="d-grid mx-auto" variant="primary" type="submit" justifyContent="center" style={{ width: '200px' }}>
                                 Request
                             </Button> 
+                        </div>
                     
                         </Form>
-                        <div>
+                        <div style={{ maxWidth: '400px', margin: 'auto', fontSize: '14px' }}>
                             {errorMessage && 
                                     <Alert variant="info" dismissible onClose={closeAlert} >
                                         {errorMessage}

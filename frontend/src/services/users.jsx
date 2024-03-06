@@ -50,6 +50,28 @@ export const getUser = async (firebase_id, idToken) => {
     }
 }
 
+//Bio 
+export const updateBio = async (firebase_id, bio) => {
+    try {
+        console.log(firebase_id)
+        console.log(bio)
+        const response = await fetch(`${BACKEND_URL}/users/${firebase_id}/bio`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+            body: JSON.stringify({ bio })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update bio');
+        }
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error updating bio:', error);
+    }
+};
+
 export const addAvailability = async (firebase_id, idToken, startTime, endTime) => {
 
     const availabilityInHourSlots = [];
@@ -137,3 +159,67 @@ export const updatePendingTutor = async(idToken,firebase_id) => {
     }
     
 }
+
+export const submitReview = async (tutorId, rating, comment, reviewerId) => {
+    const payload = {
+        "rating": rating,
+        "comment": comment,
+        "reviewerId": reviewerId
+    };
+
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload)
+    };
+
+    try {      
+    
+        let response = await fetch(`${BACKEND_URL}/users/${tutorId}/review`, requestOptions);
+        const data = await response.json();
+
+        if (response.status === 201) {
+            return { "success": true, "message": data.message };        
+        } else {
+            return { "success": false, "error": data.message };
+        }
+    } catch (error) {
+        console.error("An error occurred requesting a booking:", error);
+        return { "error": "An error occurred while processing the request."}
+    }
+}
+
+export const addProfilePicture = async (firebase_id, profilePictureUrl) => {
+    
+    const payload = {
+        "profilePictureUrl": profilePictureUrl
+    };
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload)
+    }
+
+    try {
+        let response = await fetch(`${BACKEND_URL}/users/${firebase_id}/profile-picture`, requestOptions);
+
+        const data = await response.json()
+
+        if (response.status === 201) {
+            return data;
+        } else {
+            console.error("Error adding profile picture:", data.error);
+            throw new Error(data.message);
+        }
+    } catch (error){
+        console.error("Unexpected error:", error);
+        throw error;
+    }
+}
+
+
+
