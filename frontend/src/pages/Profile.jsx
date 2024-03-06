@@ -39,7 +39,6 @@ const Profile = () => {
         "grade": "alevel"
     }
 
-   
 
     useEffect(() => {
         //console.log("line 20 profile.jsx")
@@ -130,7 +129,6 @@ const Profile = () => {
         </div>}
 
 
-
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
 
             <div className="add-availability">
@@ -147,15 +145,16 @@ const Profile = () => {
         <PendingTutorList pending = {pendingTutors} idToken = {idToken} userApproved={() => setRefresh(!refresh)}/>
         </div>}
 
-
+        {user.uid != firebase_id && userDetails.status === "Tutor" &&
         <div className="booking-request">
             <BookingRequestCalender 
                 tutorDetails = {userDetails}
                 loggedInUser = {mongoUser}
                 onRequestBooking={() => 
                     setRefresh(!refresh)} />
-        </div>
+        </div> }
 
+        {user.uid != firebase_id && userDetails.status === "Tutor" &&
         <div className="tutor-rating">
             <TutorRating 
                 tutorId={firebase_id}
@@ -163,7 +162,7 @@ const Profile = () => {
                 onSubmitReview={() => 
                     setRefresh(!refresh)}
             />
-        </div>
+        </div> }
 
         </>
     )    
