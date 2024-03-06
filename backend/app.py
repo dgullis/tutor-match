@@ -96,7 +96,7 @@ def add_availability(userId):
 @app.route('/users/<string:firebase_id>/bio', methods=['POST'])
 def update_user_bio(firebase_id):
     data = request.json
-    #firebase_id = data.get('firebase_id')
+    ##firebase_id = data.get('firebase_id')
     bio = data.get('bio')
 
     try:
