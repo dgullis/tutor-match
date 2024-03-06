@@ -18,6 +18,7 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
 
 
     return (
+        <>
         numRatings > 0 ? 
         <div className="container text-center">
             <span style={{ fontSize: '14px' }}>({avgRating})</span>
@@ -30,6 +31,9 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
         <div className="container text-center">
             <span style={{ fontSize: '14px' }}>No reviews</span>
         </div>
+
+        <p>see</p>
+        </>
 
 
     )
