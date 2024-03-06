@@ -10,6 +10,7 @@ import { BookingRequestCalender } from "../components/BookingRequestCalender";
 import { RequestedBooking } from "../components/RequestedBooking";
 import { Card, CardTitle } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
+import { ProfileCalendar } from "../components/ProfileCalendar";
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import PendingTutorList from "../components/PendingTutors";
@@ -17,7 +18,7 @@ import PendingTutorList from "../components/PendingTutors";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user, mongoUser, idToken } = useAuth()
+    const { user, idToken, mongoUser } = useAuth()
     const handle = useParams()
     const firebase_id = handle.id
     const [userDetails, setUserDetails] = useState({})
@@ -39,18 +40,21 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        //console.log("line 20 profile.jsx")
-        //console.log(user)
-        //console.log(userDetails)
-        //console.log(idToken)
         getUser(firebase_id, idToken)
             .then((data) => {
+                console.log(data)
                 setUserDetails(data.user)
             })
             .catch((err) => {
                 console.log(err);
                 navigate("/login");
             });
+        console.log("line 52")
+        console.log(userDetails)
+        console.log("line 54")
+        console.log(user)
+        console.log("line 56")
+        console.log(mongoUser)
         searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
@@ -84,19 +88,16 @@ const Profile = () => {
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
-        {userDetails.safeguarding === "Pending" && <p>Your account is awaiting background checks. <br/> Please ensure you respond to all requests for further information promptly.
-        </p>}
-        {userDetails.status === "Tutor" && <h2>Tutor Details</h2> }
-        {userDetails.status === "Student" && <h2>Student Details</h2>}
-        {userDetails.status === "Admin" && <h2>Admin Account</h2>}
-        <div className = "profile">
-            <UserProfile user = {userDetails} />
-        </div>
-        <br/>
-        {userDetails.status === "Tutor" &&
-        <ProfileSubjects gcse = {gcse} alevel = {alevel} />}
-        </div>
-        </div>
+                {userDetails.status === "Tutor" && <h2>Tutor Details</h2> }
+                {userDetails.status === "Student" && <h2>Student Details</h2>}
+                    <div className = "profile">
+                    <UserProfile user = {userDetails} />
+                    </div>
+                <br/>
+                {userDetails.status === "Tutor" &&
+                    <ProfileSubjects gcse = {gcse} alevel = {alevel} />}
+                </div>
+            </div>
         </div>
 
 
@@ -110,10 +111,9 @@ const Profile = () => {
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
             <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
-            setRefresh(!refresh)}/>
-
-        </div>}
+                <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
+                setRefresh(!refresh)}/>
+            </div>}
 
 
 
@@ -127,6 +127,23 @@ const Profile = () => {
                         setRefresh(!refresh)}
                     />
             </div> }
+        
+        { user.uid === firebase_id &&
+            <div className="profileCalendar">
+                <ProfileCalendar
+                    mongoUser = {mongoUser}
+                />
+            </div>
+        }
+
+
+        <div className="booking-request">
+            <BookingRequestCalender 
+                tutorDetails = {userDetails}
+                loggedInUser = {mongoUser}
+                onRequestBooking={() => 
+                    setRefresh(!refresh)} />
+        </div>
         
         {user.uid === firebase_id && userDetails.status === "Admin" &&
         <div>
