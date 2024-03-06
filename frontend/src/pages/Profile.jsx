@@ -13,7 +13,7 @@ import RequestedBookingsScrollable from "../components/RequestedBookingsScrollab
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import PendingTutorList from "../components/PendingTutors";
-import { TutorRating } from "../components/TutorRating/TutorRating";
+import { TutorReview } from "../components/TutorRating/TutorRating";
 import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
 
 
@@ -156,7 +156,7 @@ const Profile = () => {
 
         {user.uid != firebase_id && userDetails.status === "Tutor" &&
         <div className="tutor-rating">
-            <TutorRating 
+            <TutorReview 
                 tutorId={firebase_id}
                 loggedInUser = {mongoUser}
                 onSubmitReview={() => 

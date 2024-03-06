@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { submitReview } from '../../services/users';
 
-import './TutorRating.css'
+import './TutorReview.css'
 
-export const TutorRating = ({tutorId, loggedInUser, onSubmitReview}) => {
+export const TutorReview = ({tutorId, loggedInUser, onSubmitReview}) => {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
     const [totalStars, setTotalStars] = useState(5);
