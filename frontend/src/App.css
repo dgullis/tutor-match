@@ -47,7 +47,8 @@
 }
 
 .custom-link:active {
-  text-decoration: underline; 
+  text-decoration: underline;
+}
 
 @keyframes App-logo-spin {
   from {
