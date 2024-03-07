@@ -17,6 +17,7 @@ const UserProfile = (props) => {
                 <TutorStarRating 
                     tutorReviews={props.user.reviews}
                     tutorRating={props.user.rating}
+                    userStatus={props.user.status}
                 />
             </div>
 

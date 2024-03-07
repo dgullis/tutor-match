@@ -38,7 +38,6 @@ const PendingTutorList = (props) => {
     return (
         <div className = "container">
             <div className = "row justify-content-center mt-3">
-                <div className = "col-md-4 text-center">
                 <h4>Pending Tutors: </h4>
                 {pendingTutors.map((user) => (
                     <>
@@ -48,12 +47,11 @@ const PendingTutorList = (props) => {
                         E-mail: {user.email}<br/>
                     </div>
                     <div className = "d-grid">
-                                <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => updateTutorList(user.firebase_id)}>Approve</button>
+                                <button type = "submit" className = "btn btn-primary mt-2 pt-1 pb-1" onClick = {(e) => updateTutorList(user.firebase_id)}>Approve</button>
                     </div><br/>
 
                     </>
                 ))}
-            </div>
         </div>
         </div>
     )

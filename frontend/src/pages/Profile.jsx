@@ -32,7 +32,7 @@ const Profile = () => {
     const [alevel, setAlevel] = useState([])
     const [pendingTutors, setPendingTutors] = useState([])
     const [isCurrentUser, setIsCurrentUser] = useState(false)
-    //console.log("user")
+    const [pageToDisplay, setPageToDisplay] = useState("")
     //console.log(user)
 
     const gcseQueryParams = {
@@ -53,9 +53,6 @@ const Profile = () => {
             .then((data) => {
                 console.log(data)
                 setUserDetails(data.user)
-                if(user.uid === firebase_id){
-                    setIsCurrentUser(true)
-                }
             })
             .catch((err) => {
                 console.log(err);
@@ -86,14 +83,40 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             })
+
     },[refresh, firebase_id]);
 
+    useEffect(()=> {
+
+        if (userDetails.status === "Student"){
+            if (user.uid === firebase_id){
+                setPageToDisplay("STUDENT_OWNER")
+            } else {
+                setPageToDisplay("STUDENT_VISITOR")
+            }
+        } else if (userDetails.status === "Tutor"){
+            if (user.uid === firebase_id){
+                if(userDetails.safeguarding === "Approved"){
+                    setPageToDisplay("TUTOR_OWNER_APPROVED")
+                } else {
+                    setPageToDisplay("TUTOR_OWNER_PENDING")
+                }
+            } else {
+                setPageToDisplay("TUTOR_VISITOR")
+            }
+        } else if (userDetails.status === "Admin"){
+            setPageToDisplay("ADMIN")
+        }
+
+    }, [userDetails])
+    
     
     
     
 
     // student profile page, not belonging to logged in user
-    if (userDetails && userDetails.status === "Student" && user.uid !== firebase_id){
+    // if (userDetails && userDetails.status === "Student" && user.uid !== firebase_id)
+    if(pageToDisplay === "STUDENT_VISITOR") {
         return (
             <Container fluid className="px-5">
                 <Row className="gx-5">
@@ -113,9 +136,11 @@ const Profile = () => {
     }
 
     // student profile page, belonging to logged in user
-    if (userDetails && userDetails.status === "Student" && user.uid === firebase_id){
+    // if (userDetails && userDetails.status === "Student" && user.uid === firebase_id)
+    
+    if(pageToDisplay === "STUDENT_OWNER") {
+        
         return (
-
             <Container fluid className="px-5">
             <Row className="gx-5">
                 <Col>
@@ -145,10 +170,9 @@ const Profile = () => {
     }
 
     // approved tutor profile page, belonging to logged in user
-    if (userDetails && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && user.uid === firebase_id) {
+    // if (userDetails && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && user.uid === firebase_id) 
+    if (pageToDisplay === "TUTOR_OWNER_APPROVED"){
         return (
-            
-            
             <Container fluid className="px-5">
             <Row className="gx-5">
             <Col md={6}>
@@ -233,7 +257,9 @@ const Profile = () => {
         )
     }
     // approved tutor profile page, not belonging to logged in user
-    if (userDetails && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && user.uid !== firebase_id) {
+    // if (userDetails && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && user.uid !== firebase_id) 
+    
+    if (pageToDisplay === "TUTOR_VISITOR"){
         return (
             <Container fluid className="px-5">
             <Row className="gx-5">
@@ -294,9 +320,56 @@ const Profile = () => {
         )
     }
 
+    if( pageToDisplay === "TUTOR_OWNER_PENDING"){
+        return (
+            <Container fluid className="px-5">
+                <Row className="gx-5">
+                    <Col md={{ span: 6, offset: 3 }}>
+                        <Card className="shadow-sm p-3 mb-3 bg-white rounded" >
+                            <Card.Body className="text-center">
+                                <Card.Title>
+                                    Tutor Details
+                                </Card.Title>
+                                <Card.Text>
+                                    Your account is awaiting background checks. <br/> 
+                                    Please ensure you respond to all requests for further information promptly.
+                                </Card.Text>
+                                <UserProfile 
+                                    user = {userDetails} 
+                                    isCurrentUser = {true} 
+                                    firebase_id={firebase_id}/>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+
+        )
+    }
+
+    if( pageToDisplay === "ADMIN"){
+        return (
+            <Container fluid className="px-5">
+                <Row className="gx-5">
+                    <Col md={{ span: 6, offset: 3 }}>
+                        <Card className="shadow-sm p-3 mb-3 bg-white rounded" >
+                            <Card.Body className="text-center">
+                                <Card.Title>
+                                    ADMIN
+                                </Card.Title>
+                                    <PendingTutorList idToken = {idToken}/>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+            
+        )
+    }
+
     return (
         <>
-
+        {/* previous code */}
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">

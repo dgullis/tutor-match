@@ -6,7 +6,9 @@ const ProfileSubjects = (props) => {
 
         <Container>
             <Row>
-                <strong>Available to tutor</strong>
+                {props.gcse || props.alevel ? (
+                    <strong>Available to tutor</strong>
+                    ) : null}
                 <Col>
                     {props.gcse && (
                         <>
@@ -39,6 +41,7 @@ const ProfileSubjects = (props) => {
 
 export default ProfileSubjects
 
+//previous code
 {/* <div class = "container">
             <div class = "row">
                 <div class = "col-sm">

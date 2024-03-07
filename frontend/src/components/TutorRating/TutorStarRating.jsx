@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap'
 
-export const TutorStarRating = ({tutorReviews, tutorRating}) => {
+export const TutorStarRating = ({tutorReviews, tutorRating, userStatus}) => {
     const [avgRating, setAvgRating] = useState(null)
     const [stars, setStars] = useState([])
     const [numRatings, setNumRatings] = useState(null)
@@ -24,6 +24,10 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
     
         setStars(starsArray);
     }, [avgRating]);
+
+    if (userStatus === "Student"){
+        return
+    }
 
     return (
         <>
@@ -58,14 +62,12 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
             </div>
 
         ) : (
-
             <div className="container text-center">
                 <span style={{ fontSize: '14px' }}>No reviews</span>
             </div>
         
         )}
         
-       
 
         </>
     )
