@@ -2,7 +2,6 @@ import pytest
 import json
 from flask import Flask
 from bson import ObjectId
-from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
 from unittest.mock import patch
@@ -35,8 +34,6 @@ def test_signup(client):
     assert response.json == {'user': user, 'message': 'Account created successfully'}
 
 
-
-# route currently not in use:
 # def test_update_user_bio_route(client):
 #     new_user = {
 #         "firebase_id": "test_firebase_id",
@@ -45,9 +42,8 @@ def test_signup(client):
 #         "status": "Student"
 #     }
     
-#     user_id = str(ObjectId()) # Generate a unique ID for the user
 #     users_collection = app.users_collection  # Access the collection from the app
-#     users_collection.insert_one({**new_user, "_id": ObjectId(user_id)})  # Insert the user into the database
+#     users_collection.insert_one({**new_user, "_id": "test_firebase_id"})  # Insert the user into the database
 
 #     bio_content = "Test bio content"
 #     response = client.put(f'/users/{user_id}/bio', json={'bio': bio_content})
@@ -60,9 +56,6 @@ def test_signup(client):
 #     assert updated_user["bio"] == bio_content
 
 
-# TO DO: Resolve testing db problems, make sure user created in testdb
-# #See lines 4 & 5 for imports
-# @patch('app.verify_token') #Patch points to where verify_token is used (not where it's defined)
 # def test_getUser(mock_verify_token, client):
 #     # Mock simulates a successful verification
 #     mock_verify_token.return_value = {"firebase_id": "test_firebase_id"}
@@ -74,7 +67,7 @@ def test_signup(client):
 #         "status": "Student"
 #     }
     
-#     client.post("/signup", json=user)
+#     users_collection.insert_one({**user, "_id": ObjectId(user_id)})
 #     response = client.get("/users/test_firebase_id")
     
 #     assert response.status_code == 200

@@ -5,8 +5,6 @@ bookings_collection = get_bookings_collection()
 users_collection = get_users_collection()
 
 
-#define functions here for bookings
-
 def update_booking_request(bookingId, tutor_id, booking_time, status):
     filter_criteria = {"_id": ObjectId(bookingId) }
     update_operation = {'$set': {'status': status}}
@@ -54,7 +52,6 @@ def update_booking_request(bookingId, tutor_id, booking_time, status):
 
 
 def request_booking(tutorId, studentId, start_time):
-
     if is_booking_duplicate(tutorId, studentId, start_time):
         return {"success": False, "message": "Booking request already exists for this time and date", "status_code": 400}
     
