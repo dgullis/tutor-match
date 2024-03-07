@@ -49,6 +49,7 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
             <div className = "row justify-content-center mt-3">
                 <div className = "col-md-4 text-center">
                     <p className = "lead">Add subjects</p>
+                    <p>Let students know what subjects you can tutor</p>
                 </div>
                 <div className = "container">
                     <div className = "row justify-content-center">
@@ -70,7 +71,9 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
 
 
                             <div className = "d-grid">
-                                <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => addSubjectAndLevel(e)}>Add Subject</button>
+                                <button type = "submit" className = "btn btn-primary" onClick = {(e) => addSubjectAndLevel(e)}>
+                                    Add subject to profile
+                                </button>
                             </div>  
                                 <div className= "row-md-4 mt-3 pt-3 pb-3">
                                 {errorMessage &&
