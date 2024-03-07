@@ -2,8 +2,10 @@ import UploadImage from "./UploadImage";
 import AboutMe from "./AboutMe";
 import ProfileSubjects from "./ProfileSubjects";
 import { TutorStarRating } from "./TutorRating/TutorStarRating";
+import { useAuth } from "../components/authContext";
 
 const UserProfile = (props) => {
+    const { idToken } = useAuth()
     return (
         <div key={props.user.firebase_id} style={{ marginBottom: '20px' }}>
             <div>
@@ -25,7 +27,8 @@ const UserProfile = (props) => {
                 <div style={{ marginBottom: '10px' }}>
                     <UploadImage 
                         firebase_id={props.user.firebase_id}
-                        onChangeProfileImage={props.onChangeProfileImage} />
+                        onChangeProfileImage={props.onChangeProfileImage}
+                        idToken={idToken} />
                 </div>
             }
             <div>
@@ -39,7 +42,7 @@ const UserProfile = (props) => {
             {props.isCurrentUser ? (
                 <div>
                     <AboutMe
-                        userDetails={props.user} 
+                        userDetails={props.user}
                     />
                 </div>
             ) : (
