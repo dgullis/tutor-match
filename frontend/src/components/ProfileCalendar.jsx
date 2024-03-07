@@ -8,7 +8,7 @@ export const ProfileCalendar = ({mongoUser}) => {
     return (
         <div className="container-fluid">
             <div className="row justify-content-center text-center">
-                {mongoUser.bookings && mongoUser.bookings.length == 0 ? (
+                {mongoUser.bookings && mongoUser.bookings.length === 0 ? (
                     <Card style={{ width: '18rem', marginBottom: '10px', fontSize: '0.8rem' }}>
                     <Card.Body>
                     <Card.Text>No tutoring sessions booked or requested</Card.Text>

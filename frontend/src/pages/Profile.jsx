@@ -252,6 +252,15 @@ const Profile = () => {
                                 <Card.Text>
                                 Let students know when you are available to tutor
                                 </Card.Text>
+                                
+                                <BookingRequestCalender 
+                                    tutorDetails = {userDetails}
+                                    loggedInUser = {mongoUser}
+                                    showSubmit = {false}
+                                    onRequestBooking={() => 
+                                        setRefresh(!refresh)} 
+                                    />
+                                
                                 <AddAvailability 
                                     firebaseId = {firebase_id} 
                                     idToken={idToken}
@@ -319,7 +328,8 @@ const Profile = () => {
                                 tutorDetails = {userDetails}
                                 loggedInUser = {mongoUser}
                                 onRequestBooking={() => 
-                                    setRefresh(!refresh)} />
+                                    setRefresh(!refresh)}
+                                showSubmit = {true}/>
 
                                 
                         </Card.Body>

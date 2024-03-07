@@ -78,7 +78,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
                 format="dd-MM-yy HH:00"
                 step={60}
                 onChange={handleStartDateChange}
-                readonly={true} 
+                
                 // style={{marginBottom: "10px"}}
                 >
             </DateTimePickerComponent>
@@ -89,7 +89,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
                 format="dd-MM-yy HH:00"
                 step={60}
                 onChange={handleEndDateChange}
-                readonly={true} 
+                
                 // style={{marginBottom: "10px"}}
                 >
             </DateTimePickerComponent>
