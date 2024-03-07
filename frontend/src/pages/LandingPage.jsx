@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../App.css';
 
 // AboutUsModal component/ button
 const AboutUsModal = () => {
@@ -21,13 +22,13 @@ const AboutUsModal = () => {
                 <Modal.Body>
                     <p>This is a Makers Academy final project using FReMP tech stack by:</p>
                     <ul>
-                        <li>Ann Galloway</li>
-                        <li>Leah Simon</li>
-                        <li>Kat Bielecka</li>
-                        <li>Dan Gullis</li>
-                        <li>Simon Budden</li>
-                        <li>Muhtadi Maahir</li>
-                        <li>Pier Bruno Pompilii</li>
+                        <li>Ann Galloway - <a href="https://github.com/AnnGalloway" target="_blank" rel="noopener noreferrer" className="custom-link">@AnnGalloway</a></li>
+                        <li>Leah Simon - <a href="https://github.com/nsleeah" target="_blank" rel="noopener noreferrer" className="custom-link">@Nsleeah</a></li>
+                        <li>Kat Bielecka - <a href="https://github.com/KatBiel" target="_blank" rel="noopener noreferrer" className="custom-link">@KatBiel</a></li>
+                        <li>Dan Gullis - <a href="https://github.com/dgullis" target="_blank" rel="noopener noreferrer" className="custom-link">@dgullis</a></li>
+                        <li>Simon Budden - <a href="https://github.com/fantastito" target="_blank" rel="noopener noreferrer" className="custom-link">@fantastito</a></li>
+                        <li>Muhtadi Maahir - <a href="https://github.com/MMaahir" target="_blank" rel="noopener noreferrer" className="custom-link">@MMaahir</a></li>
+                        <li>Pier Bruno Pompilii - <a href="https://github.com/PierPompilii" target="_blank" rel="noopener noreferrer" className="custom-link">@PierPompilii</a></li>
                     </ul>
                     <p>Please, do not sign in :)</p>
                 </Modal.Body>
@@ -48,7 +49,7 @@ const LandingPage = () => {
             <div className="row">
                 <div className="col-md-6">
                     <h1>Online tutoring that releases potential</h1>
-                    <p>TutorMatch connects students with DBS checked tutors. Find top-rated tutors online for free!</p>
+                    <p>Tutor Match is a charity set up to connect DBS checked volunteer tutors with students who need a little extra help. Our tutoring services are provided absolutely free to those who need it most.</p>
                     <Link to="/signup" className="btn btn-primary mb-3 mb-md-0">Create a free account</Link>
                 </div>
                 <div className="col-md-6">

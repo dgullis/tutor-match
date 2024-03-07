@@ -10,6 +10,7 @@ import { BookingRequestCalender } from "../components/BookingRequestCalender";
 import { RequestedBooking } from "../components/RequestedBooking";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
+import { ProfileCalendar } from "../components/ProfileCalendar";
 import UserProfile from "../components/User";
 import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
@@ -33,6 +34,7 @@ const Profile = () => {
     const [pendingTutors, setPendingTutors] = useState([])
     const [isCurrentUser, setIsCurrentUser] = useState(false)
     const [pageToDisplay, setPageToDisplay] = useState("")
+
     //console.log(user)
 
     const gcseQueryParams = {
@@ -45,10 +47,6 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        //console.log("line 20 profile.jsx")
-        //console.log(user)
-        //console.log(userDetails)
-        //console.log(idToken)
         getUser(firebase_id, idToken)
             .then((data) => {
                 console.log(data)
@@ -61,7 +59,6 @@ const Profile = () => {
         searchSubjects(gcseQueryParams, idToken)
             .then((data) => {
                 //console.log(data)
-                //console.log(data.result[0].name)
                 setGcse(data.result)
             })
             .catch((err) => {
@@ -413,10 +410,9 @@ const Profile = () => {
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && 
             <div className = "addSubject">
-            <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
-            setRefresh(!refresh)}/>
-
-        </div>}
+                <AddSubject firebaseId={firebase_id} idToken={idToken} onSubjectAdded={() => 
+                setRefresh(!refresh)}/>
+            </div>}
 
         {user.uid === firebase_id && userDetails.status === "Tutor" && userDetails.safeguarding === "Approved" && 
 
@@ -428,6 +424,23 @@ const Profile = () => {
                         setRefresh(!refresh)}
                     />
             </div> }
+        
+        { user.uid === firebase_id &&
+            <div className="profileCalendar">
+                <ProfileCalendar
+                    mongoUser = {mongoUser}
+                />
+            </div>
+        }
+
+
+        <div className="booking-request">
+            <BookingRequestCalender 
+                tutorDetails = {userDetails}
+                loggedInUser = {mongoUser}
+                onRequestBooking={() => 
+                    setRefresh(!refresh)} />
+        </div>
         
         {user.uid === firebase_id && userDetails.status === "Admin" &&
         <div>
