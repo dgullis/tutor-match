@@ -7,7 +7,7 @@ import { sendEmail } from "../services/emailCommunications";
 import { useAuth } from "../components/authContext"; 
 
 
-export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBooking}) => {
+export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBooking, disableSubmit}) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [availableDates, setAvailableDates] = useState([])
     const [errorMessage, setErrorMessage] = useState("")
@@ -97,11 +97,15 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
                             open={true}
                             inline
                         />
+                        
+                        
                         <div className="m-3">
                             <Button className="d-grid mx-auto" variant="primary" type="submit" justifyContent="center" style={{ width: '200px' }}>
                                 Request
                             </Button> 
                         </div>
+                        
+                        
                     
                         </Form>
                         <div style={{ maxWidth: '400px', margin: 'auto', fontSize: '14px' }}>
