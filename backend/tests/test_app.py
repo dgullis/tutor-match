@@ -27,8 +27,6 @@ def test_signup(client):
         "email": "test@email.com",
         "status": "Student",
         "safeguarding": "Approved",
-        "bio": "Test bio content",
-
     }
     response = client.post("/signup", json=user)
 
@@ -55,6 +53,7 @@ def test_update_user_bio_route(client):
     # Check if the user's bio was actually updated in the database
     updated_user = users_collection.find_one({"_id": "test_firebase_id"})
     # assert updated_user["bio"] == bio_content
+
 
 
 # def test_getUser(mock_verify_token, client):
