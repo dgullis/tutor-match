@@ -80,7 +80,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
 
     
     return (
-                <div className = "text-center mt-4">
+                <div className = "text-center mt-4 mb-4">
                     <div className = "justify-content-center">
                     
                         <Form onSubmit={handleSubmit} >
@@ -98,12 +98,13 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
                             inline
                         />
                         
-                        
+                        {disableSubmit && disableSubmit === !true &&
                         <div className="m-3">
                             <Button className="d-grid mx-auto" variant="primary" type="submit" justifyContent="center" style={{ width: '200px' }}>
                                 Request
                             </Button> 
                         </div>
+                        }
                         
                         
                     
