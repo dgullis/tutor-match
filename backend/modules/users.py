@@ -222,7 +222,6 @@ def updating_rating(user_firebase_id):
         users_collection.update_one({"firebase_id": user_firebase_id}, {"$set": {"rating":round(avgRating, 2)}})
         
 
-
 def update_profile_picture(firebase_id, profilePitureUrl):
     try:
         result = users_collection.update_one({"firebase_id":firebase_id}, {"$set": {"profileImage": profilePitureUrl}})
