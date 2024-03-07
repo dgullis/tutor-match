@@ -4,6 +4,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { requestBooking } from "../services/bookings";
 import { useEffect } from "react";
 import { sendEmail } from "../services/emailCommunications";
+import { useAuth } from "../components/authContext"; 
 
 
 export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBooking}) => {
@@ -11,6 +12,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
     const [availableDates, setAvailableDates] = useState([])
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    const { idToken } = useAuth()
     console.log(tutorDetails)
 
     const tutorFirebaseId = tutorDetails.firebase_id && tutorDetails.firebase_id;
@@ -58,7 +60,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
         const handleSubmit = async (e) => {
             e.preventDefault()
             try {
-                const result = await requestBooking(tutorFirebaseId, loggedInUserFirebaseId, selectedDate.toISOString())
+                const result = await requestBooking(tutorFirebaseId, loggedInUserFirebaseId, selectedDate.toISOString(), idToken)
                 if (result.success){
                     setErrorMessage("")
                     setSuccessMessage(result.message)

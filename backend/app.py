@@ -34,6 +34,7 @@ firebase_admin = initialize_app(cred)
 
 @app.route("/bookings", methods=["POST"])
 def request_new_booking():
+    verify_token()
     data = request.json
     tutorId = data.get('tutorId')
     studentId = data.get('studentId')
@@ -46,6 +47,7 @@ def request_new_booking():
 
 @app.route("/bookings/<string:bookingId>", methods=["PUT"])
 def update_booking(bookingId):
+    verify_token()
     data = request.json
     status = data.get('status')
     tutor_id = data.get('tutorId')
@@ -190,6 +192,7 @@ def add_availability(userId):
 #POST - BIO.
 @app.route('/users/<string:firebase_id>/bio', methods=['POST'])
 def update_user_bio(firebase_id):
+    verify_token()
     data = request.json
     ##firebase_id = data.get('firebase_id')
     bio = data.get('bio')
@@ -220,6 +223,7 @@ def get_user(userId):
 
 @app.route('/users/<string:userId>/review', methods=['POST'])
 def add_review(userId):
+    verify_token()
     data = request.json
     rating = data.get('rating')
     comment = data.get('comment')
@@ -233,6 +237,7 @@ def add_review(userId):
 
 @app.route('/users/<string:firebase_id>/profile-picture', methods=['POST'])
 def update_profile_picture_route(firebase_id):
+    verify_token()
     data = request.json
     profilePictureUrl = data.get('profilePictureUrl')
 
