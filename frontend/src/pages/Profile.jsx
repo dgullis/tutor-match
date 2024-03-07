@@ -156,9 +156,14 @@ const Profile = () => {
                 </Col>
                 <Col>
                 <Card className="shadow-sm p-3 mb-3 bg-white rounded">
-                    <Card.Title>
-                        Calender
+                    <Card.Title className="row justify-content-center text-center">
+                        My tutoring sessions
                     </Card.Title>
+                        <div className="profileCalendar">
+                            <ProfileCalendar
+                                mongoUser = {mongoUser}
+                            />
+                        </div>
                     </Card>
                 </Col>
             </Row>
@@ -226,9 +231,13 @@ const Profile = () => {
 
                             <Card.Body className="text-center">
                                 <Card.Title style={{marginBottom: "20px"}}>
-                                    Calender
+                                    My tutoring sessions
                                 </Card.Title>
-                                    
+                                    <div className="profileCalendar">
+                                        <ProfileCalendar
+                                            mongoUser = {mongoUser}
+                                        />
+                                    </div>
                             </Card.Body>
                         </Card>
                     </Row>
