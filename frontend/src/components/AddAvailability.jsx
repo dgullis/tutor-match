@@ -73,7 +73,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
         <>
         <Form onSubmit={handleSubmit}>
             <div style={{marginBottom: "10px"}}>
-            <DateTimePickerComponent id="datetimepicker" placeholder="Choose start date and time" min={minDate} max={maxDate}
+            <DateTimePickerComponent id="startdatetimepicker" placeholder="Choose start date and time" min={minDate} max={maxDate}
                 value={startDate}
                 format="dd-MM-yy HH:00"
                 step={60}
@@ -83,7 +83,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
             </DateTimePickerComponent>
             </div>
             <div style={{marginBottom: "10px"}}>
-            <DateTimePickerComponent id="datetimepicker" placeholder="Choose end date and time" min={minDate} max={maxDate}
+            <DateTimePickerComponent id="enddatetimepicker" placeholder="Choose end date and time" min={minDate} max={maxDate}
                 value={endDate}
                 format="dd-MM-yy HH:00"
                 step={60}
