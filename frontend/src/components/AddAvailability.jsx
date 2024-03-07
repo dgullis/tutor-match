@@ -69,6 +69,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
 
 
     return (
+
         <>
         <Form onSubmit={handleSubmit}>
             <div style={{marginBottom: "10px"}}>

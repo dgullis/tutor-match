@@ -48,7 +48,6 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
 
     return(
 
-
         <form>
             <select className="form-select" aria-label="Default select example" value = {grade} onChange={ (e) => setGrade(e.target.value)} style = {{marginBottom: "10px"}}>
                 <option defaultValue>Select grade</option>
@@ -92,6 +91,5 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
                 }
             </div>                 
         </form>
-
     )
 }
