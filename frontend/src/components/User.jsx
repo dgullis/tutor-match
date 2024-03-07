@@ -1,25 +1,61 @@
+import UploadImage from "./UploadImage";
+import AboutMe from "./AboutMe";
+import ProfileSubjects from "./ProfileSubjects";
+import { TutorStarRating } from "./TutorRating/TutorStarRating";
+
 const UserProfile = (props) => {
     return (
-        <article key={props.user.firebase_id}>
-        {props.user.profileImage ? (
-            <img
-            src={props.user.profileImage}
-            alt="Profile"
-            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-            />
-        ) : (
-            <img
-            src={props.defaultPicture} 
-            alt="Default Profile"
-            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-            />
-        )}
+        <div key={props.user.firebase_id} style={{ marginBottom: '20px' }}>
+            <div>
+                <img 
+                    src={props.user.profileImage ? props.user.profileImage : "https://res.cloudinary.com/dzkvzncgr/image/upload/v1707228333/ph2p8wvxud1qbsqqfxqk.png"} 
+                    alt="Image description" 
+                    style={{ width: "150px", height: "150px", borderRadius: "50%", margin: '10px' }}
+                />
+            </div>
+            <div>
+                <TutorStarRating 
+                    tutorReviews={props.user.reviews}
+                    tutorRating={props.user.rating}
+                    userStatus={props.user.status}
+                />
+            </div>
 
-        <br />
-        Name: {props.user.name} <br />
-        Email: {props.user.email}<br/>
-        About Me: {props.user.bio}
-        </article>
+            {props.isCurrentUser &&
+                <div style={{ marginBottom: '10px' }}>
+                    <UploadImage 
+                        firebase_id={props.user.firebase_id}
+                        onChangeProfileImage={props.onChangeProfileImage} />
+                </div>
+            }
+            <div>
+                <strong>Name:</strong><br/> {props.user.name} 
+            </div>
+            <div>
+                <strong>Email:</strong> <br/>{props.user.email}
+            </div>
+            <div>
+                <strong>About me:</strong> <br/>
+            {props.isCurrentUser ? (
+                <div>
+                    <AboutMe
+                        userDetails={props.user} 
+                    />
+                </div>
+            ) : (
+                <div>
+                    {props.user.bio}
+                </div>
+            )}
+                <div>
+                    <ProfileSubjects 
+                        gcse = {props.gcse} 
+                        alevel = {props.alevel} 
+                    />
+                </div>
+            </div>
+        </div>
+
     );
     };
 

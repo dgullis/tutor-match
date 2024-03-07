@@ -69,55 +69,50 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
 
 
     return (
-        <div className = "container-fluid">
-            <div className = "row justify-content-center mt-3">
-            <div className = "col-md-4 text-center">
-                    <p className = "lead">Add availabiity</p>
-                    <p>Let students know when you are available to tutor</p>
-                </div>
-                <div className = "container">
-                    <div className = "row justify-content-center">
-                        <>
-                        <Form onSubmit={handleSubmit} className = "col-md-4 mt-3 pt-3 pb-3">
-                            <DateTimePickerComponent id="datetimepicker" placeholder="Choose start date and time" min={minDate} max={maxDate}
-                                value={startDate}
-                                format="dd-MM-yy HH:00"
-                                step={60}
-                                onChange={handleStartDateChange}
-                                >
-                            </DateTimePickerComponent>
-                            <DateTimePickerComponent id="datetimepicker" placeholder="Choose end date and time" min={minDate} max={maxDate}
-                                value={endDate}
-                                format="dd-MM-yy HH:00"
-                                step={60}
-                                onChange={handleEndDateChange}
-                                >
-                            </DateTimePickerComponent>
 
-                            <div className = "d-grid">
-                                <Button variant="primary" type="submit" className="d-grid" justifyContent="center" >
-                                    Add availability slot to profile
-                                </Button> 
-                            </div>  
-
-                            <div className= "row-md-4 mt-3 pt-3 pb-3">
-                            {errorMessage && 
-                                <Alert variant="info" dismissible onClose={closeAlert} >
-                                    {errorMessage}
-                                </Alert>
-                            }
-                            {successMessage && 
-                                <Alert variant="info" dismissible onClose={closeAlert} >
-                                    {successMessage}
-                                </Alert>
-                            }
-                            </div>     
-                        </Form>
-                        </>
-                    </div>
-                </div>
+        <>
+        <Form onSubmit={handleSubmit}>
+            <div style={{marginBottom: "10px"}}>
+            <DateTimePickerComponent id="datetimepicker" placeholder="Choose start date and time" min={minDate} max={maxDate}
+                value={startDate}
+                format="dd-MM-yy HH:00"
+                step={60}
+                onChange={handleStartDateChange}
+                // style={{marginBottom: "10px"}}
+                >
+            </DateTimePickerComponent>
             </div>
-        </div>
+            <div style={{marginBottom: "10px"}}>
+            <DateTimePickerComponent id="datetimepicker" placeholder="Choose end date and time" min={minDate} max={maxDate}
+                value={endDate}
+                format="dd-MM-yy HH:00"
+                step={60}
+                onChange={handleEndDateChange}
+                // style={{marginBottom: "10px"}}
+                >
+            </DateTimePickerComponent>
+            </div>
+
+            <div className = "d-grid">
+                <Button variant="primary" type="submit" className="d-grid" justifyContent="center" >
+                    Submit
+                </Button> 
+            </div>  
+
+            <div className= "row-md-4 mt-3 pt-3 pb-3">
+            {errorMessage && 
+                <Alert variant="info" dismissible onClose={closeAlert} >
+                    {errorMessage}
+                </Alert>
+            }
+            {successMessage && 
+                <Alert variant="info" dismissible onClose={closeAlert} >
+                    {successMessage}
+                </Alert>
+            }
+            </div>     
+        </Form>
+        </>
 
     )
 }

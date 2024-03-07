@@ -65,8 +65,9 @@ return (
     <>
 
     <Container style={{ width: "75%" }} className="d-flex justify-content-center">
-    <Row>
-    <Col>
+    <Row >
+    <Col className="text-center">
+        Select a subject and grade to find suitable tutors
     <Form onSubmit={handleSubmit}>
         <Form.Group controlId="subject" style={{ margin: '20px', minWidth: '500px' }}>
             <Select
@@ -89,8 +90,8 @@ return (
         </Form.Group>
 
         <div className="d-flex justify-content-center">
-            <Button variant="primary" type="submit" className="mx-auto" style={{ width: '300px', margin: '0px 20px 20px 20px' }}>
-                Search for tutor
+            <Button variant="primary" type="submit" className="mx-auto" style={{ backgroundColor: '#025E84', color: 'whitesmoke', border: 'none' , width: '300px', margin: '0px 20px 20px 20px'}}>
+                Search for tutors
             </Button>
         </div>
         
@@ -98,6 +99,7 @@ return (
         </Col>
         </Row>
     </Container>
+    
 
 
     {searchResultMessage && 
@@ -106,14 +108,18 @@ return (
         </Alert>
     }
 
-<div className="d-flex flex-column align-items-center">
+
+ 
+    <div className= 'd-flex flex-column align-items-center'>
         {searchResults && 
-            searchResults.map((tutor) => {
-                console.log("tutor", tutor)
-                return <TutorSearchResult tutor={tutor}/>
-            })
+            searchResults.map((tutor) => (
+              
+                    <TutorSearchResult tutor={tutor}/>
+               
+            ))
         }
     </div>
+
 
 
     </>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap'
 
-export const TutorStarRating = ({tutorReviews, tutorRating}) => {
+export const TutorStarRating = ({tutorReviews, tutorRating, userStatus}) => {
     const [avgRating, setAvgRating] = useState(null)
     const [stars, setStars] = useState([])
     const [numRatings, setNumRatings] = useState(null)
@@ -12,16 +12,22 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
     
 
     useEffect(() => {
-        setAvgRating(Math.round(tutorRating))
-        setNumRatings(tutorReviews.length)
+        setAvgRating(tutorRating ? tutorRating.toFixed(1) : 0)
+        setNumRatings(tutorReviews ? tutorReviews.length: 0)
 
+    }, [tutorReviews, tutorRating])
+
+    useEffect(() => {
         const starsArray = Array.from({ length: avgRating }, (_, index) => (
             <span key={index} style={{ color: "#ffc107" }}> &#9733; </span>
         ));
-        
-        setStars(starsArray)
-    }, [tutorReviews, tutorRating])
+    
+        setStars(starsArray);
+    }, [avgRating]);
 
+    if (userStatus === "Student"){
+        return
+    }
 
     return (
         <>
@@ -37,32 +43,31 @@ export const TutorStarRating = ({tutorReviews, tutorRating}) => {
                     see reviews
                 </div>
 
+                <Modal show={showReviews} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Reviews</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {tutorReviews.map((review) => {
+                            return <p>"{review.comment}"</p>
+                        })}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer> 
+                </Modal>
+
             </div>
 
         ) : (
-
             <div className="container text-center">
                 <span style={{ fontSize: '14px' }}>No reviews</span>
             </div>
         
         )}
         
-
-        <Modal show={showReviews} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Reviews</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {tutorReviews.map((review) => {
-                    return <p>"{review.comment}"</p>
-                })}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-            </Modal.Footer> 
-        </Modal>
 
         </>
     )
