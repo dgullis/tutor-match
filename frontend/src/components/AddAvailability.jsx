@@ -71,6 +71,10 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
     return (
         <div className = "container-fluid">
             <div className = "row justify-content-center mt-3">
+            <div className = "col-md-4 text-center">
+                    <p className = "lead">Add availabiity</p>
+                    <p>Let students know when you are available to tutor</p>
+                </div>
                 <div className = "container">
                     <div className = "row justify-content-center">
                         <>
@@ -92,7 +96,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
 
                             <div className = "d-grid">
                                 <Button variant="primary" type="submit" className="d-grid" justifyContent="center" >
-                                    Submit
+                                    Add availability slot to profile
                                 </Button> 
                             </div>  
 
