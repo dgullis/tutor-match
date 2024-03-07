@@ -2,9 +2,6 @@ from db.mongodb import get_subjects_collection
 from db.mongodb import get_users_collection
 from bson import ObjectId
 
-
-#define functions here related to subjects collection
-
 class TutorAddingError(Exception):
     pass
 class SubjectGradeNotFoundError(Exception):
@@ -58,7 +55,6 @@ def search_by_subject_and_grade(subject, grade):
 
             #returns array of user documents i.e. 
                 #[{'_id': '', 'name': '', 'email': 'dan15@.com', 'status': '', 'bio': ''}]
-            print("backend results", tutor_information)
             return tutor_information
         else:
             raise SubjectGradeNotFoundError('Subject or grade not found')

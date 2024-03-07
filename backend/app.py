@@ -6,9 +6,7 @@ from datetime import datetime, timezone
 from bson import BSON
 import json
 from firebase_admin import credentials, initialize_app
-
 from modules.users import *
-
 from modules.subjects import add_tutor_to_a_subject_grade, search_by_subject_and_grade, returnSubjects, TutorAddingError, SubjectGradeNotFoundError
 from modules.bookings import request_booking, update_booking_request
 from lib.firebase_token_auth import verify_token
@@ -117,23 +115,6 @@ def get_tutor_subjects():
     except Exception as e:
         return jsonify({f'Error retrieving subjects: {str(e)}'}), 500
 
-
-# @app.route('/users/<string:userId>/bio', methods=['PUT'])
-# def update_user_bio(userId):
-#     data = request.json
-#     bioContent = data.get('bio')
-
-#     try:
-#         update_bio(userId, bioContent)
-#         return jsonify({'message': 'Update bio successful'}), 200
-    
-#     except UserNotFoundError as usnfe:
-#         return jsonify({'error': str(usnfe)}), 404
-    
-#     except Exception as e:
-#         return jsonify({'error': f'Error updating bio: {str(e)}'}), 500
-
-    
 @app.route('/subjects/<string:subject>/add', methods=['POST'])
 def add_tutor_to_subject_grade(subject):
     verify_token()
@@ -187,7 +168,6 @@ def add_availability(userId):
     except Exception as e:
         return jsonify({f'Error adding availability: {str(e)}'}), 500
 
-#POST - BIO.
 @app.route('/users/<string:firebase_id>/bio', methods=['POST'])
 def update_user_bio(firebase_id):
     verify_token()
