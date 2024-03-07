@@ -201,6 +201,7 @@ const Profile = () => {
                         <Card.Title style={{marginBottom: "20px"}}>
                             Update subjects
                         </Card.Title>
+                        <Card.Text>Let students know what subjects you can tutor</Card.Text>
                         <AddSubject 
                             firebaseId={firebase_id} 
                             idToken={idToken} 
@@ -248,6 +249,9 @@ const Profile = () => {
                                 <Card.Title style={{marginBottom: "20px"}}>
                                     Update Availability
                                 </Card.Title>
+                                <Card.Text>
+                                Let students know when you are available to tutor
+                                </Card.Text>
                                 <AddAvailability 
                                     firebaseId = {firebase_id} 
                                     idToken={idToken}
