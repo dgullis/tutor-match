@@ -256,7 +256,7 @@ const Profile = () => {
                                 <BookingRequestCalender 
                                     tutorDetails = {userDetails}
                                     loggedInUser = {mongoUser}
-                                    disableSubmit = {true}
+                                    showSubmit = {false}
                                     onRequestBooking={() => 
                                         setRefresh(!refresh)} 
                                     />
@@ -328,7 +328,8 @@ const Profile = () => {
                                 tutorDetails = {userDetails}
                                 loggedInUser = {mongoUser}
                                 onRequestBooking={() => 
-                                    setRefresh(!refresh)} />
+                                    setRefresh(!refresh)}
+                                showSubmit = {true}/>
 
                                 
                         </Card.Body>
