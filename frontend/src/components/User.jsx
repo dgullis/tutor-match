@@ -18,6 +18,7 @@ const UserProfile = (props) => {
         <br />
         Name: {props.user.name} <br />
         Email: {props.user.email}<br/>
+        About Me: {props.user.bio}
         </article>
     );
     };

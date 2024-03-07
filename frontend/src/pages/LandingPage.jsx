@@ -49,7 +49,7 @@ const LandingPage = () => {
             <div className="row">
                 <div className="col-md-6">
                     <h1>Online tutoring that releases potential</h1>
-                    <p>TutorMatch connects students with DBS checked tutors. Find top-rated tutors online for free!</p>
+                    <p>Tutor Match is a charity set up to connect DBS checked volunteer tutors with students who need a little extra help. Our tutoring services are provided absolutely free to those who need it most.</p>
                     <Link to="/signup" className="btn btn-primary mb-3 mb-md-0">Create a free account</Link>
                 </div>
                 <div className="col-md-6">
