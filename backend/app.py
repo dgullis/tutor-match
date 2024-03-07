@@ -146,7 +146,7 @@ def add_tutor_to_subject_grade(subject):
     try:
         add_tutor_to_a_subject_grade(firebase_id, subject, grade)
         # request successfull and tutor added to array for subject/grade
-        return jsonify({'message': 'Tutor added sucessfully'}), 201
+        return jsonify({'message': 'Subject added sucessfully'}), 201
     # request successful but nothing to change as tutor already exists for subject/grade so send back 204
     except TutorAddingError as tae:
         return "", 204
