@@ -28,8 +28,8 @@ def update_bio(firebase_id, bio):
 
 def get_user_by_id(firebase_id):
     users_collection = get_users_collection()
-
-    try:
+    user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
+    if user['status'] == "Tutor":
         pipeline = [
             {
                 "$match": {"firebase_id": firebase_id}
@@ -46,6 +46,58 @@ def get_user_by_id(firebase_id):
                 "$project": {"_id": 0}
             }
         ]
+    elif user['status'] == "Student":
+        pipeline = [
+            {
+                "$match": {"firebase_id": firebase_id}
+            },
+            {
+                "$lookup": {
+                    "from": "bookings", 
+                    "localField": "firebase_id",  
+                    "foreignField": "studentId",  
+                    "as": "bookings"
+                }
+            },
+            {
+                "$project": {"_id": 0}
+            }
+        ]
+    else:
+        pipeline = [
+            {
+                "$match": {"firebase_id": firebase_id}
+            },
+            {
+                "$lookup": {
+                    "from": "bookings", 
+                    "localField": "firebase_id",  
+                    "foreignField": "tutorId",  
+                    "as": "bookings"
+                }
+            },
+            {
+                "$project": {"_id": 0}
+            }
+        ]
+
+    try:
+        # pipeline = [
+        #     {
+        #         "$match": {"firebase_id": firebase_id}
+        #     },
+        #     {
+        #         "$lookup": {
+        #             "from": "bookings", 
+        #             "localField": "firebase_id",  
+        #             "foreignField": "tutorId",  
+        #             "as": "bookings"
+        #         }
+        #     },
+        #     {
+        #         "$project": {"_id": 0}
+        #     }
+        # ]
 
         result = list(users_collection.aggregate(pipeline))
 

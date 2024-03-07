@@ -12,7 +12,6 @@ from modules.bookings import request_booking, update_booking_request
 from lib.firebase_token_auth import verify_token
 import os
 
-
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
