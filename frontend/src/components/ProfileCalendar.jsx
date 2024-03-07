@@ -11,14 +11,14 @@ export const ProfileCalendar = ({mongoUser}) => {
                     <p className = "lead">My tutoring sessions</p>
             </div>
             <div className="row justify-content-center text-center">
-                {mongoUser.bookings.length == 0 ? (
+                {mongoUser.bookings && mongoUser.bookings.length == 0 ? (
                     <Card style={{ width: '18rem', marginBottom: '10px', fontSize: '0.8rem' }}>
                     <Card.Body>
                     <Card.Text>No tutoring sessions booked or requested</Card.Text>
                     </Card.Body>
                     </Card>
                 ) : (
-                    mongoUser.bookings.map((booking) => (
+                    mongoUser.bookings && mongoUser.bookings.map((booking) => (
                         <div className="row justify-content-center text-center" > 
                             <ProfileCalendarItem
                                 key={booking._id}

@@ -49,7 +49,7 @@ const Profile = () => {
     useEffect(() => {
         getUser(firebase_id, idToken)
             .then((data) => {
-                console.log(data)
+                //console.log(data)
                 setUserDetails(data.user)
             })
             .catch((err) => {
@@ -74,7 +74,7 @@ const Profile = () => {
             })
         getPendingTutors(idToken)
             .then((data) => {
-                console.log(data)
+                //console.log(data)
                 setPendingTutors(data.result)
             })
             .catch((err) => {
