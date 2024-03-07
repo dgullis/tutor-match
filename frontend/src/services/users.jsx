@@ -51,14 +51,15 @@ export const getUser = async (firebase_id, idToken) => {
 }
 
 //Bio 
-export const updateBio = async (firebase_id, bio) => {
+export const updateBio = async (firebase_id, bio, idToken) => {
     try {
         console.log(firebase_id)
         console.log(bio)
         const response = await fetch(`${BACKEND_URL}/users/${firebase_id}/bio`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
                 
             },
             body: JSON.stringify({ bio })
@@ -160,7 +161,7 @@ export const updatePendingTutor = async(idToken,firebase_id) => {
     
 }
 
-export const submitReview = async (tutorId, rating, comment, reviewerId) => {
+export const submitReview = async (tutorId, rating, comment, reviewerId, idToken) => {
     const payload = {
         "rating": rating,
         "comment": comment,
@@ -171,6 +172,7 @@ export const submitReview = async (tutorId, rating, comment, reviewerId) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`
         },
         body: JSON.stringify(payload)
     };
@@ -191,7 +193,7 @@ export const submitReview = async (tutorId, rating, comment, reviewerId) => {
     }
 }
 
-export const addProfilePicture = async (firebase_id, profilePictureUrl) => {
+export const addProfilePicture = async (firebase_id, profilePictureUrl, idToken) => {
     
     const payload = {
         "profilePictureUrl": profilePictureUrl
@@ -200,6 +202,7 @@ export const addProfilePicture = async (firebase_id, profilePictureUrl) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${idToken}`
         },
         body: JSON.stringify(payload)
     }

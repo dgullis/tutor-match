@@ -95,7 +95,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
 
             <div className = "d-grid">
                 <Button variant="primary" type="submit" className="d-grid" justifyContent="center" >
-                    Submit
+                Add availability to profile
                 </Button> 
             </div>  
 

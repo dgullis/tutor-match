@@ -49,7 +49,7 @@ const Profile = () => {
     useEffect(() => {
         getUser(firebase_id, idToken)
             .then((data) => {
-                console.log(data)
+                //console.log(data)
                 setUserDetails(data.user)
             })
             .catch((err) => {
@@ -74,7 +74,7 @@ const Profile = () => {
             })
         getPendingTutors(idToken)
             .then((data) => {
-                console.log(data)
+                //console.log(data)
                 setPendingTutors(data.result)
             })
             .catch((err) => {
@@ -156,9 +156,14 @@ const Profile = () => {
                 </Col>
                 <Col>
                 <Card className="shadow-sm p-3 mb-3 bg-white rounded">
-                    <Card.Title>
-                        Calender
+                    <Card.Title className="row justify-content-center text-center">
+                        My tutoring sessions
                     </Card.Title>
+                        <div className="profileCalendar">
+                            <ProfileCalendar
+                                mongoUser = {mongoUser}
+                            />
+                        </div>
                     </Card>
                 </Col>
             </Row>
@@ -196,6 +201,7 @@ const Profile = () => {
                         <Card.Title style={{marginBottom: "20px"}}>
                             Update subjects
                         </Card.Title>
+                        <Card.Text>Let students know what subjects you can tutor</Card.Text>
                         <AddSubject 
                             firebaseId={firebase_id} 
                             idToken={idToken} 
@@ -226,9 +232,13 @@ const Profile = () => {
 
                             <Card.Body className="text-center">
                                 <Card.Title style={{marginBottom: "20px"}}>
-                                    Calender
+                                    My tutoring sessions
                                 </Card.Title>
-                                    
+                                    <div className="profileCalendar">
+                                        <ProfileCalendar
+                                            mongoUser = {mongoUser}
+                                        />
+                                    </div>
                             </Card.Body>
                         </Card>
                     </Row>
@@ -239,6 +249,9 @@ const Profile = () => {
                                 <Card.Title style={{marginBottom: "20px"}}>
                                     Update Availability
                                 </Card.Title>
+                                <Card.Text>
+                                Let students know when you are available to tutor
+                                </Card.Text>
                                 <AddAvailability 
                                     firebaseId = {firebase_id} 
                                     idToken={idToken}
@@ -287,6 +300,7 @@ const Profile = () => {
                         loggedInUser = {mongoUser}
                         onSubmitReview={() => 
                             setRefresh(!refresh)}
+                        idToken={idToken}
                     />
                     </Card.Body>
                     </Card>
