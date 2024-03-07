@@ -1,9 +1,11 @@
 import { Card, Button } from 'react-bootstrap';
 import { acceptBooking, denyBooking } from '../services/bookings';
 import { sendEmail } from '../services/emailCommunications';
+import { useAuth } from "../components/authContext";
 
 
 export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
+    const { idToken } = useAuth()
 
     const bookingTime = new Date(booking.start_time);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -13,7 +15,7 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
 
     const onAccept = async (bookingId) => {
         try {
-            await acceptBooking(bookingId, booking.tutorId, booking.start_time)
+            await acceptBooking(bookingId, booking.tutorId, booking.start_time, idToken)
             onChangeBookingStatus()
         } catch(error) {
             console.log(error)
@@ -22,7 +24,7 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
     
     const onDeny = async (bookingId) => {
         try {
-            await denyBooking(bookingId)
+            await denyBooking(bookingId, idToken)
             onChangeBookingStatus()
         } catch(error) {
             console.log(error)

@@ -287,6 +287,7 @@ const Profile = () => {
                         loggedInUser = {mongoUser}
                         onSubmitReview={() => 
                             setRefresh(!refresh)}
+                        idToken={idToken}
                     />
                     </Card.Body>
                     </Card>

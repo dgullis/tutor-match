@@ -3,7 +3,7 @@ import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addProfilePicture } from "../services/users";
 
-const UploadImage = ({firebase_id, onChangeProfileImage}) => {
+const UploadImage = ({firebase_id, onChangeProfileImage, idToken}) => {
     const [image, setImage] = useState(null)
 
     const handleFileChange = (e) => {
@@ -35,7 +35,7 @@ const UploadImage = ({firebase_id, onChangeProfileImage}) => {
             try {
                 await getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
 
-                const result = await addProfilePicture(firebase_id, downloadURL)
+                const result = await addProfilePicture(firebase_id, downloadURL, idToken)
                 onChangeProfileImage()
                     
                 })

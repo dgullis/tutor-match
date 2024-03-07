@@ -3,11 +3,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { updateBio } from '../services/users';
 
+import { useAuth } from "../components/authContext";
+
 const AboutMe = ({ userDetails }) => {
     //console.log(userDetails.bio)
     const [bio, setBio] = useState(userDetails.bio);
     const [editing, setIsEditing] = useState(false)
     const textareaRef = useRef(null);
+    const { idToken } = useAuth()
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -25,7 +28,7 @@ const AboutMe = ({ userDetails }) => {
 
     const handleSubmit = async () => {
         try {
-            await updateBio(userDetails.firebase_id, bio); 
+            await updateBio(userDetails.firebase_id, bio, idToken); 
             setIsEditing(false);
         } catch (error) {
             console.error('Error updating bio:', error);
