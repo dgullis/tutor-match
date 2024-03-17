@@ -13,7 +13,6 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const { idToken } = useAuth()
-    console.log(tutorDetails)
 
     const tutorFirebaseId = tutorDetails.firebase_id && tutorDetails.firebase_id;
     const loggedInUserFirebaseId = loggedInUser.firebase_id && loggedInUser.firebase_id

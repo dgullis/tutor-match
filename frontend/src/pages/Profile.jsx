@@ -16,9 +16,9 @@ import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
 import { addProfilePicture } from "../services/users";
-
 import { TutorReview } from "../components/TutorRating/TutorRating";
 import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
+import { DiaryCalendar } from "../components/DiaryCalendar";
 
 const DEFAULT_PFP = "https://firebasestorage.googleapis.com/v0/b/tutormatch-e2a6a.appspot.com/o/profile-images%2FScreenshot%202024-03-07%20at%2010.12.22.png?alt=media&token=22295bdd-8c61-4837-aba0-6bc98985c0f3";
 
@@ -214,7 +214,34 @@ const Profile = () => {
                 </Col>
                 <Col md={6} className="pl-md-5">
                     <Row>
-                    <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{ maxHeight: '500px', overflowY: 'auto'}}>
+                        <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+                            <Card.Body className="text-center">
+                                <Card.Title style={{marginBottom: "20px"}}>
+                                    Calendar
+                                </Card.Title>
+                                <Card.Text>
+                                Select date to show availability and bookings
+                                </Card.Text>
+
+                                <DiaryCalendar 
+                                    tutorDetails = {userDetails}
+                                />
+                                <Card.Text>
+                                Select date and times to add availability
+                                </Card.Text>
+
+                                <AddAvailability 
+                                    firebaseId = {firebase_id} 
+                                    idToken={idToken}
+                                    onChangeAvailability={() => 
+                                        setRefresh(!refresh)}
+                                />
+                                
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                    <Row>
+                        <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{ maxHeight: '500px', overflowY: 'auto'}}>
                             <Card.Body className="text-center">
                                 <Card.Title style={{marginBottom: "20px"}}> 
                                     Requested Bookings
@@ -228,47 +255,7 @@ const Profile = () => {
                         </Card>
                     </Row>
                     <Row>
-                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
-
-                            <Card.Body className="text-center">
-                                <Card.Title style={{marginBottom: "20px"}}>
-                                    My tutoring sessions
-                                </Card.Title>
-                                    <div className="profileCalendar">
-                                        <ProfileCalendar
-                                            mongoUser = {mongoUser}
-                                        />
-                                    </div>
-                            </Card.Body>
-                        </Card>
-                    </Row>
-                    <Row>
-                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
-
-                            <Card.Body className="text-center">
-                                <Card.Title style={{marginBottom: "20px"}}>
-                                    Update Availability
-                                </Card.Title>
-                                <Card.Text>
-                                Let students know when you are available to tutor
-                                </Card.Text>
-                                
-                                <BookingRequestCalender 
-                                    tutorDetails = {userDetails}
-                                    loggedInUser = {mongoUser}
-                                    showSubmit = {false}
-                                    onRequestBooking={() => 
-                                        setRefresh(!refresh)} 
-                                    />
-                                
-                                <AddAvailability 
-                                    firebaseId = {firebase_id} 
-                                    idToken={idToken}
-                                    onChangeAvailability={() => 
-                                        setRefresh(!refresh)}
-                                />
-                            </Card.Body>
-                        </Card>
+                    
                     </Row>
                 </Col>
                 </Row>

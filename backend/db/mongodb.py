@@ -6,6 +6,7 @@ load_dotenv()
 mongo_uri = os.getenv('MONGO_URI')
 mongo_client = MongoClient(mongo_uri)
 db_name = os.getenv('DB_NAME')
+print(db_name)
 db = mongo_client.get_database(db_name)
 
 users_collection = db.get_collection('users')

@@ -101,18 +101,23 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
                 </Button> 
             </div>  
 
-            <div className= "row-md-4 mt-3 pt-3 pb-3">
+            
             {errorMessage && 
+            <div className= "row-md-4 mt-3 pt-3 pb-3">
                 <Alert variant="info" dismissible onClose={closeAlert} >
                     {errorMessage}
                 </Alert>
+            </div>
             }
+
             {successMessage && 
+            <div className= "row-md-4 mt-3 pt-3 pb-3">
                 <Alert variant="info" dismissible onClose={closeAlert} >
                     {successMessage}
                 </Alert>
+            </div>   
             }
-            </div>     
+
         </Form>
         </>
 
