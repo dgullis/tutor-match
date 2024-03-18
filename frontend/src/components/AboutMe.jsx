@@ -37,7 +37,6 @@ const AboutMe = ({ userDetails }) => {
     
     return (
         <div>
-            {/* Updating Bio */}
                 <Form>
                     <Form.Group controlId="bioTextArea">
                         {/* <Form.Label>Bio</Form.Label>*/}
