@@ -214,7 +214,7 @@ const Profile = () => {
                 </Col>
                 <Col md={6} className="pl-md-5">
                     <Row>
-                        <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+                        <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{ minWidth: '400px' }}>
                             <Card.Body className="text-center">
                                 <Card.Title style={{marginBottom: "20px"}}>
                                     Calendar
@@ -305,9 +305,9 @@ const Profile = () => {
 
             <Col md={6}>
                 <Row>
-                    <Card className="shadow-sm p-3 mb-3 bg-white rounded">
+                    <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{ minWidth: '400px' }}>
 
-                        <Card.Body className="text-center">
+                        <Card.Body className="text-center" >
                             <Card.Title style={{marginBottom: "20px"}}> 
                                 Request session
                             </Card.Title>

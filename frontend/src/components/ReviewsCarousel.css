@@ -1,0 +1,22 @@
+
+.carousel-review-container {
+    display: block;
+    margin: 30px auto; /* Set top/bottom margin to 30px and left/right margin to auto */
+    width: 300px;
+    height: 100px;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.carousel-review-container p{
+    text-align: center;
+    padding-bottom: 10p;
+}
+
+.carousel-indicators {
+    bottom: -50px;
+}

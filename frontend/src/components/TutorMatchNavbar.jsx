@@ -23,13 +23,8 @@ const TutorMatchNavbar = () => {
         }
     }
 
-    //console.log("mongoUser")
-    //console.log(mongoUser)
-    //console.log("user")
-    //console.log(user)
-
     return (
-        <Navbar bg="myColor" variant="dark" expand="lg" className="fixed-top-custom" style={{ marginBottom: '20px'}}>
+        <Navbar bg="myColor" variant="dark" expand="lg" className="fixed-top-custom" style={{ backgroundColor: "#E07A5F", marginBottom: '20px'}}>
         <Container>
         <Navbar.Brand>
             <div className="d-inline-block align-top">

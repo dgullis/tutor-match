@@ -1,0 +1,45 @@
+.landing-page-container {
+    max-width: 700px;
+}
+
+
+.landing-page-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.landing-page-bio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.landing-page-bio p{
+    text-align: center;
+    font-weight: 500;
+}
+
+.landing-page-bio p.header{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.landing-page-bio h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.landing-page-bio-create-account{
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.landing-page-about-modal-button {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}

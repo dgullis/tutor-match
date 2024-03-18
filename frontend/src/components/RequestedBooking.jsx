@@ -37,8 +37,8 @@ export const RequestedBooking = ( { booking, onChangeBookingStatus } ) => {
             <Card.Text>
                 {formattedDate}
             </Card.Text>
-                <Button variant="success" style={{fontSize: "0.75rem"}} size="sm" onClick={() => onAccept(booking._id)}>Accept</Button>{' '}
-                <Button variant="danger" className = "Deny" style={{fontSize: "0.75rem"}} size="sm" onClick={() => onDeny(booking._id)}>Deny</Button>
+                <Button variant="success bg-gradient" style={{fontSize: "0.75rem"}} size="sm" onClick={() => onAccept(booking._id)}>Accept</Button>{' '}
+                <Button variant="danger bg-gradient" className = "Deny" style={{fontSize: "0.75rem"}} size="sm" onClick={() => onDeny(booking._id)}>Deny</Button>
             </Card.Body>
         </Card>
     )

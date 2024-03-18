@@ -99,7 +99,7 @@ export const BookingRequestCalender = ({tutorDetails, loggedInUser, onRequestBoo
                         
                         {showSubmit && showSubmit === true &&
                         <div className="m-3">
-                            <Button className="d-grid mx-auto" variant="primary" type="submit" justifyContent="center" style={{ width: '200px' }}>
+                            <Button className="d-grid mx-auto bg-gradient" variant="primary" type="submit" justifyContent="center" style={{ width: '200px' }}>
                                 Request
                             </Button> 
                         </div>

@@ -55,7 +55,7 @@ const Login = () => {
                                 <label htmlFor = "exampleInputPassword1" className = "form-label">Password</label>
                             </div>
                             <div className = "d-grid">
-                                <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => loginWithUsernameAndPassword(e)}>Submit</button>
+                                <button type = "submit" className = "btn btn-primary bg-gradient pt-3 pb-3" onClick = {(e) => loginWithUsernameAndPassword(e)}>Submit</button>
                             </div>
                             <div className = "mt-3 text-center">
                                 <span>Need to sign up for an account? <Link to = "/signup">Click here.</Link></span>

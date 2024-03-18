@@ -19,7 +19,7 @@ export const TutorStarRating = ({tutorReviews, tutorRating, userStatus}) => {
 
     useEffect(() => {
         const starsArray = Array.from({ length: avgRating }, (_, index) => (
-            <span key={index} style={{ color: "#ffc107" }}> &#9733; </span>
+            <span key={index} style={{ color: "#F2CC8F" }}> &#9733; </span>
         ));
     
         setStars(starsArray);
@@ -39,7 +39,7 @@ export const TutorStarRating = ({tutorReviews, tutorRating, userStatus}) => {
                 <span style={{ fontSize: '14px' }}>{numRatings}{numRatings > 1 ? ' reviews' : ' review'}</span>
             
 
-                <div onClick={handleClick} style={{ fontSize: '14px', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>
+                <div onClick={handleClick} style={{ fontSize: '14px', color: 'blue', textDecoration: 'underline', cursor: 'pointer', paddingBottom: '10px' }}>
                     see reviews
                 </div>
 
@@ -49,7 +49,7 @@ export const TutorStarRating = ({tutorReviews, tutorRating, userStatus}) => {
                     </Modal.Header>
                     <Modal.Body>
                         {tutorReviews.map((review) => {
-                            return <p>"{review.comment}"</p>
+                            return review.comment &&  <p>"{review.comment}"</p>
                         })}
                     </Modal.Body>
                     <Modal.Footer>

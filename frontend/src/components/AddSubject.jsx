@@ -73,8 +73,8 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
 
 
             <div className = "d-grid">
-                <Button variant="primary" type="submit" className="d-grid" justifyContent="center" onClick = {(e) => addSubjectAndLevel(e)}>
-                    Add subject & grade to profile
+                <Button variant="primary bg-gradient" type="submit" className="d-grid" justifyContent="center" onClick = {(e) => addSubjectAndLevel(e)}>
+                    Add to profile
                 </Button> 
             </div>  
 

@@ -78,8 +78,8 @@ const AboutMe = ({ userDetails }) => {
 
                     :
 
-                    <Button variant="primary" onClick={() => setIsEditing(true)}>
-                        Edit Bio
+                    <Button variant="primary bg-gradient" onClick={() => setIsEditing(true)}>
+                        Edit
                     </Button>
                     }
 

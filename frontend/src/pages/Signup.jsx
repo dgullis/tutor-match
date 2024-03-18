@@ -124,14 +124,12 @@ const Signup = () => {
                         <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" onChange = { (e) => setTutor()}></input>
                         <label className="custom-control-label" htmlFor="customRadio1">Tutor</label>
                         </div>
-                        <div className="custom-control custom-radio">
+                        <div className="custom-control custom-radio mb-3">
                         <input type="radio" id="customRadio2" name="customRadio" className="custom-control-input" onChange = { (e) => setStatus("Student")}></input>
                         <label className="custom-control-label" htmlFor="customRadio2">Student</label>
                         </div>
-
-
                             <div className = "d-grid">
-                                <button style={{ backgroundColor: '#025E84', color: 'white' }} type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Sign up</button>
+                                <button style={{ backgroundColor: '#025E84', color: 'white' }} type = "submit" className = "btn btn-primary bg-gradient pt-3 pb-3" onClick = {(e) => signupWithUsernameAndPassword(e)}>Sign up</button>
                             </div>
 
                             {password && (

@@ -56,7 +56,7 @@ export const TutorReview = ({tutorId, loggedInUser, onSubmitReview, idToken}) =>
                         className="star"
                         style={{
                             color:
-                            currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9",
+                            currentRating <= (hover || rating) ? "#F2CC8F" : "#e4e5e9",
                         }}
                         onMouseEnter={() => setHover(currentRating)}
                         onMouseLeave={() => setHover(null)}
@@ -79,7 +79,7 @@ export const TutorReview = ({tutorId, loggedInUser, onSubmitReview, idToken}) =>
                 </div>
 
                 <div className="m-3">
-                <Button className="mx-auto" variant="primary" type="submit" style={{ width: '200px' }} onClick={handleSubmit}>
+                <Button className="mx-auto bg-gradient" variant="primary" type="submit" style={{ width: '200px' }} onClick={handleSubmit}>
                     Submit Review
                 </Button>
                 </div>

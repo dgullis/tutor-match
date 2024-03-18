@@ -90,7 +90,7 @@ return (
         </Form.Group>
 
         <div className="d-flex justify-content-center">
-            <Button variant="primary" type="submit" className="mx-auto" style={{ backgroundColor: '#025E84', color: 'whitesmoke', border: 'none' , width: '300px', margin: '0px 20px 20px 20px'}}>
+            <Button variant="primary bg-gradient" type="submit" className="mx-auto" style={{ backgroundColor: '#025E84', color: 'whitesmoke', border: 'none' , width: '300px', margin: '0px 20px 20px 20px'}}>
                 Search for tutors
             </Button>
         </div>

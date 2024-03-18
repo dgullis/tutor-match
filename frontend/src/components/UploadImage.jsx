@@ -49,7 +49,7 @@ const UploadImage = ({firebase_id, onChangeProfileImage, idToken}) => {
     return (
         <>
         <div class="d-flex justify-content-center">
-            <div class="btn btn-primary btn-rounded" style={{padding: '3px', fontSize:'14px'}}>
+            <div class="btn btn-rounded bg-gradient text-white" style={{padding: '3px', fontSize:'14px'}}>
                 <label class="form-label text-white m-1" for="customFile1">Upload image</label>
                 <input type="file" class="form-control d-none" id="customFile1" onChange={handleFileChange} />
             </div>
