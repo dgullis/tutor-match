@@ -30,7 +30,6 @@
     "test": "vitest",
     "eject": "react-scripts eject",
     "dev": "vite",
-    "vite-build": "vite build",
     "preview": "vite preview"
   },
   "eslintConfig": {
