@@ -6,7 +6,7 @@ node_modules
 .pnp.js
 
 # firebase
-firebase.js
+# firebase.js
 
 # testing
 /coverage
@@ -28,4 +28,4 @@ yarn-error.log*
 
 #firebase admin certificate
 firebaseServiceAccountKey.json
-firebase.js
+# firebase.js
