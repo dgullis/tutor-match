@@ -11,11 +11,20 @@
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=flat&logo=bootstrap&logoColor=white)
 
+
 ### Summary
 
 Tutor Match is a group project completed on the Makers Academy software development bootcamp.
 
-The brief for the project was to design and build a product that adhered to the self selected theme of "tech for good".
+The brief for the project was to design and build a product that adhered to the self selected theme of "tech for good".  
+  
+Student login > search tutor > booking request > update profile picture and bio > logout
+![alt text](frontend/public/student-gif)
+
+
+
+Tutor login > add subject > accept booking requests > update availability > logout
+![alt text](frontend/public/tutor-gif)
 
 ### Description
 
