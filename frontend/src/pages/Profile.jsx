@@ -11,7 +11,7 @@ import { RequestedBooking } from "../components/RequestedBooking";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import RequestedBookingsScrollable from "../components/RequestedBookingsScrollable"; 
 import { ProfileCalendar } from "../components/ProfileCalendar";
-import UserProfile from "../components/User";
+import UserProfile from "../components/UserProfile";
 import ProfileSubjects from "../components/ProfileSubjects";
 import AboutMe from "../components/AboutMe";
 import PendingTutorList from "../components/PendingTutors";
@@ -35,17 +35,6 @@ const Profile = () => {
     const [isCurrentUser, setIsCurrentUser] = useState(false)
     const [pageToDisplay, setPageToDisplay] = useState("")
 
-    //console.log(user)
-
-    const gcseQueryParams = {
-        "firebaseId": firebase_id,
-        "grade": "gcse"
-    }
-    const alevelQueryParams = {
-        "firebaseId": firebase_id,
-        "grade": "alevel"
-    }
-
     useEffect(() => {
         getUser(firebase_id, idToken)
             .then((data) => {
@@ -56,22 +45,6 @@ const Profile = () => {
                 console.log(err);
                 navigate("/login");
             });
-        searchSubjects(gcseQueryParams, idToken)
-            .then((data) => {
-                //console.log(data)
-                setGcse(data.result)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-        searchSubjects(alevelQueryParams, idToken)
-            .then((data) => {
-                //console.log(data)
-                setAlevel(data.result)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
         getPendingTutors(idToken)
             .then((data) => {
                 //console.log(data)
@@ -187,8 +160,6 @@ const Profile = () => {
                             <UserProfile 
                                 user = {userDetails} 
                                 isCurrentUser = {true}
-                                gcse = {gcse} 
-                                alevel = {alevel}
                                 onChangeProfileImage={() => 
                                     setRefresh(!refresh)}/>
                                 

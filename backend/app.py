@@ -225,4 +225,4 @@ def update_profile_picture_route(firebase_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)  
+    app.run(debug=True, port=5050)

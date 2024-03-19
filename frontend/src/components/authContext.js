@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     const signUpAuth = async (email, password, name, status, safeguarding) => {
         setIsLoading(true)
         try {
+            console.log("hello", email, password, name, status, safeguarding)
             await createUserWithEmailAndPassword(auth, email, password)
             const firebase_id = auth.currentUser.uid
             const result = await signup(firebase_id, name, email, status, safeguarding)
@@ -43,11 +44,15 @@ export const AuthProvider = ({ children }) => {
     const logInAuth = async (email, password) => {
         setIsLoading(true)
         try {
+            console.log("logigng in auth", auth, email, password)
             await signInWithEmailAndPassword(auth, email, password);
             const firebase_id = auth.currentUser.uid
+            console.log("firebaseif", firebase_id)
+            console.log("token", idToken)
             const result = await getUser(firebase_id, idToken)
             setMongoUser(result.user)
             setIsLoading(false)
+            console.log("here now")
             return { success: true };  
         } catch {
             setIsLoading(false)

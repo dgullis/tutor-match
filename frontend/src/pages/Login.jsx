@@ -24,6 +24,7 @@ const Login = () => {
     const loginWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
+        console.log("logging in", email, password)
         const loginResult = await logInAuth(email, password) 
 
         if (loginResult.success === false) {

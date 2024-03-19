@@ -2,7 +2,7 @@ import UploadImage from "./UploadImage";
 import AboutMe from "./AboutMe";
 import ProfileSubjects from "./ProfileSubjects";
 import { TutorStarRating } from "./TutorRating/TutorStarRating";
-import { useAuth } from "../components/authContext";
+import { useAuth } from "./authContext";
 
 const UserProfile = (props) => {
     const { idToken } = useAuth()
@@ -54,9 +54,9 @@ const UserProfile = (props) => {
                     <strong>Available to tutor:</strong>
                 </div>
                 <div className="mt-3">
-                {props.gcse && (
+                {props.user.gcseSubjects && (
                         <>
-                        <strong>GCSE:</strong> {props.gcse.map((subject, index) => (
+                        <strong>GCSE:</strong> {props.user.gcseSubjects.map((subject, index) => (
                             <span className= "p-1 m-1 bg-gradient text-dark rounded-1" key={index} style={{ backgroundColor: "#81B29A"}}>
                                 {subject.name} 
                             </span>
@@ -66,9 +66,9 @@ const UserProfile = (props) => {
                 </div>
                 
                 <div className="mt-2">
-                {props.alevel && (
+                {props.user.alevelSubjects && (
                         <>
-                        <strong>A Level:</strong> {props.alevel.map((subject, index) => (
+                        <strong>A Level:</strong> {props.user.alevelSubjects.map((subject, index) => (
                             <span className= "p-1 m-1 bg-gradient text-dark rounded-1" key={index} style={{ backgroundColor: "#81B29A"}}>
                             {subject.name} 
                         </span>

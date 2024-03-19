@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const signup = async (firebase_id, name, email, status, safeguarding) => {
     const payload = {
@@ -16,7 +16,6 @@ export const signup = async (firebase_id, name, email, status, safeguarding) => 
         },
         body: JSON.stringify(payload)
     };
-
     let response = await fetch(`${BACKEND_URL}/signup`, requestOptions);
 
     if (response.status === 201) {

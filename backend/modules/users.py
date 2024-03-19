@@ -29,23 +29,57 @@ def update_bio(firebase_id, bio):
 def get_user_by_id(firebase_id):
     users_collection = get_users_collection()
     user = users_collection.find_one({"firebase_id": firebase_id}, {"_id": 0})
+    
     if user['status'] == "Tutor":
         pipeline = [
             {
-                "$match": {"firebase_id": firebase_id}
-            },
-            {
-                "$lookup": {
-                    "from": "bookings", 
-                    "localField": "firebase_id",  
-                    "foreignField": "tutorId",  
-                    "as": "bookings"
+                '$match': {
+                    'firebase_id': 'es42DGOHd9OeANS0JJvCotHt1aH2'
                 }
-            },
-            {
-                "$project": {"_id": 0}
+            }, {
+                '$lookup': {
+                    'from': 'bookings', 
+                    'localField': 'firebase_id', 
+                    'foreignField': 'tutorId', 
+                    'as': 'bookings'
+                }
+            }, {
+                '$lookup': {
+                    'from': 'subjects', 
+                    'localField': 'firebase_id', 
+                    'foreignField': 'gcse', 
+                    'as': 'gcseSubjects', 
+                    'pipeline': [
+                        {
+                            '$project': {
+                                '_id': 0, 
+                                'name': 1
+                            }
+                        }
+                    ]
+                }
+            }, {
+                '$lookup': {
+                    'from': 'subjects', 
+                    'localField': 'firebase_id', 
+                    'foreignField': 'alevel', 
+                    'as': 'alevelSubjects', 
+                    'pipeline': [
+                        {
+                            '$project': {
+                                '_id': 0, 
+                                'name': 1
+                            }
+                        }
+                    ]
+                }
+            }, {
+                '$project': {
+                    '_id': 0
+                }
             }
         ]
+
     elif user['status'] == "Student":
         pipeline = [
             {
@@ -82,29 +116,10 @@ def get_user_by_id(firebase_id):
         ]
 
     try:
-        # pipeline = [
-        #     {
-        #         "$match": {"firebase_id": firebase_id}
-        #     },
-        #     {
-        #         "$lookup": {
-        #             "from": "bookings", 
-        #             "localField": "firebase_id",  
-        #             "foreignField": "tutorId",  
-        #             "as": "bookings"
-        #         }
-        #     },
-        #     {
-        #         "$project": {"_id": 0}
-        #     }
-        # ]
-
         result = list(users_collection.aggregate(pipeline))
-
         if result:
             for booking in result[0].get("bookings", []):
                 booking["_id"] = str(booking["_id"])
-
             return result[0]
         else:
             raise UserNotFoundError('User not found')
@@ -112,40 +127,6 @@ def get_user_by_id(firebase_id):
     except Exception as e:
         raise ValueError(f'{str(e)}')
     
-# def get_user_by_id_with_bookings(userId):
-#     users_collection = get_users_collection()
-
-#     try:
-#         # Perform a $lookup to get bookings related to the user
-#         pipeline = [
-#             {
-#                 "$match": {"firebase_id": userId}
-#             },
-#             {
-#                 "$lookup": {
-#                     "from": "bookings",  # Replace with the actual name of your bookings collection
-#                     "localField": "firebase_id",  # Replace with the actual field in the users collection
-#                     "foreignField": "tutorId",  # Replace with the actual field in the bookings collection
-#                     "as": "bookings"
-#                 }
-#             },
-#             {
-#                 "$project": {"_id": 0}
-#             }
-#         ]
-
-#         result = list(users_collection.aggregate(pipeline))
-
-#         if result:
-#             for booking in result[0].get("bookings", []):
-#                 booking["_id"] = str(booking["_id"])
-
-#             return result[0]
-#         else:
-#             raise UserNotFoundError('User not found')
-
-#     except Exception as e:
-#         raise ValueError(str(e))
 
 
 
@@ -284,3 +265,33 @@ def update_profile_picture(firebase_id, profilePitureUrl):
             return {"sucess": True, "error": "profile picture URL updated", "status_code": 201}
     except Exception as e:
         raise ValueError(f'Error updating profile picture URL: {str(e)}')
+    
+
+
+    [
+    {
+        '$match': {
+            'firebase_id': 'es42DGOHd9OeANS0JJvCotHt1aH2'
+        }
+    }, {
+        '$lookup': {
+            'from': 'subjects', 
+            'localField': 'firebase_id', 
+            'foreignField': 'gcse', 
+            'as': 'gcse-subjects'
+        }
+    }, {
+        '$lookup': {
+            'from': 'subjects', 
+            'localField': 'firebase_id', 
+            'foreignField': 'alevel', 
+            'as': 'alevel-subjects'
+        }
+    }, {
+        '$project': {
+            'gcse-subjects.name': 1, 
+            'alevel-subjects.name': 1, 
+            '_id': 0
+        }
+    }
+]

@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const searchTutor = async (query, idToken) => {
     try {
@@ -26,7 +26,6 @@ export const searchTutor = async (query, idToken) => {
 }
 
 export const addSubject = async (subject, grade, firebase_id, idToken) => {
-    console.log(idToken)
     const payload = {
         grade: grade,
         firebase_id: firebase_id
