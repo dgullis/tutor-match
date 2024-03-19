@@ -74,7 +74,7 @@ export const TutorReview = ({tutorId, loggedInUser, onSubmitReview, idToken}) =>
                     value={ratingComment}
                     type="text"
                     placeholder="leave a comment for your review..."
-                    style={{ width: "400px", height: "50px", fontSize: "14px" }}
+                    style={{ width: "400px", height: "50px", fontSize: "14px", padding: '5px' }}
                 />
                 </div>
 

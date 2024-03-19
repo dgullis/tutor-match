@@ -27,6 +27,7 @@ export const signup = async (firebase_id, name, email, status, safeguarding) => 
 };
 
 export const getUser = async (firebase_id, idToken) => {
+    console.log(BACKEND_URL)
     const requestOptions = {
         method: "GET",
         headers: {

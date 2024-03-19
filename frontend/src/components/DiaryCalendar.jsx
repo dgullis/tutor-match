@@ -3,26 +3,39 @@ import DatePicker from "react-datepicker";
 import { DiaryActivity } from "./DiaryActivity";
 import { Container, Row, Col } from "react-bootstrap";
 
-export const DiaryCalendar = ({ tutorDetails }) => {
+export const DiaryCalendar = ({ userDetails }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [activityDates, setActivityDates] = useState([])
     const [selectedDateActivities, setSelectedDateActivities] = useState([])
 
     useEffect(()=> {
-        if (tutorDetails.availability) {
-            var tutorsAvailabileDates = tutorDetails.availability.filter((availableSlot) =>{
-                return availableSlot.available === true;
-            });
-        }
         
-        if (tutorDetails.bookings) {
-            var combinedDates = [...tutorsAvailabileDates, ...tutorDetails.bookings];
-            setActivityDates(combinedDates);
-        } else {
-            setActivityDates(tutorsAvailabileDates);
+        if(userDetails.bookings){
+            var tutorsBookingsDates = [...userDetails.bookings]
+            if(userDetails.availability) {
+                var tutorsAvailabileDates = userDetails.availability.filter((availableSlot) =>{
+                    return availableSlot.available === true;
+                });
+                var combinedDates = [...tutorsBookingsDates, ...tutorsAvailabileDates];
+                setActivityDates(combinedDates);
+            } else {
+                setActivityDates(tutorsBookingsDates)
+            }
         }
+        // if (userDetails.availability) {
+        //     var tutorsAvailabileDates = userDetails.availability.filter((availableSlot) =>{
+        //         return availableSlot.available === true;
+        //     });
+        // }
+        
+        // if (userDetails.bookings) {
+        //     var combinedDates = [...tutorsAvailabileDates, ...userDetails.bookings];
+        //     setActivityDates(combinedDates);
+        // } else {
+        //     setActivityDates(tutorsAvailabileDates);
+        // }
 
-    }, [tutorDetails])
+    }, [userDetails])
 
     useEffect(() => {
         var activitiesForDate = activityDates.filter((item) => {
@@ -35,7 +48,7 @@ export const DiaryCalendar = ({ tutorDetails }) => {
 
         setSelectedDateActivities(activitiesForDate)
 
-    }, [tutorDetails, activityDates, selectedDate])
+    }, [userDetails, activityDates, selectedDate])
 
     
 

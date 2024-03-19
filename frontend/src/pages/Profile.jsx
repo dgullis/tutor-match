@@ -20,7 +20,7 @@ import { TutorReview } from "../components/TutorRating/TutorRating";
 import { TutorStarRating } from "../components/TutorRating/TutorStarRating";
 import { DiaryCalendar } from "../components/DiaryCalendar";
 
-const DEFAULT_PFP = "https://firebasestorage.googleapis.com/v0/b/tutormatch-e2a6a.appspot.com/o/profile-images%2FScreenshot%202024-03-07%20at%2010.12.22.png?alt=media&token=22295bdd-8c61-4837-aba0-6bc98985c0f3";
+const DEFAULT_PFP = "frontend/public/user_3177440.png";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -128,15 +128,16 @@ const Profile = () => {
                 </Card>
                 </Col>
                 <Col>
-                <Card className="shadow-sm p-3 mb-3 bg-white rounded">
-                    <Card.Title className="row justify-content-center text-center">
-                        My tutoring sessions
+                <Card className="shadow-sm p-3 mb-3 bg-white rounded" style={{ minWidth: '400px' }}>
+                    <Card.Body className="text-center">
+                    <Card.Title style={{marginBottom: "20px"}}>
+                        Calendar
                     </Card.Title>
-                        <div className="profileCalendar">
-                            <ProfileCalendar
-                                mongoUser = {mongoUser}
-                            />
-                        </div>
+                        <DiaryCalendar 
+                            userDetails = {userDetails}
+                        />
+                    </Card.Body>
+                        
                     </Card>
                 </Col>
             </Row>
@@ -195,7 +196,7 @@ const Profile = () => {
                                 </Card.Text>
 
                                 <DiaryCalendar 
-                                    tutorDetails = {userDetails}
+                                    userDetails = {userDetails}
                                 />
                                 <Card.Text>
                                 Select date and times to add availability
