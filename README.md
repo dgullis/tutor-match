@@ -16,15 +16,24 @@
 
 Tutor Match is a group project completed on the Makers Academy software development bootcamp.
 
-The brief for the project was to design and build a product that adhered to the self selected theme of "tech for good".  
-  
+The brief for the project was to design and build a product that adhered to the self selected theme of "tech for good"
+
+[tutormatch.dangullis.com](tutormatch.dangullis.com)
+
+If you would like to have a look around please use these details
+
+- email: emma@email.com
+- password: Password123!
+
+
+### Demos
+
 Student login > search tutor > booking request > update profile picture and bio > logout
 ![alt text](frontend/public/student-gif)
 
 
-
 Tutor login > add subject > accept booking requests > update availability > logout
-![alt text](frontend/public/tutor-gif)
+![alt text](frontend/public/tutor-gif2)
 
 ### Description
 
@@ -49,6 +58,8 @@ Over two weeks as a team we developed the following user features
 ### Working Process
 
 Embracing Agile methodologies involving iterative development cycles, daily stand-ups and sprint planning to define and prioritise tasks. Organised workflow through a ticket system to ensure tracking and management of tasks throughout the project.
+
+
 
 ### Contributors
 
