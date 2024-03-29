@@ -33,7 +33,7 @@ Student login > search tutor > booking request > update profile picture and bio 
 
 
 Tutor login > add subject > accept booking requests > update availability > logout
-![alt text](frontend/public/tutor-gif)
+![alt text](frontend/public/tutor-gif.gif)
 
 ### Description
 
