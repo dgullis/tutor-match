@@ -60,7 +60,7 @@ Over two weeks as a team we developed the following user features
 Embracing Agile methodologies involving iterative development cycles, daily stand-ups and sprint planning to define and prioritise tasks. Organised workflow through a ticket system to ensure tracking and management of tasks throughout the project.
 
 ### Documentation
-(here)
+[here](/DOCUMENTATION.md)
 
 ### Contributors
 
