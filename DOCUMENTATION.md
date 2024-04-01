@@ -139,19 +139,24 @@ Services
 
 Services encapsulate communication with the backend, through HTTP requests. They make our code easier to read and understand, by abstracting the complexity of the fetch requests into their own functions, so they don't clutter our components.
 
+### Backend Structure
 
+app.py
 
+This file contains the code for our backend server built using Flask. It does a few things:
 
+Initializes a Flask application.
+Configures CORS to allow cross-origin requests and sets up email server settings for sending emails using Flask-Mail.
+Initializes the Firebase Admin SDK.
+Defines various routes using Flask's @app.route decorator, each corresponding to a specific functionality or endpoint of the API. Routes generally utilise functions defined in users.py/subjects.py/bookings.py in the modules folder inorder to interact with the database.
 
+Starts the Flask development server on port 5050.
 
+modules/
 
+This folder contains files 'users.py' 'subjects.py' 'bookings.py' each of whih contain functions for managing operations that interact with the MongoDB database.
 
-Install dependencies for both the frontend and api applications:
+db/mongodb.py
 
-```
-cd frontend
-npm install
+This file is responsible for setting up a connection to our MongoDB database and providing access to specific collections within that database. 
 
-cd ../api
-npm install
-```
