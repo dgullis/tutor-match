@@ -1,5 +1,13 @@
 # Content
 
+- [Installation Instructions](#Installation-Instructions)
+- [Architecture](#Architecture)
+- [Frontend Structure](#Frontend-Structure)
+- [Backend Structure](#Backend-Structure)
+- [Authentication](#Authentication)
+- [Technologies](#Technologies)
+
+
 ### Installation Instructions
 
 If you haven't already, make sure you have node and NVM installed.
@@ -156,7 +164,45 @@ modules/
 
 This folder contains files 'users.py' 'subjects.py' 'bookings.py' each of whih contain functions for managing operations that interact with the MongoDB database.
 
+lib/firebase_token_auth.py
+
+This file provides a function verify_token() that verifies the Firebase ID token present in the request headers and returns the decoded token if valid. Otherwise, it raises an error indicating the reason for the invalid token.
+
 db/mongodb.py
 
 This file is responsible for setting up a connection to our MongoDB database and providing access to specific collections within that database. 
+
+
+### Authentication
+
+components/authContext.js
+
+This file facilitates user authentication by integrating Firebase Authentication and MongoDB to manage user authentication data. It handles user sign-up, login, logout, and authentication state change events. Here's a breakdown:
+
+Context Creation: It creates a context called AuthContext using React createContext function. This context will be used to store and share user authentication information across components.
+
+AuthProvider Component: The AuthProvider component is responsible for managing authentication state.
+
+Authentication Functions: It defines functions for user sign-up, login, and logout using Firebase Authentication methods (createUserWithEmailAndPassword, signInWithEmailAndPassword, auth.signOut). These functions handle the authentication process, update state variables, and interact with MongoDB to store user data.
+
+UseEffect Hook: It uses the useEffect hook to set up a listener for changes in the user's authentication state (onAuthStateChanged). When the authentication state changes, it updates the user and mongoUser state variables accordingly.
+
+Loading Indicator: While fetching user authentication data, it displays a loading spinner to indicate that the authentication process is in progress.
+
+Context Provider Value: It provides the user, mongoUser, and authentication functions (signUpAuth, logInAuth, signOutAuth) as values to the AuthContext.Provider, making them accessible to other components using the useAuth hook.
+
+UseAuth Hook: The useAuth hook allows components to access authentication state and functions from the AuthContext.
+
+###  Technologies
+
+- MongoDB - database
+- Flask - server framework
+- React - user interface framework
+- Jest - frontend testing
+- Pytest - backend testing
+- Firebase - image storage and user authentication
+- React Boostrap - front styling
+
+
+
 
