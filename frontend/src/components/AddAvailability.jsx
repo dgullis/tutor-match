@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { Form, Button } from 'react-bootstrap';
@@ -13,7 +14,6 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
     todayDate.setHours(0, 0, 0, 0)
 
     const initialtDate = new Date("01/03/2024 00:00 AM")
-
 
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)

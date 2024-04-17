@@ -7,7 +7,6 @@ import AboutMe from '../../src/components/AboutMe'
 import { useAuth, AuthProvider } from "../../src/components/authContext";
 import { updateBio } from "../../src/services/users";
 
-
 jest.mock('../../src/components/authContext', () => {
     const originalModule = jest.requireActual('../../src/components/authContext');
     return {

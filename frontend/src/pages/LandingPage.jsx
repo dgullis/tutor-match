@@ -8,11 +8,7 @@ import { AboutUsModal } from '../components/AboutUsModal';
 import './LandingPage.css'
 
 const LandingPage = () => {
-    const [showAboutModal, setShowAboutModal] = useState(false);
-
-    const toggleAboutModal = () => {
-        setShowAboutModal(!showAboutModal);
-    };
+   
 
     return (
         <Container fluid className="landing-page-container">
@@ -33,10 +29,7 @@ const LandingPage = () => {
                 </Row>   
                 <Row>
                     <div className="landing-page-about-modal-button">
-                    <AboutUsModal 
-                        showAboutModal={showAboutModal}
-                        toggleAboutModal={toggleAboutModal}                    
-                    />
+                    <AboutUsModal />
                     </div>
                 </Row>             
                 <Row>

@@ -27,7 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "vitest",
+    "test": "jest",
     "eject": "react-scripts eject",
     "dev": "vite",
     "vite-build": "vite build",

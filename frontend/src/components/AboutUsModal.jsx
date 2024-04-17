@@ -1,8 +1,13 @@
+import React from "react";
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-export const AboutUsModal = ({showAboutModal, toggleAboutModal}) => {
+export const AboutUsModal = () => {
+    const [showAboutModal, setShowAboutModal] = useState(false);
 
+    const toggleAboutModal = () => {
+        setShowAboutModal(prevShowAboutModal => !prevShowAboutModal);
+    };
     
     return (
 

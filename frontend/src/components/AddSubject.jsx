@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addSubject } from "../services/subjects";
@@ -26,7 +27,6 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
     } else {
         try {
             const addSubjectResult = await addSubject(subject, grade, firebaseId, idToken);
-            console.log("add subject result: ", addSubjectResult.error)
             if (addSubjectResult.error) {
                 setSuccessMessage("")
                 setErrorMessage(addSubjectResult.error)
@@ -73,7 +73,7 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
 
 
             <div className = "d-grid">
-                <Button variant="primary bg-gradient" type="submit" className="d-grid" justifyContent="center" onClick = {(e) => addSubjectAndLevel(e)}>
+                <Button variant="primary bg-gradient" type="submit" className="d-grid" justifycontent="center" onClick = {(e) => addSubjectAndLevel(e)}>
                     Add to profile
                 </Button> 
             </div>  
