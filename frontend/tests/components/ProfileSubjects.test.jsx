@@ -34,10 +34,10 @@ describe('ProfileSubjects component unit tests', () => {
         expect(screen.getByText('English')).toBeVisible()
     })
 
-    // check
     it('displays nothing if no gcse or a levels', () => {
         const props = {}
         render(<ProfileSubjects {...props}/>, {wrapper: BrowserRouter})
-
+        const text = screen.queryByText('Available to tutor')
+        expect(text).toBeNull()
     })
 })

@@ -88,10 +88,5 @@ describe('AddSubject component unit tests', () => {
         await waitFor(() => {
             expect(screen.getByText('Please select subject/grade.')).toBeVisible()
         })
-
-       
-
-        // expect(screen.getByRole('option', {name: 'Science'})).toBeVisible()
-        // expect(screen.getByRole('option', {name: 'English'})).toBeVisible()
     })
 })
