@@ -49,13 +49,13 @@ export const AddSubject = ({firebaseId, idToken, onSubjectAdded}) => {
     return(
 
         <form>
-            <select className="form-select" aria-label="Default select example" value = {grade} onChange={ (e) => setGrade(e.target.value)} style = {{marginBottom: "10px"}}>
+            <select className="form-select" aria-label="Select grade" value = {grade} onChange={ (e) => setGrade(e.target.value)} style = {{marginBottom: "10px"}}>
                 <option defaultValue>Select grade</option>
                 <option value="gcse">GCSE</option>
                 <option value="alevel">A level</option>
             </select>
 
-            <select className="form-select" aria-label="Default select example" value = {subject} onChange={ (e) => setSubject(e.target.value)} style = {{marginBottom: "10px"}}>
+            <select className="form-select" aria-label="Select subject" value = {subject} onChange={ (e) => setSubject(e.target.value)} style = {{marginBottom: "10px"}}>
                 <option defaultValue>Select subject</option>
                 <option value="English">English</option>
                 <option value="Maths">Maths</option>
