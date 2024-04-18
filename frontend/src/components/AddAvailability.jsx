@@ -31,6 +31,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
 
     const handleStartDateChange = (args) => {
         const selectedDate = args.value;
+        console.log(selectedDate)
         selectedDate.setMinutes(0);
         selectedDate.setSeconds(0);
         setStartDate(selectedDate);
@@ -57,6 +58,7 @@ export const AddAvailability = ({firebaseId, idToken, onChangeAvailability}) => 
             setAvailability([startDate, endDate])
             onChangeAvailability()
             try {
+                console.log(startDate)
                 await addAvailability(firebaseId, idToken, startDate, endDate)
                 setErrorMessage("")
                 setSuccessMessage("Availability added")

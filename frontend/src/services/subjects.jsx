@@ -1,5 +1,4 @@
-const BACKEND_URL = "http://localhost:5000";
-
+const BACKEND_URL = "https://tutormatch-server.dangullis.com";
 
 export const searchTutor = async (query, idToken) => {
     try {

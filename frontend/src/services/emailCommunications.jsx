@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://tutormatch-server.dangullis.com";
 
 const emailBody = {
     "signUpTutor": "Thank you for signing up as a tutor on TutorMatch. You profile is awaiting authorisation form one of our administrators. You will be contated when this is complete!",
