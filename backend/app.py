@@ -24,7 +24,6 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_DEFAULT_SENDER'] = 'tutor.match01@gmail.com'
 mail = Mail(app)
 
-
 cred = credentials.Certificate('firebaseServiceAccountKey.json')
 firebase_admin = initialize_app(cred)
 

@@ -30,7 +30,6 @@ def test_signup(client):
     }
     
     response = client.post("/signup", json=user)
-
     assert response.status_code == 201
     assert response.json == {'user': user, 'message': 'Account created successfully'}
 
