@@ -5,7 +5,6 @@ from datetime import datetime
 from modules.users import *
 from modules.users import UserNotFoundError
 
-
 @pytest.fixture
 def client():
     return app.test_client()
@@ -172,7 +171,6 @@ def test_update_bio_user_not_found(mongo_db_connection):
 
 def test_get_user_by_id_success_tutor(mongo_db_connection):
     db = mongo_db_connection
-
     db.users.insert_one(test_tutor_data)
     db.users.insert_one(test_student_data)
     db.bookings.insert_one(test_booking_data)
@@ -343,10 +341,19 @@ def test_update_rating_success_multiple_reviews(mongo_db_connection):
     assert user['rating'] == 3.33
 
 
+def test_update_profile_picture_success(mongo_db_connection):
+    db = mongo_db_connection
 
+    db.users.insert_one(test_tutor_data)
+    update_profile_picture("tutor_firebase_id", "https://example.com/profile.jpg")
+    user = db.users.find_one({"firebase_id": "tutor_firebase_id"})
+    assert user['profileImage'] == "https://example.com/profile.jpg"
 
+def test_update_profile_picture_error_user_not_found(mongo_db_connection):  
 
- 
+    result = update_profile_picture("tutor_firebase_id", "https://example.com/profile.jpg")
+    assert result ==  {"sucess": False, "error": "unable to update profile picture URL", "status_code": 404}
+
 
 
 

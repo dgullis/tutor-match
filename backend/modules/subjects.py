@@ -38,13 +38,11 @@ def search_by_subject_and_grade(subject, grade):
     
     try:
         result = subjects_collection.find_one({"name": subject}, {grade: 1})
-        print(result)
 
         if result:
             #returns value of grade key i.e. array of tutorIds
             #if grade key not found returns empty array
             tutor_firebase_ids = result.get(grade, [])
-            print("fb ids", tutor_firebase_ids)
             
             #iterates through list of tutor_firebase_ids to find the corresponding tutor from the users collection.
                     #adds the tutors documents to the tutor_information array
@@ -71,7 +69,8 @@ def returnSubjects(firebase_id, grade):
 
         if result:
             return list(result)
-    
+        else:
+            raise ValueError('grade not found')
     
     except Exception as e:
         raise ValueError(f'Error finding subjects: {str(e)}')

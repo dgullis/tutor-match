@@ -9,7 +9,6 @@ def update_booking_request(bookingId, tutor_id, booking_time, status):
     filter_criteria = {"_id": ObjectId(bookingId) }
     update_operation = {'$set': {'status': status}}
 
-
     # if denying booking request then delete request so another user can make a request
     if status == "denied":
         delete_booking_request_result = bookings_collection.delete_one(filter_criteria)
@@ -40,7 +39,7 @@ def update_booking_request(bookingId, tutor_id, booking_time, status):
         update_availability_result = users_collection.update_one(filter_criteria, {'$set': update_fields})
 
         if update_availability_result.modified_count > 0:
-            # if booking status has been updated to acepted and corresponding availablity slot has been change to available - false then
+            # if booking status has been updated to accepted and corresponding availablity slot has been change to available - false then
             return  {"success": True, "message": "Booking request updated", "status_code": 201}
         else:
             #booking status updated (accepted) but corresponding availability slot not found then
