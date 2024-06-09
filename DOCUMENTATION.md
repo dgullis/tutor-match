@@ -162,7 +162,7 @@ Starts the Flask development server on port 5050.
 
 modules/
 
-This folder contains files 'users.py' 'subjects.py' 'bookings.py' each of whih contain functions for managing operations that interact with the MongoDB database.
+This folder contains files 'users.py' 'subjects.py' 'bookings.py' each of which contain functions for managing operations that interact with the MongoDB database.
 
 lib/firebase_token_auth.py
 
